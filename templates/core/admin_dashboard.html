@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Admin Dashboard</h2>
+        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
+        <p>Your role: <strong>{{ user_role|title }}</strong></p>
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">System Overview</h5>
+                <p class="card-text">Manage users, courses, and system settings.</p>
+                <a href="/admin/" class="btn btn-primary">Access Admin Panel</a>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Quick Stats</h5>
+                <p class="card-text">Users: 0 | Courses: 0 | Enrollments: 0</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

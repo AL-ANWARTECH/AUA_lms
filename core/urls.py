@@ -5,7 +5,10 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('register/', views.register, name='register'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('dashboard/student/', views.student_dashboard, name='student_dashboard'),
+    path('dashboard/instructor/', views.instructor_dashboard, name='instructor_dashboard'),
+    path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
 ]
