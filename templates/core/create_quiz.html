@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Quiz - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Create Quiz for: {{ lesson.title }}</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">Quiz Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="text-danger">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.time_limit.id_for_label }}" class="form-label">Time Limit (minutes)</label>
+                {{ form.time_limit }}
+                {% if form.time_limit.errors %}
+                    <div class="text-danger">{{ form.time_limit.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.max_attempts.id_for_label }}" class="form-label">Maximum Attempts</label>
+                {{ form.max_attempts }}
+                {% if form.max_attempts.errors %}
+                    <div class="text-danger">{{ form.max_attempts.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.passing_score.id_for_label }}" class="form-label">Passing Score (%)</label>
+                {{ form.passing_score }}
+                {% if form.passing_score.errors %}
+                    <div class="text-danger">{{ form.passing_score.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Quiz</button>
+            <a href="{% url 'lesson_detail' lesson.pk %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

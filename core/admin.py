@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -61,3 +61,32 @@ class EnrollmentAdmin(admin.ModelAdmin):
     def get_progress(self, obj):
         return f"{obj.progress_percentage()}%"
     get_progress.short_description = 'Progress'
+
+@admin.register(Quiz)
+class QuizAdmin(admin.ModelAdmin):
+    list_display = ('title', 'lesson', 'time_limit', 'max_attempts', 'passing_score')
+    list_filter = ('lesson__module__course',)
+    search_fields = ('title', 'lesson__title')
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('text', 'quiz', 'question_type', 'points', 'order')
+    list_filter = ('quiz__lesson__module__course', 'question_type')
+    search_fields = ('text', 'quiz__title')
+
+@admin.register(AnswerOption)
+class AnswerOptionAdmin(admin.ModelAdmin):
+    list_display = ('text', 'question', 'is_correct', 'order')
+    list_filter = ('question__quiz__lesson__module__course', 'is_correct')
+    search_fields = ('text', 'question__text')
+
+@admin.register(QuizAttempt)
+class QuizAttemptAdmin(admin.ModelAdmin):
+    list_display = ('student', 'quiz', 'attempt_number', 'score', 'completed_at')
+    list_filter = ('quiz__lesson__module__course', 'student', 'completed_at')
+    search_fields = ('student__username', 'quiz__title')
+
+@admin.register(QuizAnswer)
+class QuizAnswerAdmin(admin.ModelAdmin):
+    list_display = ('quiz_attempt', 'question', 'is_correct')
+    list_filter = ('quiz_attempt__quiz__lesson__module__course', 'is_correct')

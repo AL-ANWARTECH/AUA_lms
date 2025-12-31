@@ -21,4 +21,10 @@ urlpatterns = [
     path('lesson/<int:pk>/', views.lesson_detail, name='lesson_detail'),
     path('lesson/<int:pk>/complete/', views.complete_lesson, name='complete_lesson'),
     path('lesson/<int:pk>/uncomplete/', views.uncomplete_lesson, name='uncomplete_lesson'),
+    path('quiz/<int:quiz_pk>/take/', views.take_quiz, name='take_quiz'),
+    path('quiz/<int:quiz_pk>/submit/', views.submit_quiz, name='submit_quiz'),
+    path('quiz/<int:lesson_pk>/create/', views.create_quiz, name='create_quiz'),
+    path('quiz/<int:pk>/manage/', views.manage_quiz, name='manage_quiz'),
+    path('quiz/<int:quiz_pk>/question/create/', views.create_question, name='create_question'),
+    path('question/<int:pk>/edit/', views.edit_question, name='edit_question'),
 ]

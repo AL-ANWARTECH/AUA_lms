@@ -101,6 +101,14 @@
                                 </span>
                             {% endif %}
                             
+                            {% if lesson.content_type == 'quiz' %}
+                                {% if user.role == 'instructor' and course.instructor == user %}
+                                    <a href="{% url 'create_quiz' lesson.pk %}" class="btn btn-sm btn-outline-info">Create Quiz</a>
+                                {% elif user.role == 'student' and is_enrolled %}
+                                    <a href="{% url 'take_quiz' lesson.quiz.pk %}" class="btn btn-sm btn-outline-info">Take Quiz</a>
+                                {% endif %}
+                            {% endif %}
+                            
                             <span class="badge bg-secondary">{{ lesson.content_type|title }}</span>
                         </div>
                     {% empty %}

@@ -73,6 +73,71 @@ class Lesson(models.Model):
     def __str__(self):
         return f"{self.module.title} - {self.title}"
 
+class Quiz(models.Model):
+    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, related_name='quiz')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    time_limit = models.IntegerField(help_text="Time limit in minutes", null=True, blank=True)
+    max_attempts = models.IntegerField(default=1, help_text="Maximum number of attempts allowed")
+    passing_score = models.FloatField(default=70.0, help_text="Minimum score percentage to pass")
+    
+    def __str__(self):
+        return f"Quiz: {self.title} for {self.lesson.title}"
+
+class Question(models.Model):
+    QUESTION_TYPES = [
+        ('multiple_choice', 'Multiple Choice'),
+        ('true_false', 'True/False'),
+        ('short_answer', 'Short Answer'),
+    ]
+    
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
+    text = models.TextField()
+    question_type = models.CharField(max_length=20, choices=QUESTION_TYPES, default='multiple_choice')
+    points = models.IntegerField(default=1)
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+    
+    def __str__(self):
+        return f"Q: {self.text[:50]}..."
+
+class AnswerOption(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answer_options')
+    text = models.TextField()
+    is_correct = models.BooleanField(default=False)
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+    
+    def __str__(self):
+        return f"Option: {self.text[:30]}..."
+
+class QuizAttempt(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='attempts')
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='quiz_attempts')
+    attempt_number = models.PositiveIntegerField()
+    score = models.FloatField()
+    completed_at = models.DateTimeField(auto_now_add=True)
+    time_taken = models.IntegerField(help_text="Time taken in seconds", null=True, blank=True)
+    
+    class Meta:
+        unique_together = ('quiz', 'student', 'attempt_number')
+    
+    def __str__(self):
+        return f"{self.student.username} - {self.quiz.title} (Attempt #{self.attempt_number})"
+
+class QuizAnswer(models.Model):
+    quiz_attempt = models.ForeignKey(QuizAttempt, on_delete=models.CASCADE, related_name='answers')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    selected_option = models.ForeignKey(AnswerOption, on_delete=models.CASCADE, null=True, blank=True)
+    text_answer = models.TextField(null=True, blank=True)  # For short answer questions
+    is_correct = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"Answer to {self.question.text[:30]}..."
 class Enrollment(models.Model):
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='enrollments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')

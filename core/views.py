@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment, Lesson
+from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -347,6 +347,256 @@ def uncomplete_lesson(request, pk):
     messages.success(request, f'Lesson "{lesson.title}" marked as incomplete.')
     
     return redirect('lesson_detail', pk=pk)
+
+@login_required
+def create_quiz(request, lesson_pk):
+    """Create a quiz for a lesson"""
+    lesson = get_object_or_404(Lesson, pk=lesson_pk)
+    
+    if request.user.role != 'instructor' or lesson.module.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .quiz_forms import QuizForm
+        form = QuizForm(request.POST)
+        if form.is_valid():
+            quiz = form.save(commit=False)
+            quiz.lesson = lesson
+            quiz.save()
+            messages.success(request, f'Quiz "{quiz.title}" created successfully!')
+            return redirect('manage_quiz', pk=quiz.pk)
+    else:
+        from .quiz_forms import QuizForm
+        form = QuizForm()
+    
+    return render(request, 'core/create_quiz.html', {
+        'form': form,
+        'lesson': lesson
+    })
+
+@login_required
+def manage_quiz(request, pk):
+    """Manage quiz questions"""
+    quiz = get_object_or_404(Quiz, pk=pk)
+    
+    if request.user.role != 'instructor' or quiz.lesson.module.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    questions = quiz.questions.all()
+    
+    context = {
+        'quiz': quiz,
+        'questions': questions
+    }
+    return render(request, 'core/manage_quiz.html', context)
+
+@login_required
+def create_question(request, quiz_pk):
+    """Create a question for a quiz"""
+    quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    
+    if request.user.role != 'instructor' or quiz.lesson.module.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .quiz_forms import QuestionForm
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.quiz = quiz
+            question.save()
+            return redirect('edit_question', pk=question.pk)
+    else:
+        from .quiz_forms import QuestionForm
+        form = QuestionForm()
+    
+    return render(request, 'core/create_question.html', {
+        'form': form,
+        'quiz': quiz
+    })
+
+@login_required
+def edit_question(request, pk):
+    """Edit a question and its answer options"""
+    question = get_object_or_404(Question, pk=pk)
+    
+    if request.user.role != 'instructor' or question.quiz.lesson.module.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .quiz_forms import QuestionForm, AnswerOptionFormSet
+        form = QuestionForm(request.POST, instance=question)
+        formset = AnswerOptionFormSet(request.POST, instance=question)
+        
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
+            messages.success(request, "Question updated successfully!")
+            return redirect('manage_quiz', pk=question.quiz.pk)
+    else:
+        from .quiz_forms import QuestionForm, AnswerOptionFormSet
+        form = QuestionForm(instance=question)
+        formset = AnswerOptionFormSet(instance=question)
+    
+    return render(request, 'core/edit_question.html', {
+        'form': form,
+        'formset': formset,
+        'question': question
+    })
+
+@login_required
+def take_quiz(request, quiz_pk):
+    """Take a quiz"""
+    quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    lesson = quiz.lesson
+    course = lesson.module.course
+    
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    # Check if user is enrolled in the course
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        messages.error(request, "You must be enrolled in the course to take this quiz.")
+        return redirect('course_detail', pk=course.pk)
+    
+    # Check if user can take the quiz
+    attempt_count = QuizAttempt.objects.filter(
+        quiz=quiz, 
+        student=request.user
+    ).count()
+    
+    if attempt_count >= quiz.max_attempts:
+        messages.error(request, "You have reached the maximum number of attempts for this quiz.")
+        return redirect('lesson_detail', pk=lesson.pk)
+    
+    questions = quiz.questions.all().prefetch_related('answer_options')
+    
+    context = {
+        'quiz': quiz,
+        'questions': questions,
+        'lesson': lesson
+    }
+    return render(request, 'core/take_quiz.html', context)
+
+@login_required
+def submit_quiz(request, quiz_pk):
+    """Submit quiz answers and calculate score"""
+    quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    lesson = quiz.lesson
+    course = lesson.module.course
+    
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    # Check if user is enrolled in the course
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        return redirect('course_detail', pk=course.pk)
+    
+    # Check if user can take the quiz
+    attempt_count = QuizAttempt.objects.filter(
+        quiz=quiz, 
+        student=request.user
+    ).count()
+    
+    if attempt_count >= quiz.max_attempts:
+        return redirect('lesson_detail', pk=lesson.pk)
+    
+    if request.method == 'POST':
+        # Create quiz attempt
+        attempt_number = attempt_count + 1
+        quiz_attempt = QuizAttempt.objects.create(
+            quiz=quiz,
+            student=request.user,
+            attempt_number=attempt_number,
+            score=0  # Will calculate after processing answers
+        )
+        
+        # Process answers
+        score = 0
+        total_points = 0
+        
+        for question in quiz.questions.all():
+            total_points += question.points
+            
+            if question.question_type == 'multiple_choice':
+                answer_id = request.POST.get(f'question_{question.id}')
+                if answer_id:
+                    try:
+                        answer_option = AnswerOption.objects.get(
+                            id=answer_id, 
+                            question=question
+                        )
+                        is_correct = answer_option.is_correct
+                        QuizAnswer.objects.create(
+                            quiz_attempt=quiz_attempt,
+                            question=question,
+                            selected_option=answer_option,
+                            is_correct=is_correct
+                        )
+                        if is_correct:
+                            score += question.points
+                    except AnswerOption.DoesNotExist:
+                        pass
+            elif question.question_type == 'true_false':
+                answer_id = request.POST.get(f'question_{question.id}')
+                if answer_id:
+                    try:
+                        answer_option = AnswerOption.objects.get(
+                            id=answer_id, 
+                            question=question
+                        )
+                        is_correct = answer_option.is_correct
+                        QuizAnswer.objects.create(
+                            quiz_attempt=quiz_attempt,
+                            question=question,
+                            selected_option=answer_option,
+                            is_correct=is_correct
+                        )
+                        if is_correct:
+                            score += question.points
+                    except AnswerOption.DoesNotExist:
+                        pass
+            elif question.question_type == 'short_answer':
+                text_answer = request.POST.get(f'question_{question.id}')
+                if text_answer:
+                    # For now, we'll mark all short answers as incorrect
+                    # In a real system, you'd need to implement answer matching
+                    is_correct = False
+                    QuizAnswer.objects.create(
+                        quiz_attempt=quiz_attempt,
+                        question=question,
+                        text_answer=text_answer,
+                        is_correct=is_correct
+                    )
+        
+        # Calculate final score percentage
+        if total_points > 0:
+            quiz_attempt.score = (score / total_points) * 100
+        else:
+            quiz_attempt.score = 0
+        quiz_attempt.save()
+        
+        # Check if passed
+        if quiz_attempt.score >= quiz.passing_score:
+            messages.success(
+                request, 
+                f"Quiz completed! Score: {quiz_attempt.score:.1f}% (Passed!)"
+            )
+            # Mark lesson as completed if quiz was passed
+            enrollment.completed_lessons.add(lesson)
+        else:
+            messages.info(
+                request, 
+                f"Quiz completed! Score: {quiz_attempt.score:.1f}% (Need {quiz.passing_score}% to pass)"
+            )
+        
+        return redirect('lesson_detail', pk=lesson.pk)
+    
+    return redirect('take_quiz', quiz_pk=quiz_pk)
 
 def logout_view(request):
     """Custom logout view"""
