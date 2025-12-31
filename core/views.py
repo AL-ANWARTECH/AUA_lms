@@ -1,12 +1,12 @@
-from django.contrib.auth import logout as django_logout
-from django.shortcuts import redirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from django.db.models import Q
 from .forms import CustomUserCreationForm
+from .models import Course, Category
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -25,7 +25,49 @@ class CustomLoginView(LoginView):
 
 def home(request):
     """Home page view"""
-    return render(request, 'core/home.html')
+    # Get 3 most recent courses for the home page
+    recent_courses = Course.objects.filter(is_active=True)[:3]
+    context = {
+        'recent_courses': recent_courses
+    }
+    return render(request, 'core/home.html', context)
+
+def course_list(request):
+    """Public course listing page"""
+    courses = Course.objects.filter(is_active=True).select_related('instructor', 'category')
+    
+    # Add search functionality
+    query = request.GET.get('q')
+    if query:
+        courses = courses.filter(
+            Q(title__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(instructor__username__icontains=query)
+        )
+    
+    # Add category filter
+    category_id = request.GET.get('category')
+    if category_id:
+        courses = courses.filter(category_id=category_id)
+    
+    # Get all categories for the filter dropdown
+    categories = Category.objects.all()
+    
+    context = {
+        'courses': courses,
+        'categories': categories,
+        'query': query,
+        'selected_category': int(category_id) if category_id else None
+    }
+    return render(request, 'core/course_list.html', context)
+
+def course_detail(request, pk):
+    """Course detail page"""
+    course = get_object_or_404(Course, pk=pk, is_active=True)
+    context = {
+        'course': course
+    }
+    return render(request, 'core/course_detail.html', context)
 
 def register(request):
     """User registration view"""
@@ -75,5 +117,6 @@ def admin_dashboard(request):
 
 def logout_view(request):
     """Custom logout view"""
-    django_logout(request)
+    from django.contrib.auth import logout
+    logout(request)
     return redirect('home')

@@ -16,4 +16,28 @@
         {% endif %}
     </div>
 </div>
+
+{% if recent_courses %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h2>Featured Courses</h2>
+        <div class="row">
+            {% for course in recent_courses %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course.title }}</h5>
+                            <p class="card-text">{{ course.description|truncatewords:15 }}</p>
+                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">View Course</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            <a href="{% url 'course_list' %}" class="btn btn-outline-primary">View All Courses</a>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
