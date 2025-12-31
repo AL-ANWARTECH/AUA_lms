@@ -113,9 +113,16 @@ def student_dashboard(request):
 
 @login_required
 def instructor_dashboard(request):
-    """Instructor-specific dashboard"""
+    """Instructor-specific dashboard with course management"""
+    if request.user.role != 'instructor':
+        return redirect('dashboard')
+    
+    # Get courses created by this instructor
+    courses = Course.objects.filter(instructor=request.user).select_related('category').prefetch_related('modules')
+    
     context = {
         'user_role': request.user.role,
+        'courses': courses
     }
     return render(request, 'core/instructor_dashboard.html', context)
 

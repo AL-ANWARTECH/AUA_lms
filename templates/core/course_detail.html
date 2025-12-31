@@ -40,7 +40,8 @@
                                 <button class="btn btn-success">Enroll in Course</button>
                             {% endif %}
                         {% elif user.role == 'instructor' and course.instructor == user %}
-                            <a href="#" class="btn btn-primary">Edit Course</a>
+                            <a href="{% url 'create_module' course.pk %}" class="btn btn-primary">Add Module</a>
+                            <a href="#" class="btn btn-outline-primary">Edit Course</a>
                         {% else %}
                             <a href="{% url 'student_dashboard' %}" class="btn btn-primary">View Dashboard</a>
                         {% endif %}
@@ -80,6 +81,11 @@
                     {% empty %}
                         <p class="text-muted">No lessons in this module yet.</p>
                     {% endfor %}
+                    {% if user.role == 'instructor' and course.instructor == user %}
+                        <div class="mt-2">
+                            <a href="{% url 'create_lesson' module.pk %}" class="btn btn-sm btn-outline-success">Add Lesson</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
