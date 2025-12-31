@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Gradebook - {{ course.title }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>{{ course.title }} - Gradebook</h2>
+        <p>Manage and view grades for your course.</p>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Course Overview</h5>
+                <p class="text-muted">
+                    Total Students: {{ gradebook_data|length }} |
+                    Assignments: {{ assignments.count }} |
+                    Quizzes: {{ quizzes.count }}
+                </p>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        {% for assignment in assignments %}
+                            <th class="text-center" style="min-width: 120px;">
+                                <div>{{ assignment.title|truncatewords:3 }}</div>
+                                <small class="text-muted">/{{ assignment.max_points }}</small>
+                            </th>
+                        {% endfor %}
+                        {% for quiz in quizzes %}
+                            <th class="text-center" style="min-width: 120px;">
+                                <div>{{ quiz.title|truncatewords:3 }}</div>
+                                <small class="text-muted">/100</small>
+                            </th>
+                        {% endfor %}
+                        <th class="text-center">Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student_data in gradebook_data %}
+                        <tr>
+                            <td>{{ student_data.student.username }}</td>
+                            {% for assignment_data in student_data.assignments %}
+                                <td class="text-center">
+                                    {% if assignment_data.grade %}
+                                        {{ assignment_data.grade }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            {% for quiz_data in student_data.quizzes %}
+                                <td class="text-center">
+                                    {% if quiz_data.grade %}
+                                        {{ quiz_data.grade.score|floatformat:1 }}%
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            <td class="text-center">
+                                {% if student_data.course_grade %}
+                                    {{ student_data.course_grade.final_grade|floatformat:1 }}%<br>
+                                    <strong>{{ student_data.course_grade.letter_grade }}</strong>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

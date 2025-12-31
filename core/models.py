@@ -138,6 +138,7 @@ class QuizAnswer(models.Model):
     
     def __str__(self):
         return f"Answer to {self.question.text[:30]}..."
+
 class Enrollment(models.Model):
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='enrollments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
@@ -167,3 +168,94 @@ def lessons(self):
 
 # Add this to the Course class
 Course.add_to_class('lessons', lessons)
+
+class Assignment(models.Model):
+    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, related_name='assignment')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    due_date = models.DateTimeField()
+    max_points = models.IntegerField(default=100)
+    
+    def __str__(self):
+        return f"Assignment: {self.title} for {self.lesson.title}"
+
+class Submission(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='submissions')
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='submissions')
+    file = models.FileField(upload_to='assignments/', null=True, blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    grade = models.FloatField(null=True, blank=True)
+    feedback = models.TextField(blank=True)
+    
+    class Meta:
+        unique_together = ('assignment', 'student')
+    
+    def __str__(self):
+        return f"{self.student.username} - {self.assignment.title}"
+
+class Grade(models.Model):
+    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE, related_name='grades')
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, null=True, blank=True)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True, blank=True)
+    score = models.FloatField()  # Actual points earned
+    max_points = models.FloatField()  # Max possible points
+    date_recorded = models.DateTimeField(auto_now_add=True)
+    grade_type = models.CharField(max_length=20, choices=[
+        ('quiz', 'Quiz'),
+        ('assignment', 'Assignment'),
+        ('exam', 'Exam'),
+    ])
+    
+    def percentage(self):
+        """Calculate percentage score"""
+        if self.max_points > 0:
+            return (self.score / self.max_points) * 100
+        return 0
+    
+    def __str__(self):
+        return f"{self.enrollment.student.username} - {self.score}/{self.max_points}"
+
+class CourseGrade(models.Model):
+    enrollment = models.OneToOneField(Enrollment, on_delete=models.CASCADE, related_name='course_grade')
+    final_grade = models.FloatField(null=True, blank=True)
+    letter_grade = models.CharField(max_length=2, blank=True)
+    
+    def calculate_final_grade(self):
+        """Calculate final grade based on all assignments/quizzes"""
+        grades = self.enrollment.grades.all()
+        if not grades:
+            return 0
+        
+        total_score = 0
+        total_max = 0
+        for grade in grades:
+            total_score += grade.score
+            total_max += grade.max_points
+        
+        if total_max > 0:
+            return (total_score / total_max) * 100
+        return 0
+    
+    def get_letter_grade(self, percentage):
+        """Convert percentage to letter grade"""
+        if percentage >= 90:
+            return 'A'
+        elif percentage >= 80:
+            return 'B'
+        elif percentage >= 70:
+            return 'C'
+        elif percentage >= 60:
+            return 'D'
+        else:
+            return 'F'
+    
+    def save(self, *args, **kwargs):
+        """Auto-calculate final grade and letter grade"""
+        if not self.final_grade:
+            self.final_grade = self.calculate_final_grade()
+        if not self.letter_grade:
+            self.letter_grade = self.get_letter_grade(self.final_grade)
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"{self.enrollment.student.username} - {self.enrollment.course.title}: {self.letter_grade}"

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -90,3 +90,35 @@ class QuizAttemptAdmin(admin.ModelAdmin):
 class QuizAnswerAdmin(admin.ModelAdmin):
     list_display = ('quiz_attempt', 'question', 'is_correct')
     list_filter = ('quiz_attempt__quiz__lesson__module__course', 'is_correct')
+
+@admin.register(Assignment)
+class AssignmentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'lesson', 'due_date', 'max_points')
+    list_filter = ('lesson__module__course', 'due_date')
+    search_fields = ('title', 'lesson__title')
+
+@admin.register(Submission)
+class SubmissionAdmin(admin.ModelAdmin):
+    list_display = ('student', 'assignment', 'submitted_at', 'grade')
+    list_filter = ('assignment__lesson__module__course', 'student', 'submitted_at')
+    search_fields = ('student__username', 'assignment__title')
+
+@admin.register(Grade)
+class GradeAdmin(admin.ModelAdmin):
+    list_display = ('enrollment', 'get_student_name', 'get_course_name', 'score', 'max_points', 'percentage', 'grade_type', 'date_recorded')
+    list_filter = ('grade_type', 'date_recorded', 'enrollment__course')
+    search_fields = ('enrollment__student__username', 'enrollment__course__title')
+    
+    def get_student_name(self, obj):
+        return obj.enrollment.student.username
+    get_student_name.short_description = 'Student'
+    
+    def get_course_name(self, obj):
+        return obj.enrollment.course.title
+    get_course_name.short_description = 'Course'
+
+@admin.register(CourseGrade)
+class CourseGradeAdmin(admin.ModelAdmin):
+    list_display = ('enrollment', 'final_grade', 'letter_grade')
+    list_filter = ('enrollment__course', 'letter_grade')
+    search_fields = ('enrollment__student__username', 'enrollment__course__title')

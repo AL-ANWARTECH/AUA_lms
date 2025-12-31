@@ -27,4 +27,8 @@ urlpatterns = [
     path('quiz/<int:pk>/manage/', views.manage_quiz, name='manage_quiz'),
     path('quiz/<int:quiz_pk>/question/create/', views.create_question, name='create_question'),
     path('question/<int:pk>/edit/', views.edit_question, name='edit_question'),
+    path('assignment/<int:lesson_pk>/create/', views.create_assignment, name='create_assignment'),
+    path('gradebook/student/', views.student_gradebook, name='student_gradebook'),
+    path('gradebook/instructor/<int:course_pk>/', views.instructor_gradebook, name='instructor_gradebook'),
+    path('grade/<int:enrollment_pk>/<str:grade_type>/<int:item_pk>/', views.record_grade, name='record_grade'),
 ]

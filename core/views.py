@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer
+from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -597,6 +597,170 @@ def submit_quiz(request, quiz_pk):
         return redirect('lesson_detail', pk=lesson.pk)
     
     return redirect('take_quiz', quiz_pk=quiz_pk)
+
+@login_required
+def create_assignment(request, lesson_pk):
+    """Create an assignment for a lesson"""
+    lesson = get_object_or_404(Lesson, pk=lesson_pk)
+    
+    if request.user.role != 'instructor' or lesson.module.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .assignment_forms import AssignmentForm
+        form = AssignmentForm(request.POST)
+        if form.is_valid():
+            assignment = form.save(commit=False)
+            assignment.lesson = lesson
+            assignment.save()
+            messages.success(request, f'Assignment "{assignment.title}" created successfully!')
+            return redirect('lesson_detail', pk=lesson.pk)
+    else:
+        from .assignment_forms import AssignmentForm
+        form = AssignmentForm()
+    
+    return render(request, 'core/create_assignment.html', {
+        'form': form,
+        'lesson': lesson
+    })
+
+@login_required
+def student_gradebook(request):
+    """Show student's gradebook"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    # Get all enrollments for this student
+    enrollments = Enrollment.objects.filter(student=request.user).select_related('course', 'course__instructor')
+    
+    # Get grades for each enrollment
+    gradebook_data = []
+    for enrollment in enrollments:
+        grades = enrollment.grades.all().order_by('-date_recorded')
+        course_grade = getattr(enrollment, 'course_grade', None)
+        
+        gradebook_data.append({
+            'course': enrollment.course,
+            'grades': grades,
+            'course_grade': course_grade
+        })
+    
+    context = {
+        'gradebook_data': gradebook_data
+    }
+    return render(request, 'core/student_gradebook.html', context)
+
+@login_required
+def instructor_gradebook(request, course_pk):
+    """Show instructor's gradebook for a specific course"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    if request.user.role != 'instructor' or course.instructor != request.user:
+        return redirect('dashboard')
+    
+    # Get all students enrolled in this course
+    enrollments = Enrollment.objects.filter(course=course).select_related('student')
+    
+    # Get all assignments and quizzes for this course
+    assignments = Assignment.objects.filter(lesson__module__course=course).prefetch_related('submissions')
+    quizzes = Quiz.objects.filter(lesson__module__course=course)
+    
+    # Prepare gradebook data
+    gradebook_data = []
+    for enrollment in enrollments:
+        student_grades = {
+            'student': enrollment.student,
+            'assignments': [],
+            'quizzes': [],
+            'course_grade': getattr(enrollment, 'course_grade', None)
+        }
+        
+        # Get assignment grades
+        for assignment in assignments:
+            try:
+                submission = assignment.submissions.get(student=enrollment.student)
+                student_grades['assignments'].append({
+                    'assignment': assignment,
+                    'submission': submission,
+                    'grade': submission.grade
+                })
+            except Submission.DoesNotExist:
+                student_grades['assignments'].append({
+                    'assignment': assignment,
+                    'submission': None,
+                    'grade': None
+                })
+        
+        # Get quiz grades
+        for quiz in quizzes:
+            quiz_grades = enrollment.grades.filter(quiz=quiz).order_by('-date_recorded')
+            student_grades['quizzes'].extend([{
+                'quiz': quiz,
+                'grade': grade
+            } for grade in quiz_grades])
+        
+        gradebook_data.append(student_grades)
+    
+    context = {
+        'course': course,
+        'gradebook_data': gradebook_data,
+        'assignments': assignments,
+        'quizzes': quizzes
+    }
+    return render(request, 'core/instructor_gradebook.html', context)
+
+@login_required
+def record_grade(request, enrollment_pk, grade_type, item_pk):
+    """Record a grade for an assignment or quiz"""
+    enrollment = get_object_or_404(Enrollment, pk=enrollment_pk)
+    
+    if request.user.role != 'instructor' or enrollment.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+        max_points = float(request.POST.get('max_points', 100))
+        
+        # Create or update grade
+        if grade_type == 'assignment':
+            assignment = get_object_or_404(Assignment, pk=item_pk)
+            grade, created = Grade.objects.get_or_create(
+                enrollment=enrollment,
+                assignment=assignment,
+                defaults={
+                    'score': score,
+                    'max_points': max_points,
+                    'grade_type': 'assignment'
+                }
+            )
+            if not created:
+                grade.score = score
+                grade.max_points = max_points
+                grade.save()
+        elif grade_type == 'quiz':
+            quiz = get_object_or_404(Quiz, pk=item_pk)
+            grade, created = Grade.objects.get_or_create(
+                enrollment=enrollment,
+                quiz=quiz,
+                defaults={
+                    'score': score,
+                    'max_points': max_points,
+                    'grade_type': 'quiz'
+                }
+            )
+            if not created:
+                grade.score = score
+                grade.max_points = max_points
+                grade.save()
+        
+        # Update course grade
+        course_grade, created = CourseGrade.objects.get_or_create(enrollment=enrollment)
+        course_grade.save()  # This will recalculate the final grade
+        
+        messages.success(request, "Grade recorded successfully!")
+    
+    redirect_url = request.POST.get('redirect_url', 'dashboard')
+    return redirect(redirect_url)
 
 def logout_view(request):
     """Custom logout view"""
