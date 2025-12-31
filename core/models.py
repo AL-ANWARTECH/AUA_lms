@@ -56,6 +56,7 @@ class Lesson(models.Model):
         ('video', 'Video'),
         ('pdf', 'PDF'),
         ('quiz', 'Quiz'),
+        ('assignment', 'Assignment'),
     ]
     
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='lessons')
@@ -259,3 +260,56 @@ class CourseGrade(models.Model):
     
     def __str__(self):
         return f"{self.enrollment.student.username} - {self.enrollment.course.title}: {self.letter_grade}"
+
+class Forum(models.Model):
+    course = models.OneToOneField(Course, on_delete=models.CASCADE, related_name='forum')
+    title = models.CharField(max_length=200, default='Course Forum')
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"Forum: {self.course.title}"
+
+class Topic(models.Model):
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name='topics')
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='topics')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_pinned = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-is_pinned', '-created_at']
+    
+    def __str__(self):
+        return self.title
+
+class Post(models.Model):
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='posts')
+    content = models.TextField()
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posts')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_edited = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return f"Post by {self.author.username} on {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+class TopicTag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    color = models.CharField(max_length=7, default='#007bff')  # Hex color code
+    
+    def __str__(self):
+        return self.name
+
+class TopicTagging(models.Model):
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='tags')
+    tag = models.ForeignKey(TopicTag, on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = ('topic', 'tag')

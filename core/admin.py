@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -122,3 +122,33 @@ class CourseGradeAdmin(admin.ModelAdmin):
     list_display = ('enrollment', 'final_grade', 'letter_grade')
     list_filter = ('enrollment__course', 'letter_grade')
     search_fields = ('enrollment__student__username', 'enrollment__course__title')
+
+@admin.register(Forum)
+class ForumAdmin(admin.ModelAdmin):
+    list_display = ('course', 'title', 'is_active')
+    list_filter = ('is_active', 'course__title')
+    search_fields = ('course__title', 'title')
+
+@admin.register(Topic)
+class TopicAdmin(admin.ModelAdmin):
+    list_display = ('title', 'forum', 'author', 'created_at', 'is_pinned', 'is_closed')
+    list_filter = ('forum__course__title', 'author', 'is_pinned', 'is_closed', 'created_at')
+    search_fields = ('title', 'content', 'author__username')
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('author', 'topic', 'created_at', 'is_edited')
+    list_filter = ('topic__forum__course__title', 'author', 'created_at')
+    search_fields = ('content', 'author__username', 'topic__title')
+
+@admin.register(TopicTag)
+class TopicTagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'color')
+    list_filter = ('name',)
+    search_fields = ('name',)
+
+@admin.register(TopicTagging)
+class TopicTaggingAdmin(admin.ModelAdmin):
+    list_display = ('topic', 'tag')
+    list_filter = ('topic__forum__course__title', 'tag__name')
+    search_fields = ('topic__title', 'tag__name')

@@ -31,4 +31,8 @@ urlpatterns = [
     path('gradebook/student/', views.student_gradebook, name='student_gradebook'),
     path('gradebook/instructor/<int:course_pk>/', views.instructor_gradebook, name='instructor_gradebook'),
     path('grade/<int:enrollment_pk>/<str:grade_type>/<int:item_pk>/', views.record_grade, name='record_grade'),
+    path('forum/<int:course_pk>/', views.course_forum, name='course_forum'),
+    path('forum/<int:forum_pk>/topic/create/', views.create_topic, name='create_topic'),
+    path('topic/<int:topic_pk>/', views.topic_detail, name='topic_detail'),
+    path('topic/<int:topic_pk>/post/create/', views.create_post, name='create_post'),
 ]

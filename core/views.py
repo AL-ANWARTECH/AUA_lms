@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade
+from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -161,6 +161,8 @@ def create_course(request):
         form = CourseForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             course = form.save()
+            # Create forum for the course automatically
+            Forum.objects.create(course=course)
             return redirect('course_detail', pk=course.pk)
     else:
         from .course_forms import CourseForm
@@ -761,6 +763,144 @@ def record_grade(request, enrollment_pk, grade_type, item_pk):
     
     redirect_url = request.POST.get('redirect_url', 'dashboard')
     return redirect(redirect_url)
+
+@login_required
+def course_forum(request, course_pk):
+    """Show course forum with topics"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    # Check if user is enrolled in the course
+    is_enrolled = False
+    if request.user.is_authenticated and request.user.role == 'student':
+        is_enrolled = Enrollment.objects.filter(student=request.user, course=course).exists()
+    
+    # Check if user is the instructor
+    is_instructor = (request.user.role == 'instructor' and course.instructor == request.user)
+    
+    # Only enrolled students and instructors can access the forum
+    if not (is_enrolled or is_instructor):
+        messages.error(request, "You must be enrolled in the course to access the forum.")
+        return redirect('course_detail', pk=course.pk)
+    
+    # Get forum for this course
+    forum, created = Forum.objects.get_or_create(course=course)
+    
+    # Get topics for this forum
+    topics = forum.topics.all().prefetch_related('author', 'posts')
+    
+    context = {
+        'course': course,
+        'forum': forum,
+        'topics': topics
+    }
+    return render(request, 'core/course_forum.html', context)
+
+@login_required
+def create_topic(request, forum_pk):
+    """Create a new topic in a forum"""
+    forum = get_object_or_404(Forum, pk=forum_pk)
+    course = forum.course
+    
+    # Check if user is enrolled in the course
+    is_enrolled = False
+    if request.user.role == 'student':
+        is_enrolled = Enrollment.objects.filter(student=request.user, course=course).exists()
+    
+    # Check if user is the instructor
+    is_instructor = (request.user.role == 'instructor' and course.instructor == request.user)
+    
+    # Only enrolled students and instructors can create topics
+    if not (is_enrolled or is_instructor):
+        messages.error(request, "You must be enrolled in the course to create topics.")
+        return redirect('course_forum', course_pk=course.pk)
+    
+    if request.method == 'POST':
+        title = request.POST.get('title', '').strip()
+        content = request.POST.get('content', '').strip()
+        
+        if title and content:
+            topic = Topic.objects.create(
+                forum=forum,
+                title=title,
+                content=content,
+                author=request.user
+            )
+            messages.success(request, f'Topic "{topic.title}" created successfully!')
+            return redirect('topic_detail', topic_pk=topic.pk)
+        else:
+            messages.error(request, "Please fill in both title and content.")
+    
+    context = {
+        'forum': forum,
+        'course': course
+    }
+    return render(request, 'core/create_topic.html', context)
+
+@login_required
+def topic_detail(request, topic_pk):
+    """Show topic with all its posts"""
+    topic = get_object_or_404(Topic, pk=topic_pk)
+    forum = topic.forum
+    course = forum.course
+    
+    # Check if user is enrolled in the course
+    is_enrolled = False
+    if request.user.role == 'student':
+        is_enrolled = Enrollment.objects.filter(student=request.user, course=course).exists()
+    
+    # Check if user is the instructor
+    is_instructor = (request.user.role == 'instructor' and course.instructor == request.user)
+    
+    # Only enrolled students and instructors can access the topic
+    if not (is_enrolled or is_instructor):
+        messages.error(request, "You must be enrolled in the course to access this topic.")
+        return redirect('course_forum', course_pk=course.pk)
+    
+    posts = topic.posts.all().prefetch_related('author')
+    
+    context = {
+        'topic': topic,
+        'forum': forum,
+        'course': course,
+        'posts': posts
+    }
+    return render(request, 'core/topic_detail.html', context)
+
+@login_required
+def create_post(request, topic_pk):
+    """Create a new post in a topic"""
+    topic = get_object_or_404(Topic, pk=topic_pk)
+    forum = topic.forum
+    course = forum.course
+    
+    # Check if user is enrolled in the course
+    is_enrolled = False
+    if request.user.role == 'student':
+        is_enrolled = Enrollment.objects.filter(student=request.user, course=course).exists()
+    
+    # Check if user is the instructor
+    is_instructor = (request.user.role == 'instructor' and course.instructor == request.user)
+    
+    # Only enrolled students and instructors can create posts
+    if not (is_enrolled or is_instructor):
+        messages.error(request, "You must be enrolled in the course to create posts.")
+        return redirect('topic_detail', topic_pk=topic.pk)
+    
+    if request.method == 'POST':
+        content = request.POST.get('content', '').strip()
+        
+        if content:
+            post = Post.objects.create(
+                topic=topic,
+                content=content,
+                author=request.user
+            )
+            messages.success(request, "Post created successfully!")
+            return redirect('topic_detail', topic_pk=topic.pk)
+        else:
+            messages.error(request, "Please enter content for your post.")
+    
+    return redirect('topic_detail', topic_pk=topic.pk)
 
 def logout_view(request):
     """Custom logout view"""

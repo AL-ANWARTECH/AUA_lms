@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ topic.title }} - Forum - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_forum' course.pk %}">Forum</a></li>
+                <li class="breadcrumb-item active">{{ topic.title }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3>{{ topic.title }}</h3>
+                <p class="text-muted">
+                    Started by <strong>{{ topic.author.username }}</strong> on {{ topic.created_at|date:"M d, Y H:i" }}
+                    {% if topic.is_pinned %}
+                        <span class="badge bg-primary ms-1">Pinned</span>
+                    {% endif %}
+                    {% if topic.is_closed %}
+                        <span class="badge bg-secondary ms-1">Closed</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-body">
+                <p>{{ topic.content|linebreaks }}</p>
+            </div>
+        </div>
+
+        <!-- Posts -->
+        {% for post in posts %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <p class="mb-0">
+                        <strong>{{ post.author.username }}</strong> - {{ post.created_at|date:"M d, Y H:i" }}
+                        {% if post.is_edited %}
+                            <span class="text-muted">(edited)</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-body">
+                    <p>{{ post.content|linebreaks }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">
+                <p>No posts yet. Be the first to reply!</p>
+            </div>
+        {% endfor %}
+
+        <!-- Reply Form -->
+        {% if not topic.is_closed %}
+            <div class="card">
+                <div class="card-header">
+                    <h5>Reply to Topic</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'create_post' topic.pk %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <textarea class="form-control" name="content" rows="4" placeholder="Write your reply here..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Post Reply</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-secondary">
+                <p>This topic is closed. No new replies are allowed.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

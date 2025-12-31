@@ -56,6 +56,15 @@
                         <a href="{% url 'register' %}" class="btn btn-outline-primary">Register to Enroll</a>
                     {% endif %}
                 </div>
+                
+                <!-- Add Forum Link -->
+                {% if is_enrolled or user.role == 'instructor' and course.instructor == user %}
+                    <div class="mt-3">
+                        <a href="{% url 'course_forum' course.pk %}" class="btn btn-outline-primary">
+                            <i class="bi bi-chat-square-text"></i> Course Forum
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
