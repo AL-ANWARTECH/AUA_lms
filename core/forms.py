@@ -18,4 +18,4 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['email'].required = True  
+        self.fields['email'].required = True  # Make email required

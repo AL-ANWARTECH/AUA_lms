@@ -127,6 +127,74 @@ def admin_dashboard(request):
     }
     return render(request, 'core/admin_dashboard.html', context)
 
+@login_required
+def create_course(request):
+    """Allow instructors to create a new course"""
+    if request.user.role != 'instructor':
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .course_forms import CourseForm
+        form = CourseForm(request.POST, request.FILES, user=request.user)
+        if form.is_valid():
+            course = form.save()
+            return redirect('course_detail', pk=course.pk)
+    else:
+        from .course_forms import CourseForm
+        form = CourseForm(user=request.user)
+    
+    return render(request, 'core/create_course.html', {'form': form})
+
+@login_required
+def create_module(request, course_pk):
+    """Allow instructors to create a module for a course"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    if request.user.role != 'instructor' or course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .course_forms import ModuleForm
+        form = ModuleForm(request.POST)
+        if form.is_valid():
+            module = form.save(commit=False)
+            module.course = course
+            module.save()
+            return redirect('course_detail', pk=course.pk)
+    else:
+        from .course_forms import ModuleForm
+        form = ModuleForm()
+    
+    return render(request, 'core/create_module.html', {
+        'form': form,
+        'course': course
+    })
+
+@login_required
+def create_lesson(request, module_pk):
+    """Allow instructors to create a lesson for a module"""
+    module = get_object_or_404(Module, pk=module_pk)
+    
+    if request.user.role != 'instructor' or module.course.instructor != request.user:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        from .course_forms import LessonForm
+        form = LessonForm(request.POST, request.FILES)
+        if form.is_valid():
+            lesson = form.save(commit=False)
+            lesson.module = module
+            lesson.save()
+            return redirect('course_detail', pk=module.course.pk)
+    else:
+        from .course_forms import LessonForm
+        form = LessonForm()
+    
+    return render(request, 'core/create_lesson.html', {
+        'form': form,
+        'module': module
+    })
+
 def logout_view(request):
     """Custom logout view"""
     from django.contrib.auth import logout

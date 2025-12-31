@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Lesson - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Create Lesson for: {{ module.title }}</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">Lesson Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.content_type.id_for_label }}" class="form-label">Content Type</label>
+                {{ form.content_type }}
+                {% if form.content_type.errors %}
+                    <div class="text-danger">{{ form.content_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.content.id_for_label }}" class="form-label">Content</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="text-danger">{{ form.content.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.video_url.id_for_label }}" class="form-label">Video URL</label>
+                {{ form.video_url }}
+                {% if form.video_url.errors %}
+                    <div class="text-danger">{{ form.video_url.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.file.id_for_label }}" class="form-label">File Upload</label>
+                {{ form.file }}
+                {% if form.file.errors %}
+                    <div class="text-danger">{{ form.file.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.order.id_for_label }}" class="form-label">Order</label>
+                {{ form.order }}
+                {% if form.order.errors %}
+                    <div class="text-danger">{{ form.order.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Lesson</button>
+            <a href="{% url 'course_detail' module.course.pk %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

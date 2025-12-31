@@ -13,4 +13,7 @@ urlpatterns = [
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
     path('courses/', views.course_list, name='course_list'),
     path('course/<int:pk>/', views.course_detail, name='course_detail'),
+    path('course/create/', views.create_course, name='create_course'),
+    path('course/<int:course_pk>/module/create/', views.create_module, name='create_module'),
+    path('module/<int:module_pk>/lesson/create/', views.create_lesson, name='create_lesson'),
 ]
