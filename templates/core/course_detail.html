@@ -77,11 +77,30 @@
                 <div class="card-body">
                     {% for lesson in module.lessons.all %}
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span>
-                                <i class="bi bi-file-earmark-text"></i> 
-                                {{ lesson.title }}
-                                <small class="text-muted">({{ lesson.content_type|title }})</small>
-                            </span>
+                            {% if user.role == 'student' and is_enrolled %}
+                                <a href="{% url 'lesson_detail' lesson.pk %}" class="text-decoration-none">
+                                    <span>
+                                        {% if lesson.pk in completed_lessons %}
+                                            <i class="bi bi-check-circle-fill text-success"></i>
+                                        {% else %}
+                                            <i class="bi bi-circle text-muted"></i>
+                                        {% endif %}
+                                        {{ lesson.title }}
+                                        <small class="text-muted">({{ lesson.content_type|title }})</small>
+                                    </span>
+                                </a>
+                            {% else %}
+                                <span>
+                                    {% if user.role == 'instructor' and course.instructor == user %}
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    {% else %}
+                                        <i class="bi bi-lock text-muted"></i>
+                                    {% endif %}
+                                    {{ lesson.title }}
+                                    <small class="text-muted">({{ lesson.content_type|title }})</small>
+                                </span>
+                            {% endif %}
+                            
                             <span class="badge bg-secondary">{{ lesson.content_type|title }}</span>
                         </div>
                     {% empty %}

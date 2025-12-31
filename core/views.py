@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment
+from .models import Course, Category, Module, Enrollment, Lesson
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -69,11 +69,14 @@ def course_detail(request, pk):
     # Check if user is enrolled
     is_enrolled = False
     enrollment = None
+    completed_lessons = []
+    
     if request.user.is_authenticated and request.user.role == 'student':
         enrollment_obj = Enrollment.objects.filter(student=request.user, course=course).first()
         is_enrolled = enrollment_obj is not None
         if is_enrolled:
             enrollment = enrollment_obj
+            completed_lessons = list(enrollment.completed_lessons.values_list('pk', flat=True))
     
     # Get course modules and lessons
     modules = course.modules.all().prefetch_related('lessons')
@@ -82,7 +85,8 @@ def course_detail(request, pk):
         'course': course,
         'modules': modules,
         'is_enrolled': is_enrolled,
-        'enrollment': enrollment
+        'enrollment': enrollment,
+        'completed_lessons': completed_lessons
     }
     return render(request, 'core/course_detail.html', context)
 
@@ -251,6 +255,98 @@ def unenroll_course(request, pk):
         messages.warning(request, f'You were not enrolled in {course.title}.')
     
     return redirect('student_dashboard')
+
+@login_required
+def lesson_detail(request, pk):
+    """Lesson detail page with completion tracking"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    lesson = get_object_or_404(Lesson, pk=pk)
+    course = lesson.module.course
+    
+    # Check if user is enrolled in the course
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        messages.error(request, "You must be enrolled in the course to access this lesson.")
+        return redirect('course_detail', pk=course.pk)
+    
+    # Check if lesson is already completed
+    is_completed = enrollment.completed_lessons.filter(pk=pk).exists()
+    
+    context = {
+        'lesson': lesson,
+        'course': course,
+        'is_completed': is_completed,
+        'enrollment': enrollment
+    }
+    return render(request, 'core/lesson_detail.html', context)
+
+@login_required
+def complete_lesson(request, pk):
+    """Mark a lesson as completed"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    lesson = get_object_or_404(Lesson, pk=pk)
+    course = lesson.module.course
+    
+    # Check if user is enrolled in the course
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        messages.error(request, "You must be enrolled in the course to complete lessons.")
+        return redirect('course_detail', pk=course.pk)
+    
+    # Add lesson to completed lessons
+    enrollment.completed_lessons.add(lesson)
+    messages.success(request, f'Lesson "{lesson.title}" marked as completed!')
+    
+    # Redirect to next lesson or back to course
+    next_lesson = Lesson.objects.filter(
+        module=lesson.module,
+        order__gt=lesson.order
+    ).order_by('order').first()
+    
+    if next_lesson:
+        return redirect('lesson_detail', pk=next_lesson.pk)
+    else:
+        # Check for next module
+        next_module = Module.objects.filter(
+            course=course,
+            order__gt=lesson.module.order
+        ).order_by('order').first()
+        
+        if next_module:
+            next_lesson = next_module.lessons.order_by('order').first()
+            if next_lesson:
+                return redirect('lesson_detail', pk=next_lesson.pk)
+    
+    # If no next lesson/module, go back to course
+    return redirect('course_detail', pk=course.pk)
+
+@login_required
+def uncomplete_lesson(request, pk):
+    """Mark a lesson as not completed"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    lesson = get_object_or_404(Lesson, pk=pk)
+    course = lesson.module.course
+    
+    # Check if user is enrolled in the course
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        messages.error(request, "You must be enrolled in the course to modify lesson completion.")
+        return redirect('course_detail', pk=course.pk)
+    
+    # Remove lesson from completed lessons
+    enrollment.completed_lessons.remove(lesson)
+    messages.success(request, f'Lesson "{lesson.title}" marked as incomplete.')
+    
+    return redirect('lesson_detail', pk=pk)
 
 def logout_view(request):
     """Custom logout view"""
