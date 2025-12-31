@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category
+from .models import Course, Category, Module, Enrollment
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -62,10 +63,21 @@ def course_list(request):
     return render(request, 'core/course_list.html', context)
 
 def course_detail(request, pk):
-    """Course detail page"""
+    """Course detail page with modules and lessons"""
     course = get_object_or_404(Course, pk=pk, is_active=True)
+    
+    # Check if user is enrolled
+    is_enrolled = False
+    if request.user.is_authenticated and request.user.role == 'student':
+        is_enrolled = Enrollment.objects.filter(student=request.user, course=course).exists()
+    
+    # Get course modules and lessons
+    modules = course.modules.all().prefetch_related('lessons')
+    
     context = {
-        'course': course
+        'course': course,
+        'modules': modules,
+        'is_enrolled': is_enrolled
     }
     return render(request, 'core/course_detail.html', context)
 
