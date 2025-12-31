@@ -12,15 +12,67 @@
         <div class="card mt-3">
             <div class="card-body">
                 <h5 class="card-title">Your Courses</h5>
-                <p class="card-text">You are enrolled in 0 courses.</p>
-                <p><em>Courses will appear here once you enroll.</em></p>
+                
+                {% if enrollments %}
+                    <div class="row">
+                        {% for enrollment in enrollments %}
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card h-100">
+                                    {% if enrollment.course.thumbnail %}
+                                        <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top" alt="{{ enrollment.course.title }}" style="height: 150px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                            <span class="text-muted">No Thumbnail</span>
+                                        </div>
+                                    {% endif %}
+                                    <div class="card-body d-flex flex-column">
+                                        <h6 class="card-title">{{ enrollment.course.title }}</h6>
+                                        <p class="card-text small text-muted">{{ enrollment.course.description|truncatewords:10 }}</p>
+                                        <p class="text-muted small">
+                                            <strong>Instructor:</strong> {{ enrollment.course.instructor.username }}<br>
+                                            <strong>Progress:</strong> {{ enrollment.progress_percentage }}%
+                                        </p>
+                                        <div class="mt-auto">
+                                            <a href="{% url 'course_detail' enrollment.course.pk %}" class="btn btn-sm btn-primary">Continue Learning</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">You are not enrolled in any courses yet.</p>
+                    <p><a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a></p>
+                {% endif %}
             </div>
         </div>
         
         <div class="card mt-3">
             <div class="card-body">
                 <h5 class="card-title">Your Progress</h5>
-                <p class="card-text">No progress data available yet.</p>
+                <p class="card-text">
+                    {% if enrollments %}
+                        <strong>Courses Enrolled:</strong> {{ enrollments|length }}<br>
+                        <strong>Average Progress:</strong> 
+                        {% if enrollments %}
+                            {% with total_progress=0 count=0 %}
+                                {% for enrollment in enrollments %}
+                                    {% with total_progress=total_progress|add:enrollment.progress_percentage count=count|add:1 %}
+                                    {% endwith %}
+                                {% endfor %}
+                                {% if count > 0 %}
+                                    {{ total_progress|div:count|floatformat:1 }}%
+                                {% else %}
+                                    0%
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            0%
+                        {% endif %}
+                    {% else %}
+                        No progress data available yet.
+                    {% endif %}
+                </p>
             </div>
         </div>
     </div>

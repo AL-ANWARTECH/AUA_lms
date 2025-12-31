@@ -68,8 +68,12 @@ def course_detail(request, pk):
     
     # Check if user is enrolled
     is_enrolled = False
+    enrollment = None
     if request.user.is_authenticated and request.user.role == 'student':
-        is_enrolled = Enrollment.objects.filter(student=request.user, course=course).exists()
+        enrollment_obj = Enrollment.objects.filter(student=request.user, course=course).first()
+        is_enrolled = enrollment_obj is not None
+        if is_enrolled:
+            enrollment = enrollment_obj
     
     # Get course modules and lessons
     modules = course.modules.all().prefetch_related('lessons')
@@ -77,7 +81,8 @@ def course_detail(request, pk):
     context = {
         'course': course,
         'modules': modules,
-        'is_enrolled': is_enrolled
+        'is_enrolled': is_enrolled,
+        'enrollment': enrollment
     }
     return render(request, 'core/course_detail.html', context)
 
@@ -105,9 +110,16 @@ def dashboard(request):
 
 @login_required
 def student_dashboard(request):
-    """Student-specific dashboard"""
+    """Student-specific dashboard with enrolled courses"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    # Get courses the student is enrolled in
+    enrollments = Enrollment.objects.filter(student=request.user).select_related('course__instructor', 'course__category')
+    
     context = {
         'user_role': request.user.role,
+        'enrollments': enrollments
     }
     return render(request, 'core/student_dashboard.html', context)
 
@@ -201,6 +213,44 @@ def create_lesson(request, module_pk):
         'form': form,
         'module': module
     })
+
+@login_required
+def enroll_course(request, pk):
+    """Allow students to enroll in a course"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    course = get_object_or_404(Course, pk=pk, is_active=True)
+    
+    # Check if already enrolled
+    enrollment, created = Enrollment.objects.get_or_create(
+        student=request.user,
+        course=course
+    )
+    
+    if created:
+        messages.success(request, f'You have successfully enrolled in {course.title}!')
+    else:
+        messages.info(request, f'You are already enrolled in {course.title}.')
+    
+    return redirect('course_detail', pk=pk)
+
+@login_required
+def unenroll_course(request, pk):
+    """Allow students to unenroll from a course"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    course = get_object_or_404(Course, pk=pk, is_active=True)
+    
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+        enrollment.delete()
+        messages.success(request, f'You have successfully unenrolled from {course.title}.')
+    except Enrollment.DoesNotExist:
+        messages.warning(request, f'You were not enrolled in {course.title}.')
+    
+    return redirect('student_dashboard')
 
 def logout_view(request):
     """Custom logout view"""

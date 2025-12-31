@@ -86,9 +86,19 @@ class Enrollment(models.Model):
         return f"{self.student.username} - {self.course.title}"
     
     def progress_percentage(self):
-        """Calculate completion percentage"""
-        total_lessons = self.course.modules.count() * 10  # Simplified - actual lesson count
+        """Calculate completion percentage based on actual lessons"""
+        total_lessons = self.course.lessons.count()  # Get actual lesson count
         completed_lessons = self.completed_lessons.count()
         if total_lessons == 0:
             return 0
         return round((completed_lessons / total_lessons) * 100, 2)
+
+# Add a property to Course model to get all lessons
+@property
+def lessons(self):
+    """Get all lessons in the course"""
+    from django.db.models import Prefetch
+    return Lesson.objects.filter(module__course=self)
+
+# Add this to the Course class
+Course.add_to_class('lessons', lessons)
