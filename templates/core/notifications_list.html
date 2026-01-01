@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Notifications - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Notifications</h2>
+            <a href="{% url 'mark_all_notifications_read' %}" class="btn btn-outline-primary btn-sm">
+                Mark All as Read
+            </a>
+        </div>
+        
+        {% if notifications %}
+            <div class="list-group">
+                {% for notification in notifications %}
+                    <div class="list-group-item {% if not notification.is_read %}list-group-item-light{% endif %}">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                {% if not notification.is_read %}
+                                    <span class="badge bg-primary">New</span>
+                                {% endif %}
+                                {{ notification.title }}
+                            </h5>
+                            <small>{{ notification.created_at|date:"M d, Y H:i" }}</small>
+                        </div>
+                        <p class="mb-1">{{ notification.message }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-secondary">{{ notification.notification_type|title }}</span>
+                            {% if not notification.is_read %}
+                                <a href="{% url 'mark_notification_read' notification.pk %}?redirect_url=notifications_list" class="btn btn-sm btn-outline-primary">
+                                    Mark as Read
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <p>You have no notifications yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -176,3 +176,16 @@ class CertificateTemplateAdmin(admin.ModelAdmin):
     def get_course_name(self, obj):
         return obj.course.title if obj.course else "Global Template"
     get_course_name.short_description = 'Course'
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'recipient', 'notification_type', 'is_read', 'created_at')
+    list_filter = ('notification_type', 'is_read', 'created_at', 'recipient__username')
+    search_fields = ('title', 'message', 'recipient__username')
+    readonly_fields = ('created_at',)
+
+@admin.register(NotificationPreference)
+class NotificationPreferenceAdmin(admin.ModelAdmin):
+    list_display = ('user', 'email_notifications', 'in_app_notifications', 'course_updates', 'grade_updates', 'forum_posts', 'assignment_due')
+    list_filter = ('email_notifications', 'in_app_notifications', 'user__username')
+    search_fields = ('user__username',)

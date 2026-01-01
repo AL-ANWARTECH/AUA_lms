@@ -45,6 +45,20 @@
                                 <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
                             </li>
                         {% endif %}
+                        {% if unread_notifications > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'notifications_list' %}">
+                                    <i class="bi bi-bell"></i>
+                                    <span class="badge bg-danger">{{ unread_notifications }}</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'notifications_list' %}">
+                                    <i class="bi bi-bell"></i>
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>

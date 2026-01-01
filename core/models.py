@@ -343,3 +343,42 @@ class CertificateTemplate(models.Model):
     def __str__(self):
         course_name = self.course.title if self.course else "Global Template"
         return f"Template for {course_name}"
+
+class Notification(models.Model):
+    NOTIFICATION_TYPES = [
+        ('course_update', 'Course Update'),
+        ('grade_update', 'Grade Update'),
+        ('forum_post', 'Forum Post'),
+        ('assignment_due', 'Assignment Due'),
+        ('certificate_earned', 'Certificate Earned'),
+        ('enrollment', 'Enrollment'),
+        ('general', 'General'),
+    ]
+    
+    recipient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications')
+    title = models.CharField(max_length=200)
+    message = models.TextField()
+    notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES, default='general')
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    related_course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
+    related_module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True, blank=True)
+    related_lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.title} - {self.recipient.username}"
+
+class NotificationPreference(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='notification_preferences')
+    email_notifications = models.BooleanField(default=True)
+    in_app_notifications = models.BooleanField(default=True)
+    course_updates = models.BooleanField(default=True)
+    grade_updates = models.BooleanField(default=True)
+    forum_posts = models.BooleanField(default=True)
+    assignment_due = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"Preferences for {self.user.username}"

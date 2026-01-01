@@ -40,4 +40,8 @@ urlpatterns = [
     path('certificates/instructor/<int:course_pk>/', views.instructor_certificates, name='instructor_certificates'),
     path('certificate/template/<int:course_pk>/', views.manage_certificate_template, name='manage_certificate_template'),
     path('certificate/eligibility/<int:course_pk>/', views.check_certificate_eligibility, name='certificate_eligibility'),
+    path('notifications/', views.notifications_list, name='notifications_list'),
+    path('notifications/preferences/', views.notification_preference, name='notification_preference'),
+    path('notifications/<int:notification_pk>/read/', views.mark_notification_read, name='mark_notification_read'),
+    path('notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
 ]
