@@ -7,7 +7,15 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag
+from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, Certificate, CertificateTemplate
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.colors import Color
+from io import BytesIO
+import os
+from django.http import HttpResponse
+from .certificate_forms import CertificateTemplateForm
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -163,6 +171,8 @@ def create_course(request):
             course = form.save()
             # Create forum for the course automatically
             Forum.objects.create(course=course)
+            # Create certificate template for the course automatically
+            CertificateTemplate.objects.create(course=course)
             return redirect('course_detail', pk=course.pk)
     else:
         from .course_forms import CourseForm
@@ -901,6 +911,193 @@ def create_post(request, topic_pk):
             messages.error(request, "Please enter content for your post.")
     
     return redirect('topic_detail', topic_pk=topic.pk)
+
+@login_required
+def generate_certificate(request, enrollment_pk):
+    """Generate and download a certificate for course completion"""
+    enrollment = get_object_or_404(Enrollment, pk=enrollment_pk)
+    
+    # Check if user is the student who earned the certificate or instructor
+    is_student = (request.user.role == 'student' and enrollment.student == request.user)
+    is_instructor = (request.user.role == 'instructor' and enrollment.course.instructor == request.user)
+    
+    if not (is_student or is_instructor):
+        messages.error(request, "You don't have permission to access this certificate.")
+        return redirect('dashboard')
+    
+    # Check if course is completed (80% or more progress)
+    if enrollment.progress_percentage() < 80:
+        messages.error(request, "You must complete at least 80% of the course to earn a certificate.")
+        return redirect('course_detail', pk=enrollment.course.pk)
+    
+    # Check if certificate already exists
+    certificate, created = Certificate.objects.get_or_create(enrollment=enrollment)
+    
+    if created:
+        # Certificate was just created
+        messages.success(request, "Certificate generated successfully!")
+    
+    # Generate PDF certificate
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=letter)
+    width, height = letter
+    
+    # Try to get course-specific template, fallback to global template
+    try:
+        template = enrollment.course.certificate_template
+    except CertificateTemplate.DoesNotExist:
+        # Create a default template if none exists
+        template = CertificateTemplate.objects.create(
+            course=enrollment.course,
+            title="Certificate of Completion",
+            description="This is to certify that the student has successfully completed the course."
+        )
+    
+    # Use default values if template is not set
+    title = template.title
+    description = template.description
+    font_size = template.font_size
+    text_color = template.text_color
+    
+    # Convert hex color to RGB
+    try:
+        color_code = text_color.lstrip('#')
+        r = int(color_code[:2], 16) / 255.0
+        g = int(color_code[2:4], 16) / 255.0
+        b = int(color_code[4:], 16) / 255.0
+        text_color_obj = Color(r, g, b)
+    except:
+        text_color_obj = Color(0, 0, 0)  # Default black
+    
+    # Draw certificate background if available
+    if template.background_image:
+        try:
+            p.drawImage(template.background_image.path, 0, 0, width, height)
+        except:
+            pass  # Ignore if image is not available
+    
+    # Draw certificate content
+    p.setFont("Helvetica-Bold", font_size + 6)
+    p.setFillColor(text_color_obj)
+    p.drawCentredString(width/2.0, height - 2*inch, title)
+    
+    p.setFont("Helvetica", font_size)
+    p.drawCentredString(width/2.0, height - 2.5*inch, description)
+    
+    p.setFont("Helvetica-Bold", font_size + 4)
+    p.drawCentredString(width/2.0, height - 3.5*inch, enrollment.student.get_full_name() or enrollment.student.username)
+    
+    p.setFont("Helvetica", font_size)
+    p.drawCentredString(width/2.0, height - 4*inch, f"for completing the course:")
+    p.setFont("Helvetica-Bold", font_size + 2)
+    p.drawCentredString(width/2.0, height - 4.5*inch, enrollment.course.title)
+    
+    p.setFont("Helvetica", font_size - 2)
+    p.drawCentredString(width/2.0, height - 6*inch, f"Certificate ID: {certificate.certificate_id}")
+    p.drawCentredString(width/2.0, height - 6.3*inch, f"Issued on: {certificate.issued_at.strftime('%B %d, %Y')}")
+    
+    p.setFont("Helvetica-Oblique", font_size - 4)
+    p.drawCentredString(width/2.0, height - 7*inch, "Instructor: " + enrollment.course.instructor.get_full_name() or enrollment.course.instructor.username)
+    
+    p.showPage()
+    p.save()
+    
+    # Get PDF value
+    pdf = buffer.getvalue()
+    buffer.close()
+    
+    # Create HTTP response
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="certificate_{certificate.certificate_id}.pdf"'
+    
+    return response
+
+@login_required
+def student_certificates(request):
+    """Show student's certificates"""
+    if request.user.role != 'student':
+        return redirect('dashboard')
+    
+    # Get all certificates for this student
+    certificates = Certificate.objects.filter(
+        enrollment__student=request.user,
+        is_active=True
+    ).select_related('enrollment__course', 'enrollment__student')
+    
+    context = {
+        'certificates': certificates
+    }
+    return render(request, 'core/student_certificates.html', context)
+
+@login_required
+def instructor_certificates(request, course_pk):
+    """Show certificates for students in a specific course"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    if request.user.role != 'instructor' or course.instructor != request.user:
+        return redirect('dashboard')
+    
+    # Get certificates for this course
+    certificates = Certificate.objects.filter(
+        enrollment__course=course,
+        is_active=True
+    ).select_related('enrollment__student')
+    
+    context = {
+        'course': course,
+        'certificates': certificates
+    }
+    return render(request, 'core/instructor_certificates.html', context)
+
+@login_required
+def manage_certificate_template(request, course_pk):
+    """Manage certificate template for a course"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    if request.user.role != 'instructor' or course.instructor != request.user:
+        return redirect('dashboard')
+    
+    try:
+        template = course.certificate_template
+    except CertificateTemplate.DoesNotExist:
+        template = CertificateTemplate.objects.create(course=course)
+    
+    if request.method == 'POST':
+        form = CertificateTemplateForm(request.POST, request.FILES, instance=template)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Certificate template updated successfully!")
+            return redirect('manage_certificate_template', course_pk=course.pk)
+    else:
+        form = CertificateTemplateForm(instance=template)
+    
+    context = {
+        'form': form,
+        'course': course,
+        'template': template
+    }
+    return render(request, 'core/manage_certificate_template.html', context)
+
+@login_required
+def check_certificate_eligibility(request, course_pk):
+    """Check if user is eligible for certificate"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    # Check if user is enrolled in the course
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        messages.error(request, "You must be enrolled in the course to check certificate eligibility.")
+        return redirect('course_detail', pk=course.pk)
+    
+    progress = enrollment.progress_percentage()
+    
+    context = {
+        'course': course,
+        'progress': progress,
+        'is_eligible': progress >= 80
+    }
+    return render(request, 'core/certificate_eligibility.html', context)
 
 def logout_view(request):
     """Custom logout view"""

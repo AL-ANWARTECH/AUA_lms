@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Certificates - {{ course.title }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Certificates for {{ course.title }}</h2>
+        <p>Manage certificates for students in this course.</p>
+        
+        <a href="{% url 'manage_certificate_template' course.pk %}" class="btn btn-primary mb-3">
+            Manage Certificate Template
+        </a>
+        
+        {% if certificates %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Certificate ID</th>
+                            <th>Issued Date</th>
+                            <th>Progress</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cert in certificates %}
+                            <tr>
+                                <td>{{ cert.enrollment.student.username }}</td>
+                                <td>{{ cert.certificate_id }}</td>
+                                <td>{{ cert.issued_at|date:"M d, Y" }}</td>
+                                <td>{{ cert.enrollment.progress_percentage }}%</td>
+                                <td>
+                                    <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        View/Download
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-muted">No certificates have been issued for this course yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

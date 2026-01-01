@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}My Certificates - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>My Certificates</h2>
+        <p>Download your course completion certificates.</p>
+        
+        {% if certificates %}
+            <div class="row">
+                {% for cert in certificates %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ cert.enrollment.course.title }}</h5>
+                                <p class="card-text">
+                                    <strong>Student:</strong> {{ cert.enrollment.student.username }}<br>
+                                    <strong>Certificate ID:</strong> {{ cert.certificate_id }}<br>
+                                    <strong>Issued:</strong> {{ cert.issued_at|date:"M d, Y" }}<br>
+                                    <strong>Progress:</strong> {{ cert.enrollment.progress_percentage }}%
+                                </p>
+                                <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-primary">
+                                    Download Certificate
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">You haven't earned any certificates yet.</p>
+            <a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

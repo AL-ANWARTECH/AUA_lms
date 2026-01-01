@@ -35,4 +35,9 @@ urlpatterns = [
     path('forum/<int:forum_pk>/topic/create/', views.create_topic, name='create_topic'),
     path('topic/<int:topic_pk>/', views.topic_detail, name='topic_detail'),
     path('topic/<int:topic_pk>/post/create/', views.create_post, name='create_post'),
+    path('certificate/<int:enrollment_pk>/', views.generate_certificate, name='generate_certificate'),
+    path('certificates/student/', views.student_certificates, name='student_certificates'),
+    path('certificates/instructor/<int:course_pk>/', views.instructor_certificates, name='instructor_certificates'),
+    path('certificate/template/<int:course_pk>/', views.manage_certificate_template, name='manage_certificate_template'),
+    path('certificate/eligibility/<int:course_pk>/', views.check_certificate_eligibility, name='certificate_eligibility'),
 ]

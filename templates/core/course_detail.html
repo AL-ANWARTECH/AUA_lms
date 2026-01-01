@@ -65,6 +65,15 @@
                         </a>
                     </div>
                 {% endif %}
+                
+                <!-- Add Certificate Link -->
+                {% if is_enrolled %}
+                    <div class="mt-3">
+                        <a href="{% url 'certificate_eligibility' course.pk %}" class="btn btn-outline-success">
+                            <i class="bi bi-award"></i> Check Certificate Eligibility
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

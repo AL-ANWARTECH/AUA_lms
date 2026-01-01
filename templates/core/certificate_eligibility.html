@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Certificate Eligibility - {{ course.title }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Certificate Eligibility for {{ course.title }}</h2>
+        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Your Progress</h5>
+                <p class="card-text">
+                    <strong>Current Progress:</strong> {{ progress }}%<br>
+                    <strong>Required for Certificate:</strong> 80%
+                </p>
+                
+                {% if is_eligible %}
+                    <div class="alert alert-success">
+                        <h6>Congratulations! 🎉</h6>
+                        <p>You are eligible for a certificate. You can generate it now.</p>
+                        <a href="{% url 'generate_certificate' enrollment.pk %}" class="btn btn-success">
+                            Generate Certificate
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <h6>Keep Going! 📚</h6>
+                        <p>You need {{ 80|add:-progress }}% more progress to earn a certificate.</p>
+                        <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">
+                            Continue Learning
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

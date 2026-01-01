@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Certificate Template - {{ course.title }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Manage Certificate Template for {{ course.title }}</h2>
+        <p>Customize the certificate template for this course.</p>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">Certificate Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="text-danger">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.background_image.id_for_label }}" class="form-label">Background Image</label>
+                {{ form.background_image }}
+                {% if form.background_image.errors %}
+                    <div class="text-danger">{{ form.background_image.errors }}</div>
+                {% endif %}
+                {% if template.background_image %}
+                    <p class="mt-2">
+                        Current image: <img src="{{ template.background_image.url }}" alt="Current background" style="max-width: 200px; max-height: 150px;">
+                    </p>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.font_size.id_for_label }}" class="form-label">Font Size</label>
+                {{ form.font_size }}
+                {% if form.font_size.errors %}
+                    <div class="text-danger">{{ form.font_size.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.text_color.id_for_label }}" class="form-label">Text Color</label>
+                {{ form.text_color }}
+                {% if form.text_color.errors %}
+                    <div class="text-danger">{{ form.text_color.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 form-check">
+                {{ form.is_active }}
+                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Active</label>
+                {% if form.is_active.errors %}
+                    <div class="text-danger">{{ form.is_active.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Template</button>
+            <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -313,3 +313,33 @@ class TopicTagging(models.Model):
     
     class Meta:
         unique_together = ('topic', 'tag')
+
+class Certificate(models.Model):
+    enrollment = models.OneToOneField(Enrollment, on_delete=models.CASCADE, related_name='certificate')
+    certificate_id = models.CharField(max_length=20, unique=True)
+    issued_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"Certificate for {self.enrollment.student.username} - {self.enrollment.course.title}"
+    
+    def save(self, *args, **kwargs):
+        if not self.certificate_id:
+            # Generate unique certificate ID
+            import random
+            import string
+            self.certificate_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        super().save(*args, **kwargs)
+
+class CertificateTemplate(models.Model):
+    course = models.OneToOneField(Course, on_delete=models.CASCADE, related_name='certificate_template', null=True, blank=True)
+    title = models.CharField(max_length=200, default="Certificate of Completion")
+    description = models.TextField(default="This is to certify that the student has successfully completed the course.")
+    background_image = models.ImageField(upload_to='certificates/backgrounds/', null=True, blank=True)
+    font_size = models.IntegerField(default=14)
+    text_color = models.CharField(max_length=7, default='#000000')  # Hex color
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        course_name = self.course.title if self.course else "Global Template"
+        return f"Template for {course_name}"

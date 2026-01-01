@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -152,3 +152,27 @@ class TopicTaggingAdmin(admin.ModelAdmin):
     list_display = ('topic', 'tag')
     list_filter = ('topic__forum__course__title', 'tag__name')
     search_fields = ('topic__title', 'tag__name')
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('certificate_id', 'get_student_name', 'get_course_name', 'issued_at', 'is_active')
+    list_filter = ('is_active', 'issued_at', 'enrollment__course__title')
+    search_fields = ('certificate_id', 'enrollment__student__username', 'enrollment__course__title')
+    
+    def get_student_name(self, obj):
+        return obj.enrollment.student.username
+    get_student_name.short_description = 'Student'
+    
+    def get_course_name(self, obj):
+        return obj.enrollment.course.title
+    get_course_name.short_description = 'Course'
+
+@admin.register(CertificateTemplate)
+class CertificateTemplateAdmin(admin.ModelAdmin):
+    list_display = ('title', 'get_course_name', 'is_active')
+    list_filter = ('is_active', 'course__title')
+    search_fields = ('title', 'course__title')
+    
+    def get_course_name(self, obj):
+        return obj.course.title if obj.course else "Global Template"
+    get_course_name.short_description = 'Course'
