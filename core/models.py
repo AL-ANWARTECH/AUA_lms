@@ -451,3 +451,95 @@ class DashboardWidget(models.Model):
     
     def __str__(self):
         return f"{self.widget_type} for {self.user.username}"
+
+class AccessibilitySettings(models.Model):
+    """Store accessibility preferences for users"""
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='accessibility_settings')
+    high_contrast_mode = models.BooleanField(default=False)
+    large_text_mode = models.BooleanField(default=False)
+    reduced_motion_mode = models.BooleanField(default=False)
+    screen_reader_optimized = models.BooleanField(default=True)
+    keyboard_navigation_enabled = models.BooleanField(default=True)
+    focus_indicator_enabled = models.BooleanField(default=True)
+    caption_preference = models.BooleanField(default=True)
+    audio_volume_level = models.IntegerField(default=50, help_text="Default volume level (0-100)")
+    preferred_font_size = models.CharField(max_length=10, default='medium', choices=[
+        ('small', 'Small'),
+        ('medium', 'Medium'),
+        ('large', 'Large'),
+        ('x-large', 'Extra Large'),
+    ])
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Accessibility settings for {self.user.username}"
+
+class AccessibilityAudit(models.Model):
+    """Track accessibility compliance audits"""
+    AUDIT_TYPES = [
+        ('automated', 'Automated Scan'),
+        ('manual', 'Manual Review'),
+        ('user_feedback', 'User Feedback'),
+        ('compliance_check', 'Compliance Check'),
+    ]
+    
+    audit_type = models.CharField(max_length=20, choices=AUDIT_TYPES)
+    performed_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    findings = models.TextField()
+    severity = models.CharField(max_length=10, choices=[
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+        ('critical', 'Critical'),
+    ])
+    resolved = models.BooleanField(default=False)
+    resolution_notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    resolved_at = models.DateTimeField(null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.audit_type} - {self.severity} - {'Resolved' if self.resolved else 'Pending'}"
+
+class ScreenReaderContent(models.Model):
+    """Alternative content for screen readers"""
+    page_section = models.CharField(max_length=100, help_text="Name of the page section")
+    content_type = models.CharField(max_length=50, choices=[
+        ('navigation', 'Navigation'),
+        ('form', 'Form'),
+        ('media', 'Media'),
+        ('data_table', 'Data Table'),
+        ('chart', 'Chart'),
+        ('other', 'Other'),
+    ])
+    alternative_text = models.TextField(help_text="Descriptive text for screen readers")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Screen reader content for {self.page_section}"
+
+class KeyboardShortcut(models.Model):
+    """Define keyboard shortcuts for common actions"""
+    ACTION_CHOICES = [
+        ('navigate_home', 'Navigate to Home'),
+        ('open_menu', 'Open Menu'),
+        ('search_focus', 'Focus Search'),
+        ('skip_to_content', 'Skip to Content'),
+        ('toggle_sidebar', 'Toggle Sidebar'),
+        ('previous_item', 'Previous Item'),
+        ('next_item', 'Next Item'),
+        ('select_item', 'Select Item'),
+        ('close_modal', 'Close Modal'),
+        ('save_changes', 'Save Changes'),
+        ('cancel_action', 'Cancel Action'),
+    ]
+    
+    key_combination = models.CharField(max_length=20, help_text="e.g., Ctrl+S, Alt+F, Tab")
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    description = models.TextField()
+    is_global = models.BooleanField(default=True, help_text="Available on all pages")
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"{self.key_combination} - {self.action}"

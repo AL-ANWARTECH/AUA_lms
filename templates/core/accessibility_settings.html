@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Accessibility Settings - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Accessibility Settings</h2>
+        <p>Adjust settings to make the LMS more accessible for your needs.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Visual Adjustments</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check mb-2">
+                        {{ form.high_contrast_mode }}
+                        <label class="form-check-label" for="{{ form.high_contrast_mode.id_for_label }}">
+                            High Contrast Mode
+                        </label>
+                    </div>
+                    
+                    <div class="form-check mb-2">
+                        {{ form.large_text_mode }}
+                        <label class="form-check-label" for="{{ form.large_text_mode.id_for_label }}">
+                            Large Text Mode
+                        </label>
+                    </div>
+                    
+                    <div class="form-check mb-2">
+                        {{ form.preferred_font_size.label_tag }}
+                        {{ form.preferred_font_size }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Motion and Animation</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check mb-2">
+                        {{ form.reduced_motion_mode }}
+                        <label class="form-check-label" for="{{ form.reduced_motion_mode.id_for_label }}">
+                            Reduced Motion Mode
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Assistive Technology</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check mb-2">
+                        {{ form.screen_reader_optimized }}
+                        <label class="form-check-label" for="{{ form.screen_reader_optimized.id_for_label }}">
+                            Screen Reader Optimized
+                        </label>
+                    </div>
+                    
+                    <div class="form-check mb-2">
+                        {{ form.keyboard_navigation_enabled }}
+                        <label class="form-check-label" for="{{ form.keyboard_navigation_enabled.id_for_label }}">
+                            Keyboard Navigation Enabled
+                        </label>
+                    </div>
+                    
+                    <div class="form-check mb-2">
+                        {{ form.focus_indicator_enabled }}
+                        <label class="form-check-label" for="{{ form.focus_indicator_enabled.id_for_label }}">
+                            Focus Indicators Enabled
+                        </label>
+                    </div>
+                    
+                    <div class="form-check mb-2">
+                        {{ form.caption_preference }}
+                        <label class="form-check-label" for="{{ form.caption_preference.id_for_label }}">
+                            Show Captions for Media
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Audio Settings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        {{ form.audio_volume_level.label_tag }}
+                        {{ form.audio_volume_level }}
+                        <div class="form-text">Default volume level for media content (0-100)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Accessibility Audit Log - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Accessibility Audit Log</h2>
+            <a href="{% url 'run_accessibility_scan' %}" class="btn btn-primary">
+                Run Accessibility Scan
+            </a>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Performed By</th>
+                                <th>Findings</th>
+                                <th>Severity</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for audit in audits %}
+                                <tr>
+                                    <td>{{ audit.audit_type|title }}</td>
+                                    <td>{{ audit.performed_by.username if audit.performed_by else 'System' }}</td>
+                                    <td>{{ audit.findings }}</td>
+                                    <td>
+                                        <span class="badge bg-{% if audit.severity == 'critical' %}danger{% elif audit.severity == 'high' %}warning{% elif audit.severity == 'medium' %}info{% else %}secondary{% endif %}">
+                                            {{ audit.severity|title }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if audit.resolved %}
+                                            <span class="badge bg-success">Resolved</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ audit.created_at|date:"M d, Y" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

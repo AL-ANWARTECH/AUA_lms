@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Keyboard Shortcuts - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Keyboard Shortcuts</h2>
+        <p>Use these keyboard shortcuts to navigate the LMS efficiently.</p>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Key Combination</th>
+                                <th>Action</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for shortcut in shortcuts %}
+                                <tr>
+                                    <td><kbd>{{ shortcut.key_combination }}</kbd></td>
+                                    <td>{{ shortcut.action|title }}</td>
+                                    <td>{{ shortcut.description }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h5>General Navigation</h5>
+                <ul>
+                    <li><kbd>Tab</kbd> - Navigate between interactive elements</li>
+                    <li><kbd>Shift + Tab</kbd> - Navigate backwards</li>
+                    <li><kbd>Enter</kbd> - Activate links and buttons</li>
+                    <li><kbd>Space</kbd> - Toggle checkboxes and radio buttons</li>
+                    <li><kbd>Escape</kbd> - Close modals and dropdowns</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

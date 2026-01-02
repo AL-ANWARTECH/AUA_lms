@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, AccessibilityAudit, ScreenReaderContent, KeyboardShortcut
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -208,3 +208,28 @@ class DashboardWidgetAdmin(admin.ModelAdmin):
     list_display = ('widget_type', 'user', 'position', 'is_visible')
     list_filter = ('widget_type', 'user__username', 'is_visible')
     search_fields = ('user__username',)
+
+@admin.register(AccessibilitySettings)
+class AccessibilitySettingsAdmin(admin.ModelAdmin):
+    list_display = ('user', 'high_contrast_mode', 'large_text_mode', 'reduced_motion_mode', 'screen_reader_optimized')
+    list_filter = ('high_contrast_mode', 'large_text_mode', 'reduced_motion_mode', 'screen_reader_optimized', 'user__username')
+    search_fields = ('user__username',)
+
+@admin.register(AccessibilityAudit)
+class AccessibilityAuditAdmin(admin.ModelAdmin):
+    list_display = ('audit_type', 'performed_by', 'severity', 'resolved', 'created_at')
+    list_filter = ('audit_type', 'severity', 'resolved', 'created_at', 'performed_by__username')
+    search_fields = ('findings', 'resolution_notes', 'performed_by__username')
+    readonly_fields = ('created_at', 'resolved_at')
+
+@admin.register(ScreenReaderContent)
+class ScreenReaderContentAdmin(admin.ModelAdmin):
+    list_display = ('page_section', 'content_type', 'is_active', 'created_at')
+    list_filter = ('content_type', 'is_active', 'created_at')
+    search_fields = ('page_section', 'alternative_text')
+
+@admin.register(KeyboardShortcut)
+class KeyboardShortcutAdmin(admin.ModelAdmin):
+    list_display = ('key_combination', 'action', 'is_global', 'is_active')
+    list_filter = ('action', 'is_global', 'is_active')
+    search_fields = ('key_combination', 'description')

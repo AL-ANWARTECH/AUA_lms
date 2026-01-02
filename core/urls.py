@@ -49,4 +49,11 @@ urlpatterns = [
     path('analytics/report/<int:report_pk>/', views.view_report, name='view_report'),
     path('analytics/course/<int:course_pk>/', views.course_analytics, name='course_analytics'),
     path('analytics/student/<int:student_pk>/', views.student_analytics, name='student_analytics'),
+    path('accessibility/', views.accessibility_settings, name='accessibility_settings'),
+    path('accessibility/toggle/<str:mode>/', views.toggle_accessibility_mode, name='toggle_accessibility_mode'),
+    path('accessibility/statement/', views.accessibility_statement, name='accessibility_statement'),
+    path('accessibility/shortcuts/', views.keyboard_shortcuts, name='keyboard_shortcuts'),
+    path('accessibility/audit/', views.accessibility_audit_log, name='accessibility_audit_log'),
+    path('accessibility/scan/', views.run_accessibility_scan, name='run_accessibility_scan'),
+    path('accessibility/resources/', views.accessibility_resources, name='accessibility_resources'),
 ]
