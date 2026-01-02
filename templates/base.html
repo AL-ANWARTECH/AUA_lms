@@ -40,9 +40,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'student_certificates' %}">Certificates</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'analytics_dashboard' %}">Analytics</a>
+                            </li>
                         {% elif user.role == 'admin' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'analytics_dashboard' %}">Analytics</a>
                             </li>
                         {% endif %}
                         {% if unread_notifications > 0 %}

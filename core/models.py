@@ -382,3 +382,72 @@ class NotificationPreference(models.Model):
     
     def __str__(self):
         return f"Preferences for {self.user.username}"
+
+class Analytics(models.Model):
+    """Store analytics data for courses and users"""
+    ANALYTICS_TYPES = [
+        ('course_enrollment', 'Course Enrollment'),
+        ('course_completion', 'Course Completion'),
+        ('lesson_completion', 'Lesson Completion'),
+        ('quiz_attempt', 'Quiz Attempt'),
+        ('assignment_submission', 'Assignment Submission'),
+        ('forum_activity', 'Forum Activity'),
+        ('user_engagement', 'User Engagement'),
+    ]
+    
+    analytics_type = models.CharField(max_length=25, choices=ANALYTICS_TYPES)  # Increased max_length to 25
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    date_recorded = models.DateTimeField(auto_now_add=True)
+    value = models.FloatField(default=1.0)
+    metadata = models.JSONField(default=dict, blank=True)  # For additional data
+    
+    class Meta:
+        ordering = ['-date_recorded']
+    
+    def __str__(self):
+        return f"{self.analytics_type} - {self.course.title if self.course else 'N/A'} - {self.date_recorded.strftime('%Y-%m-%d')}"
+
+class Report(models.Model):
+    """Store generated reports"""
+    REPORT_TYPES = [
+        ('course_performance', 'Course Performance'),
+        ('student_progress', 'Student Progress'),
+        ('user_engagement', 'User Engagement'),
+        ('system_usage', 'System Usage'),
+        ('grade_distribution', 'Grade Distribution'),
+        ('certificate_issuance', 'Certificate Issuance'),
+    ]
+    
+    title = models.CharField(max_length=200)
+    report_type = models.CharField(max_length=20, choices=REPORT_TYPES)
+    generated_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reports_generated')
+    generated_at = models.DateTimeField(auto_now_add=True)
+    data = models.JSONField()  # Store report data as JSON
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"{self.title} - {self.generated_by.username} - {self.generated_at.strftime('%Y-%m-%d')}"
+
+class DashboardWidget(models.Model):
+    """Configurable dashboard widgets for analytics"""
+    WIDGET_TYPES = [
+        ('enrollment_chart', 'Enrollment Chart'),
+        ('progress_chart', 'Progress Chart'),
+        ('grade_distribution', 'Grade Distribution'),
+        ('recent_activities', 'Recent Activities'),
+        ('user_statistics', 'User Statistics'),
+        ('course_statistics', 'Course Statistics'),
+    ]
+    
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='dashboard_widgets')
+    widget_type = models.CharField(max_length=20, choices=WIDGET_TYPES)
+    position = models.PositiveIntegerField(default=0)
+    is_visible = models.BooleanField(default=True)
+    config = models.JSONField(default=dict, blank=True)  # Widget-specific configuration
+    
+    class Meta:
+        ordering = ['position']
+    
+    def __str__(self):
+        return f"{self.widget_type} for {self.user.username}"

@@ -44,4 +44,9 @@ urlpatterns = [
     path('notifications/preferences/', views.notification_preference, name='notification_preference'),
     path('notifications/<int:notification_pk>/read/', views.mark_notification_read, name='mark_notification_read'),
     path('notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
+    path('analytics/', views.analytics_dashboard, name='analytics_dashboard'),
+    path('analytics/generate/', views.generate_report, name='generate_report'),
+    path('analytics/report/<int:report_pk>/', views.view_report, name='view_report'),
+    path('analytics/course/<int:course_pk>/', views.course_analytics, name='course_analytics'),
+    path('analytics/student/<int:student_pk>/', views.student_analytics, name='student_analytics'),
 ]

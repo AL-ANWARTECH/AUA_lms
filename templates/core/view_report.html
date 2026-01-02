@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ report.title }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>{{ report.title }}</h2>
+        <p>Report generated on {{ report.generated_at|date:"M d, Y H:i" }} by {{ report.generated_by.username }}</p>
+        
+        <div class="card">
+            <div class="card-body">
+                <h5>Report Data</h5>
+                <pre>{{ report.data|pprint }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

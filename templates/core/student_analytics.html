@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics - {{ student.username }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Analytics for {{ student.username }}</h2>
+        <p>View detailed analytics for this student.</p>
+        
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Courses</h5>
+                        <h2 class="card-text">{{ total_courses }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Completed Courses</h5>
+                        <h2 class="card-text">{{ completed_courses }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Average Progress</h5>
+                        <h2 class="card-text">{{ average_progress|floatformat:1 }}%</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Course Progress</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Progress</th>
+                                <th>Completed Lessons</th>
+                                <th>Total Lessons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in course_data %}
+                                <tr>
+                                    <td>{{ data.course }}</td>
+                                    <td>{{ data.progress|floatformat:1 }}%</td>
+                                    <td>{{ data.completed_lessons }}</td>
+                                    <td>{{ data.total_lessons }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Grades</h5>
+            </div>
+            <div class="card-body">
+                {% if grades %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Type</th>
+                                    <th>Score</th>
+                                    <th>Max Points</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for grade in grades %}
+                                    <tr>
+                                        <td>{{ grade.enrollment.course.title }}</td>
+                                        <td>{{ grade.grade_type|title }}</td>
+                                        <td>{{ grade.score }}</td>
+                                        <td>{{ grade.max_points }}</td>
+                                        <td>{{ grade.percentage|floatformat:1 }}%</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No grades available for this student.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

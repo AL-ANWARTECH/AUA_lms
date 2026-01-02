@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Dashboard - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Analytics Dashboard</h2>
+        <p>View insights and analytics for your courses and students.</p>
+    </div>
+</div>
+
+<!-- Key Metrics -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Enrollments</h5>
+                <h2 class="card-text">{{ total_enrollments }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Course Completions</h5>
+                <h2 class="card-text">{{ total_completions }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Lessons Completed</h5>
+                <h2 class="card-text">{{ total_lessons_completed }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">Quiz Attempts</h5>
+                <h2 class="card-text">{{ total_quiz_attempts }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts and Graphs -->
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Enrollment Trend (Last 7 Days)</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="enrollmentChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'generate_report' %}" class="btn btn-primary btn-block mb-2">Generate Report</a>
+                <a href="{% url 'course_list' %}" class="btn btn-outline-primary btn-block">View Courses</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Chart.js for visualization -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Enrollment Trend Chart
+    const ctx = document.getElementById('enrollmentChart').getContext('2d');
+    const enrollmentChart = new Chart(ctx, {
+        type: 'line',
+         {
+            labels: [
+                {% for item in enrollment_trend %}
+                    '{{ item.date }}',
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'New Enrollments',
+                 [
+                    {% for item in enrollment_trend %}
+                        {{ item.count }},
+                    {% endfor %}
+                ],
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Enrollment Trend'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

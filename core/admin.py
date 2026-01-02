@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference
+from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -188,4 +188,23 @@ class NotificationAdmin(admin.ModelAdmin):
 class NotificationPreferenceAdmin(admin.ModelAdmin):
     list_display = ('user', 'email_notifications', 'in_app_notifications', 'course_updates', 'grade_updates', 'forum_posts', 'assignment_due')
     list_filter = ('email_notifications', 'in_app_notifications', 'user__username')
+    search_fields = ('user__username',)
+
+@admin.register(Analytics)
+class AnalyticsAdmin(admin.ModelAdmin):
+    list_display = ('analytics_type', 'course', 'user', 'date_recorded', 'value')
+    list_filter = ('analytics_type', 'date_recorded', 'course__title', 'user__username')
+    search_fields = ('course__title', 'user__username')
+    readonly_fields = ('date_recorded',)
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('title', 'report_type', 'generated_by', 'generated_at', 'is_active')
+    list_filter = ('report_type', 'generated_at', 'generated_by__username', 'is_active')
+    search_fields = ('title', 'generated_by__username')
+
+@admin.register(DashboardWidget)
+class DashboardWidgetAdmin(admin.ModelAdmin):
+    list_display = ('widget_type', 'user', 'position', 'is_visible')
+    list_filter = ('widget_type', 'user__username', 'is_visible')
     search_fields = ('user__username',)

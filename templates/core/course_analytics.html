@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics - {{ course.title }} - AUA LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Analytics for {{ course.title }}</h2>
+        <p>View detailed analytics for this course.</p>
+        
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Enrollments</h5>
+                        <h2 class="card-text">{{ total_enrollments }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Completions</h5>
+                        <h2 class="card-text">{{ total_completions }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Completion Rate</h5>
+                        <h2 class="card-text">{{ completion_rate|floatformat:1 }}%</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Student Progress</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Progress</th>
+                                <th>Completed Lessons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for progress in student_progress %}
+                                <tr>
+                                    <td>{{ progress.student }}</td>
+                                    <td>{{ progress.progress|floatformat:1 }}%</td>
+                                    <td>{{ progress.completed_lessons }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Lesson Completion Rates</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Lesson</th>
+                                <th>Completion Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in lesson_completion_data %}
+                                <tr>
+                                    <td>{{ data.module }}</td>
+                                    <td>{{ data.lesson }}</td>
+                                    <td>{{ data.completion_percentage|floatformat:1 }}%</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

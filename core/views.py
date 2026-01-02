@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, Certificate, CertificateTemplate, Notification, NotificationPreference
+from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -17,6 +17,10 @@ import os
 from django.http import HttpResponse
 from .certificate_forms import CertificateTemplateForm
 from .notification_forms import NotificationPreferenceForm
+from .analytics_forms import ReportGenerationForm, DashboardWidgetForm
+from django.db.models import Count, Avg, Sum
+from datetime import datetime, timedelta
+import json
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -37,32 +41,14 @@ def home(request):
     """Home page view"""
     # Get 3 most recent courses for the home page
     recent_courses = Course.objects.filter(is_active=True)[:3]
-    
-    # Calculate unread notifications count
-    unread_notifications = 0
-    if request.user.is_authenticated:
-        unread_notifications = Notification.objects.filter(
-            recipient=request.user, 
-            is_read=False
-        ).count()
-    
     context = {
-        'recent_courses': recent_courses,
-        'unread_notifications': unread_notifications
+        'recent_courses': recent_courses
     }
     return render(request, 'core/home.html', context)
 
 def course_list(request):
     """Public course listing page"""
     courses = Course.objects.filter(is_active=True).select_related('instructor', 'category')
-    
-    # Calculate unread notifications count
-    unread_notifications = 0
-    if request.user.is_authenticated:
-        unread_notifications = Notification.objects.filter(
-            recipient=request.user, 
-            is_read=False
-        ).count()
     
     # Add search functionality
     query = request.GET.get('q')
@@ -85,22 +71,13 @@ def course_list(request):
         'courses': courses,
         'categories': categories,
         'query': query,
-        'selected_category': int(category_id) if category_id else None,
-        'unread_notifications': unread_notifications
+        'selected_category': int(category_id) if category_id else None
     }
     return render(request, 'core/course_list.html', context)
 
 def course_detail(request, pk):
     """Course detail page with modules and lessons"""
     course = get_object_or_404(Course, pk=pk, is_active=True)
-    
-    # Calculate unread notifications count
-    unread_notifications = 0
-    if request.user.is_authenticated:
-        unread_notifications = Notification.objects.filter(
-            recipient=request.user, 
-            is_read=False
-        ).count()
     
     # Check if user is enrolled
     is_enrolled = False
@@ -122,21 +99,12 @@ def course_detail(request, pk):
         'modules': modules,
         'is_enrolled': is_enrolled,
         'enrollment': enrollment,
-        'completed_lessons': completed_lessons,
-        'unread_notifications': unread_notifications
+        'completed_lessons': completed_lessons
     }
     return render(request, 'core/course_detail.html', context)
 
 def register(request):
     """User registration view"""
-    # Calculate unread notifications count
-    unread_notifications = 0
-    if request.user.is_authenticated:
-        unread_notifications = Notification.objects.filter(
-            recipient=request.user, 
-            is_read=False
-        ).count()
-    
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -147,20 +115,13 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     
-    return render(request, 'core/register.html', {'form': form, 'unread_notifications': unread_notifications})
+    return render(request, 'core/register.html', {'form': form})
 
 @login_required
 def dashboard(request):
     """Generic dashboard view"""
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     context = {
         'user_role': request.user.role,
-        'unread_notifications': unread_notifications
     }
     return render(request, 'core/dashboard.html', context)
 
@@ -170,19 +131,12 @@ def student_dashboard(request):
     if request.user.role != 'student':
         return redirect('dashboard')
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Get courses the student is enrolled in
     enrollments = Enrollment.objects.filter(student=request.user).select_related('course__instructor', 'course__category')
     
     context = {
         'user_role': request.user.role,
-        'enrollments': enrollments,
-        'unread_notifications': unread_notifications
+        'enrollments': enrollments
     }
     return render(request, 'core/student_dashboard.html', context)
 
@@ -192,34 +146,20 @@ def instructor_dashboard(request):
     if request.user.role != 'instructor':
         return redirect('dashboard')
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Get courses created by this instructor
     courses = Course.objects.filter(instructor=request.user).select_related('category').prefetch_related('modules')
     
     context = {
         'user_role': request.user.role,
-        'courses': courses,
-        'unread_notifications': unread_notifications
+        'courses': courses
     }
     return render(request, 'core/instructor_dashboard.html', context)
 
 @login_required
 def admin_dashboard(request):
     """Admin-specific dashboard"""
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     context = {
         'user_role': request.user.role,
-        'unread_notifications': unread_notifications
     }
     return render(request, 'core/admin_dashboard.html', context)
 
@@ -228,12 +168,6 @@ def create_course(request):
     """Allow instructors to create a new course"""
     if request.user.role != 'instructor':
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .course_forms import CourseForm
@@ -252,12 +186,20 @@ def create_course(request):
                 notification_type='course_update',
                 related_course=course
             )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=course,
+                user=course.instructor,
+                value=1.0,
+                metadata={'action': 'create_course'}
+            )
             return redirect('course_detail', pk=course.pk)
     else:
         from .course_forms import CourseForm
         form = CourseForm(user=request.user)
     
-    return render(request, 'core/create_course.html', {'form': form, 'unread_notifications': unread_notifications})
+    return render(request, 'core/create_course.html', {'form': form})
 
 @login_required
 def create_module(request, course_pk):
@@ -266,12 +208,6 @@ def create_module(request, course_pk):
     
     if request.user.role != 'instructor' or course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .course_forms import ModuleForm
@@ -290,6 +226,14 @@ def create_module(request, course_pk):
                     related_course=course,
                     related_module=module
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=course,
+                user=course.instructor,
+                value=1.0,
+                metadata={'action': 'create_module', 'module_id': module.id}
+            )
             return redirect('course_detail', pk=course.pk)
     else:
         from .course_forms import ModuleForm
@@ -297,8 +241,7 @@ def create_module(request, course_pk):
     
     return render(request, 'core/create_module.html', {
         'form': form,
-        'course': course,
-        'unread_notifications': unread_notifications
+        'course': course
     })
 
 @login_required
@@ -308,12 +251,6 @@ def create_lesson(request, module_pk):
     
     if request.user.role != 'instructor' or module.course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .course_forms import LessonForm
@@ -333,6 +270,14 @@ def create_lesson(request, module_pk):
                     related_module=module,
                     related_lesson=lesson
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=module.course,
+                user=module.course.instructor,
+                value=1.0,
+                metadata={'action': 'create_lesson', 'lesson_id': lesson.id}
+            )
             return redirect('course_detail', pk=module.course.pk)
     else:
         from .course_forms import LessonForm
@@ -340,8 +285,7 @@ def create_lesson(request, module_pk):
     
     return render(request, 'core/create_lesson.html', {
         'form': form,
-        'module': module,
-        'unread_notifications': unread_notifications
+        'module': module
     })
 
 @login_required
@@ -351,12 +295,6 @@ def enroll_course(request, pk):
         return redirect('dashboard')
     
     course = get_object_or_404(Course, pk=pk, is_active=True)
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if already enrolled
     enrollment, created = Enrollment.objects.get_or_create(
@@ -382,6 +320,14 @@ def enroll_course(request, pk):
             notification_type='enrollment',
             related_course=course
         )
+        # Log analytics event
+        log_analytics_event(
+            'course_enrollment',
+            course=course,
+            user=request.user,
+            value=1.0,
+            metadata={'action': 'enroll_course'}
+        )
     else:
         messages.info(request, f'You are already enrolled in {course.title}.')
     
@@ -395,12 +341,6 @@ def unenroll_course(request, pk):
     
     course = get_object_or_404(Course, pk=pk, is_active=True)
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
         enrollment.delete()
@@ -412,6 +352,14 @@ def unenroll_course(request, pk):
             message=f"You have successfully unenrolled from the course '{course.title}'.",
             notification_type='enrollment',
             related_course=course
+        )
+        # Log analytics event
+        log_analytics_event(
+            'course_enrollment',
+            course=course,
+            user=request.user,
+            value=-1.0,
+            metadata={'action': 'unenroll_course'}
         )
     except Enrollment.DoesNotExist:
         messages.warning(request, f'You were not enrolled in {course.title}.')
@@ -427,12 +375,6 @@ def lesson_detail(request, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     course = lesson.module.course
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Check if user is enrolled in the course
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
@@ -447,8 +389,7 @@ def lesson_detail(request, pk):
         'lesson': lesson,
         'course': course,
         'is_completed': is_completed,
-        'enrollment': enrollment,
-        'unread_notifications': unread_notifications
+        'enrollment': enrollment
     }
     return render(request, 'core/lesson_detail.html', context)
 
@@ -460,12 +401,6 @@ def complete_lesson(request, pk):
     
     lesson = get_object_or_404(Lesson, pk=pk)
     course = lesson.module.course
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     try:
@@ -487,6 +422,15 @@ def complete_lesson(request, pk):
         related_course=course,
         related_module=lesson.module,
         related_lesson=lesson
+    )
+    
+    # Log analytics event
+    log_analytics_event(
+        'lesson_completion',
+        course=course,
+        user=request.user,
+        value=1.0,
+        metadata={'action': 'complete_lesson', 'lesson_id': lesson.id}
     )
     
     # Redirect to next lesson or back to course
@@ -521,12 +465,6 @@ def uncomplete_lesson(request, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     course = lesson.module.course
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Check if user is enrolled in the course
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
@@ -549,6 +487,15 @@ def uncomplete_lesson(request, pk):
         related_lesson=lesson
     )
     
+    # Log analytics event
+    log_analytics_event(
+        'lesson_completion',
+        course=course,
+        user=request.user,
+        value=-1.0,
+        metadata={'action': 'uncomplete_lesson', 'lesson_id': lesson.id}
+    )
+    
     return redirect('lesson_detail', pk=pk)
 
 @login_required
@@ -558,12 +505,6 @@ def create_quiz(request, lesson_pk):
     
     if request.user.role != 'instructor' or lesson.module.course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .quiz_forms import QuizForm
@@ -583,6 +524,14 @@ def create_quiz(request, lesson_pk):
                     related_course=lesson.module.course,
                     related_module=lesson.module
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=lesson.module.course,
+                user=lesson.module.course.instructor,
+                value=1.0,
+                metadata={'action': 'create_quiz', 'quiz_id': quiz.id}
+            )
             return redirect('manage_quiz', pk=quiz.pk)
     else:
         from .quiz_forms import QuizForm
@@ -590,8 +539,7 @@ def create_quiz(request, lesson_pk):
     
     return render(request, 'core/create_quiz.html', {
         'form': form,
-        'lesson': lesson,
-        'unread_notifications': unread_notifications
+        'lesson': lesson
     })
 
 @login_required
@@ -602,18 +550,11 @@ def manage_quiz(request, pk):
     if request.user.role != 'instructor' or quiz.lesson.module.course.instructor != request.user:
         return redirect('dashboard')
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     questions = quiz.questions.all()
     
     context = {
         'quiz': quiz,
-        'questions': questions,
-        'unread_notifications': unread_notifications
+        'questions': questions
     }
     return render(request, 'core/manage_quiz.html', context)
 
@@ -624,12 +565,6 @@ def create_question(request, quiz_pk):
     
     if request.user.role != 'instructor' or quiz.lesson.module.course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .quiz_forms import QuestionForm
@@ -645,8 +580,7 @@ def create_question(request, quiz_pk):
     
     return render(request, 'core/create_question.html', {
         'form': form,
-        'quiz': quiz,
-        'unread_notifications': unread_notifications
+        'quiz': quiz
     })
 
 @login_required
@@ -656,12 +590,6 @@ def edit_question(request, pk):
     
     if request.user.role != 'instructor' or question.quiz.lesson.module.course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .quiz_forms import QuestionForm, AnswerOptionFormSet
@@ -681,8 +609,7 @@ def edit_question(request, pk):
     return render(request, 'core/edit_question.html', {
         'form': form,
         'formset': formset,
-        'question': question,
-        'unread_notifications': unread_notifications
+        'question': question
     })
 
 @login_required
@@ -694,12 +621,6 @@ def take_quiz(request, quiz_pk):
     
     if request.user.role != 'student':
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     try:
@@ -723,8 +644,7 @@ def take_quiz(request, quiz_pk):
     context = {
         'quiz': quiz,
         'questions': questions,
-        'lesson': lesson,
-        'unread_notifications': unread_notifications
+        'lesson': lesson
     }
     return render(request, 'core/take_quiz.html', context)
 
@@ -737,12 +657,6 @@ def submit_quiz(request, quiz_pk):
     
     if request.user.role != 'student':
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     try:
@@ -866,6 +780,15 @@ def submit_quiz(request, quiz_pk):
                 related_module=lesson.module
             )
         
+        # Log analytics event
+        log_analytics_event(
+            'quiz_attempt',
+            course=course,
+            user=request.user,
+            value=quiz_attempt.score,
+            metadata={'action': 'submit_quiz', 'quiz_id': quiz.id, 'score': quiz_attempt.score}
+        )
+        
         return redirect('lesson_detail', pk=lesson.pk)
     
     return redirect('take_quiz', quiz_pk=quiz_pk)
@@ -877,12 +800,6 @@ def create_assignment(request, lesson_pk):
     
     if request.user.role != 'instructor' or lesson.module.course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         from .assignment_forms import AssignmentForm
@@ -902,6 +819,14 @@ def create_assignment(request, lesson_pk):
                     related_course=lesson.module.course,
                     related_module=lesson.module
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=lesson.module.course,
+                user=lesson.module.course.instructor,
+                value=1.0,
+                metadata={'action': 'create_assignment', 'assignment_id': assignment.id}
+            )
             return redirect('lesson_detail', pk=lesson.pk)
     else:
         from .assignment_forms import AssignmentForm
@@ -909,8 +834,7 @@ def create_assignment(request, lesson_pk):
     
     return render(request, 'core/create_assignment.html', {
         'form': form,
-        'lesson': lesson,
-        'unread_notifications': unread_notifications
+        'lesson': lesson
     })
 
 @login_required
@@ -918,12 +842,6 @@ def student_gradebook(request):
     """Show student's gradebook"""
     if request.user.role != 'student':
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Get all enrollments for this student
     enrollments = Enrollment.objects.filter(student=request.user).select_related('course', 'course__instructor')
@@ -941,8 +859,7 @@ def student_gradebook(request):
         })
     
     context = {
-        'gradebook_data': gradebook_data,
-        'unread_notifications': unread_notifications
+        'gradebook_data': gradebook_data
     }
     return render(request, 'core/student_gradebook.html', context)
 
@@ -953,12 +870,6 @@ def instructor_gradebook(request, course_pk):
     
     if request.user.role != 'instructor' or course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Get all students enrolled in this course
     enrollments = Enrollment.objects.filter(course=course).select_related('student')
@@ -1007,8 +918,7 @@ def instructor_gradebook(request, course_pk):
         'course': course,
         'gradebook_data': gradebook_data,
         'assignments': assignments,
-        'quizzes': quizzes,
-        'unread_notifications': unread_notifications
+        'quizzes': quizzes
     }
     return render(request, 'core/instructor_gradebook.html', context)
 
@@ -1019,12 +929,6 @@ def record_grade(request, enrollment_pk, grade_type, item_pk):
     
     if request.user.role != 'instructor' or enrollment.course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     if request.method == 'POST':
         score = float(request.POST.get('score', 0))
@@ -1084,6 +988,15 @@ def record_grade(request, enrollment_pk, grade_type, item_pk):
                 related_course=enrollment.course
             )
         
+        # Log analytics event
+        log_analytics_event(
+            'grade_distribution',
+            course=course,
+            user=enrollment.student,
+            value=score,
+            metadata={'action': 'record_grade', 'grade_type': grade_type, 'score': score, 'max_points': max_points}
+        )
+        
         messages.success(request, "Grade recorded successfully!")
     
     redirect_url = request.POST.get('redirect_url', 'dashboard')
@@ -1093,12 +1006,6 @@ def record_grade(request, enrollment_pk, grade_type, item_pk):
 def course_forum(request, course_pk):
     """Show course forum with topics"""
     course = get_object_or_404(Course, pk=course_pk)
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     is_enrolled = False
@@ -1122,8 +1029,7 @@ def course_forum(request, course_pk):
     context = {
         'course': course,
         'forum': forum,
-        'topics': topics,
-        'unread_notifications': unread_notifications
+        'topics': topics
     }
     return render(request, 'core/course_forum.html', context)
 
@@ -1132,12 +1038,6 @@ def create_topic(request, forum_pk):
     """Create a new topic in a forum"""
     forum = get_object_or_404(Forum, pk=forum_pk)
     course = forum.course
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     is_enrolled = False
@@ -1172,14 +1072,21 @@ def create_topic(request, forum_pk):
                 notification_type='forum_post',
                 related_course=course
             )
+            # Log analytics event
+            log_analytics_event(
+                'forum_activity',
+                course=course,
+                user=request.user,
+                value=1.0,
+                metadata={'action': 'create_topic', 'topic_id': topic.id}
+            )
             return redirect('topic_detail', topic_pk=topic.pk)
         else:
             messages.error(request, "Please fill in both title and content.")
     
     context = {
         'forum': forum,
-        'course': course,
-        'unread_notifications': unread_notifications
+        'course': course
     }
     return render(request, 'core/create_topic.html', context)
 
@@ -1189,12 +1096,6 @@ def topic_detail(request, topic_pk):
     topic = get_object_or_404(Topic, pk=topic_pk)
     forum = topic.forum
     course = forum.course
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     is_enrolled = False
@@ -1215,8 +1116,7 @@ def topic_detail(request, topic_pk):
         'topic': topic,
         'forum': forum,
         'course': course,
-        'posts': posts,
-        'unread_notifications': unread_notifications
+        'posts': posts
     }
     return render(request, 'core/topic_detail.html', context)
 
@@ -1226,12 +1126,6 @@ def create_post(request, topic_pk):
     topic = get_object_or_404(Topic, pk=topic_pk)
     forum = topic.forum
     course = forum.course
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     is_enrolled = False
@@ -1273,6 +1167,14 @@ def create_post(request, topic_pk):
                 notification_type='forum_post',
                 related_course=course
             )
+            # Log analytics event
+            log_analytics_event(
+                'forum_activity',
+                course=course,
+                user=request.user,
+                value=1.0,
+                metadata={'action': 'create_post', 'post_id': post.id}
+            )
             return redirect('topic_detail', topic_pk=topic.pk)
         else:
             messages.error(request, "Please enter content for your post.")
@@ -1283,12 +1185,6 @@ def create_post(request, topic_pk):
 def generate_certificate(request, enrollment_pk):
     """Generate and download a certificate for course completion"""
     enrollment = get_object_or_404(Enrollment, pk=enrollment_pk)
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is the student who earned the certificate or instructor
     is_student = (request.user.role == 'student' and enrollment.student == request.user)
@@ -1316,6 +1212,14 @@ def generate_certificate(request, enrollment_pk):
             message=f"You have earned a certificate for completing the course '{enrollment.course.title}'.",
             notification_type='certificate_earned',
             related_course=enrollment.course
+        )
+        # Log analytics event
+        log_analytics_event(
+            'certificate_issuance',
+            course=enrollment.course,
+            user=enrollment.student,
+            value=1.0,
+            metadata={'action': 'generate_certificate', 'certificate_id': certificate.certificate_id}
         )
     
     # Generate PDF certificate
@@ -1399,12 +1303,6 @@ def student_certificates(request):
     if request.user.role != 'student':
         return redirect('dashboard')
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Get all certificates for this student
     certificates = Certificate.objects.filter(
         enrollment__student=request.user,
@@ -1412,8 +1310,7 @@ def student_certificates(request):
     ).select_related('enrollment__course', 'enrollment__student')
     
     context = {
-        'certificates': certificates,
-        'unread_notifications': unread_notifications
+        'certificates': certificates
     }
     return render(request, 'core/student_certificates.html', context)
 
@@ -1425,12 +1322,6 @@ def instructor_certificates(request, course_pk):
     if request.user.role != 'instructor' or course.instructor != request.user:
         return redirect('dashboard')
     
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Get certificates for this course
     certificates = Certificate.objects.filter(
         enrollment__course=course,
@@ -1439,8 +1330,7 @@ def instructor_certificates(request, course_pk):
     
     context = {
         'course': course,
-        'certificates': certificates,
-        'unread_notifications': unread_notifications
+        'certificates': certificates
     }
     return render(request, 'core/instructor_certificates.html', context)
 
@@ -1451,12 +1341,6 @@ def manage_certificate_template(request, course_pk):
     
     if request.user.role != 'instructor' or course.instructor != request.user:
         return redirect('dashboard')
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     try:
         template = course.certificate_template
@@ -1475,8 +1359,7 @@ def manage_certificate_template(request, course_pk):
     context = {
         'form': form,
         'course': course,
-        'template': template,
-        'unread_notifications': unread_notifications
+        'template': template
     }
     return render(request, 'core/manage_certificate_template.html', context)
 
@@ -1484,12 +1367,6 @@ def manage_certificate_template(request, course_pk):
 def check_certificate_eligibility(request, course_pk):
     """Check if user is eligible for certificate"""
     course = get_object_or_404(Course, pk=course_pk)
-    
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
     
     # Check if user is enrolled in the course
     try:
@@ -1503,40 +1380,26 @@ def check_certificate_eligibility(request, course_pk):
     context = {
         'course': course,
         'progress': progress,
-        'is_eligible': progress >= 80,
-        'unread_notifications': unread_notifications
+        'is_eligible': progress >= 80
     }
     return render(request, 'core/certificate_eligibility.html', context)
 
 @login_required
 def notifications_list(request):
     """Show user's notifications"""
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     notifications = Notification.objects.filter(recipient=request.user).select_related('related_course')
     
     # Mark all notifications as read when viewing
     notifications.filter(is_read=False).update(is_read=True)
     
     context = {
-        'notifications': notifications,
-        'unread_notifications': unread_notifications
+        'notifications': notifications
     }
     return render(request, 'core/notifications_list.html', context)
 
 @login_required
 def notification_preference(request):
     """Manage notification preferences"""
-    # Calculate unread notifications count
-    unread_notifications = Notification.objects.filter(
-        recipient=request.user, 
-        is_read=False
-    ).count()
-    
     # Get or create notification preferences for the user
     preferences, created = NotificationPreference.objects.get_or_create(user=request.user)
     
@@ -1550,8 +1413,7 @@ def notification_preference(request):
         form = NotificationPreferenceForm(instance=preferences)
     
     context = {
-        'form': form,
-        'unread_notifications': unread_notifications
+        'form': form
     }
     return render(request, 'core/notification_preference.html', context)
 
@@ -1575,6 +1437,341 @@ def mark_all_notifications_read(request):
     # Redirect to the original page or notifications list
     redirect_url = request.GET.get('redirect_url', 'notifications_list')
     return redirect(redirect_url)
+
+@login_required
+def analytics_dashboard(request):
+    """Main analytics dashboard"""
+    if request.user.role not in ['instructor', 'admin']:
+        return redirect('dashboard')
+    
+    # Get analytics data for the dashboard
+    if request.user.role == 'instructor':
+        # For instructors, get data for their courses
+        courses = Course.objects.filter(instructor=request.user)
+        analytics_data = Analytics.objects.filter(course__in=courses)
+    else:
+        # For admins, get all data
+        analytics_data = Analytics.objects.all()
+    
+    # Calculate key metrics
+    total_enrollments = analytics_data.filter(analytics_type='course_enrollment').count()
+    total_completions = analytics_data.filter(analytics_type='course_completion').count()
+    total_lessons_completed = analytics_data.filter(analytics_type='lesson_completion').count()
+    total_quiz_attempts = analytics_data.filter(analytics_type='quiz_attempt').count()
+    
+    # Get recent activity (last 30 days)
+    thirty_days_ago = datetime.now() - timedelta(days=30)
+    recent_analytics = analytics_data.filter(date_recorded__gte=thirty_days_ago)
+    
+    # Prepare data for charts
+    # Enrollment trend data
+    enrollment_trend = []
+    for i in range(7):
+        date = datetime.now() - timedelta(days=i)
+        count = recent_analytics.filter(
+            analytics_type='course_enrollment',
+            date_recorded__date=date.date()
+        ).count()
+        enrollment_trend.append({
+            'date': date.strftime('%Y-%m-%d'),
+            'count': count
+        })
+    
+    context = {
+        'total_enrollments': total_enrollments,
+        'total_completions': total_completions,
+        'total_lessons_completed': total_lessons_completed,
+        'total_quiz_attempts': total_quiz_attempts,
+        'enrollment_trend': list(reversed(enrollment_trend))
+    }
+    return render(request, 'core/analytics_dashboard.html', context)
+
+@login_required
+def generate_report(request):
+    """Generate custom reports"""
+    if request.user.role not in ['instructor', 'admin']:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        form = ReportGenerationForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.generated_by = request.user
+            
+            # Generate report data based on type
+            report_data = generate_report_data(report.report_type, form.cleaned_data['start_date'], form.cleaned_data['end_date'])
+            report.data = report_data
+            
+            report.save()
+            messages.success(request, f"Report '{report.title}' generated successfully!")
+            return redirect('view_report', report_pk=report.pk)
+    else:
+        form = ReportGenerationForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'core/generate_report.html', context)
+
+@login_required
+def view_report(request, report_pk):
+    """View a specific report"""
+    report = get_object_or_404(Report, pk=report_pk)
+    
+    # Check permissions
+    if request.user.role not in ['admin'] and report.generated_by != request.user:
+        return redirect('dashboard')
+    
+    context = {
+        'report': report
+    }
+    return render(request, 'core/view_report.html', context)
+
+@login_required
+def course_analytics(request, course_pk):
+    """Analytics for a specific course"""
+    course = get_object_or_404(Course, pk=course_pk)
+    
+    if request.user.role == 'instructor' and course.instructor != request.user:
+        return redirect('dashboard')
+    elif request.user.role not in ['instructor', 'admin']:
+        return redirect('dashboard')
+    
+    # Get course-specific analytics
+    analytics_data = Analytics.objects.filter(course=course)
+    
+    # Calculate course metrics
+    total_enrollments = analytics_data.filter(analytics_type='course_enrollment').count()
+    total_completions = analytics_data.filter(analytics_type='course_completion').count()
+    completion_rate = 0
+    if total_enrollments > 0:
+        completion_rate = (total_completions / total_enrollments) * 100
+    
+    # Get student progress data
+    enrollments = Enrollment.objects.filter(course=course).select_related('student')
+    student_progress = []
+    for enrollment in enrollments:
+        progress = enrollment.progress_percentage()
+        student_progress.append({
+            'student': enrollment.student.username,
+            'progress': progress,
+            'completed_lessons': enrollment.completed_lessons.count()
+        })
+    
+    # Get lesson completion data
+    lesson_completion_data = []
+    for module in course.modules.all():
+        for lesson in module.lessons.all():
+            completed_count = Enrollment.objects.filter(
+                course=course,
+                completed_lessons=lesson
+            ).count()
+            total_enrolled = course.enrollments.count()
+            
+            completion_percentage = 0
+            if total_enrolled > 0:
+                completion_percentage = (completed_count / total_enrolled) * 100
+            
+            lesson_completion_data.append({
+                'lesson': lesson.title,
+                'module': module.title,
+                'completion_percentage': completion_percentage
+            })
+    
+    context = {
+        'course': course,
+        'total_enrollments': total_enrollments,
+        'total_completions': total_completions,
+        'completion_rate': completion_rate,
+        'student_progress': student_progress,
+        'lesson_completion_data': lesson_completion_data
+    }
+    return render(request, 'core/course_analytics.html', context)
+
+@login_required
+def student_analytics(request, student_pk):
+    """Analytics for a specific student"""
+    student = get_object_or_404(CustomUser, pk=student_pk)
+    
+    if request.user.role not in ['instructor', 'admin']:
+        return redirect('dashboard')
+    
+    # Check if user can view this student's data
+    if request.user.role == 'instructor':
+        # Instructor can only see students in their courses
+        student_courses = Course.objects.filter(instructor=request.user, enrollments__student=student).distinct()
+        if not student_courses.exists():
+            return redirect('dashboard')
+    
+    # Get student's enrollments and progress
+    enrollments = Enrollment.objects.filter(student=student).select_related('course')
+    
+    # Calculate overall metrics
+    total_courses = enrollments.count()
+    completed_courses = 0
+    total_progress = 0
+    
+    course_data = []
+    for enrollment in enrollments:
+        progress = enrollment.progress_percentage()
+        total_progress += progress
+        
+        if progress >= 80:  # Considered completed if 80% or more
+            completed_courses += 1
+        
+        course_data.append({
+            'course': enrollment.course.title,
+            'progress': progress,
+            'completed_lessons': enrollment.completed_lessons.count(),
+            'total_lessons': enrollment.course.lessons.count()
+        })
+    
+    average_progress = 0
+    if total_courses > 0:
+        average_progress = total_progress / total_courses
+    
+    # Get student's grades
+    grades = Grade.objects.filter(enrollment__student=student).select_related('enrollment__course')
+    
+    context = {
+        'student': student,
+        'total_courses': total_courses,
+        'completed_courses': completed_courses,
+        'average_progress': average_progress,
+        'course_data': course_data,
+        'grades': grades
+    }
+    return render(request, 'core/student_analytics.html', context)
+
+def log_analytics_event(analytics_type, course=None, user=None, value=1.0, metadata=None):
+    """Helper function to log analytics events"""
+    if metadata is None:
+        metadata = {}
+    
+    Analytics.objects.create(
+        analytics_type=analytics_type,
+        course=course,
+        user=user,
+        value=value,
+        metadata=metadata
+    )
+
+def generate_report_data(report_type, start_date, end_date):
+    """Generate data for different report types"""
+    data = {}
+    
+    if report_type == 'course_performance':
+        # Course performance data
+        courses = Course.objects.all()
+        data['courses'] = []
+        for course in courses:
+            enrollments = Enrollment.objects.filter(course=course)
+            total_enrolled = enrollments.count()
+            total_completed = 0
+            avg_progress = 0
+            
+            for enrollment in enrollments:
+                progress = enrollment.progress_percentage()
+                if progress >= 80:  # 80% or more considered completed
+                    total_completed += 1
+                avg_progress += progress
+            
+            avg_progress = avg_progress / total_enrolled if total_enrolled > 0 else 0
+            
+            data['courses'].append({
+                'title': course.title,
+                'instructor': course.instructor.username,
+                'enrolled': total_enrolled,
+                'completed': total_completed,
+                'completion_rate': (total_completed / total_enrolled * 100) if total_enrolled > 0 else 0,
+                'avg_progress': avg_progress
+            })
+    
+    elif report_type == 'student_progress':
+        # Student progress data
+        students = CustomUser.objects.filter(role='student')
+        data['students'] = []
+        for student in students:
+            enrollments = Enrollment.objects.filter(student=student)
+            total_courses = enrollments.count()
+            avg_progress = 0
+            completed_courses = 0
+            
+            for enrollment in enrollments:
+                progress = enrollment.progress_percentage()
+                avg_progress += progress
+                if progress >= 80:
+                    completed_courses += 1
+            
+            avg_progress = avg_progress / total_courses if total_courses > 0 else 0
+            
+            data['students'].append({
+                'username': student.username,
+                'total_courses': total_courses,
+                'completed_courses': completed_courses,
+                'avg_progress': avg_progress
+            })
+    
+    elif report_type == 'user_engagement':
+        # User engagement data
+        data['total_users'] = CustomUser.objects.count()
+        data['active_students'] = CustomUser.objects.filter(role='student').count()
+        data['instructors'] = CustomUser.objects.filter(role='instructor').count()
+        
+        # Activity in the date range
+        analytics_in_range = Analytics.objects.filter(
+            date_recorded__date__gte=start_date,
+            date_recorded__date__lte=end_date
+        )
+        
+        data['activity_summary'] = {
+            'enrollments': analytics_in_range.filter(analytics_type='course_enrollment').count(),
+            'completions': analytics_in_range.filter(analytics_type='course_completion').count(),
+            'lesson_completions': analytics_in_range.filter(analytics_type='lesson_completion').count(),
+            'quiz_attempts': analytics_in_range.filter(analytics_type='quiz_attempt').count(),
+        }
+    
+    elif report_type == 'grade_distribution':
+        # Grade distribution data
+        grades = Grade.objects.filter(
+            date_recorded__date__gte=start_date,
+            date_recorded__date__lte=end_date
+        )
+        
+        data['grade_stats'] = {
+            'total_grades': grades.count(),
+            'avg_score': grades.aggregate(Avg('score'))['score__avg'] or 0,
+            'avg_max_points': grades.aggregate(Avg('max_points'))['max_points__avg'] or 0,
+        }
+        
+        # Distribution by grade type
+        data['by_type'] = {}
+        for grade_type in ['quiz', 'assignment', 'exam']:
+            type_grades = grades.filter(grade_type=grade_type)
+            data['by_type'][grade_type] = {
+                'count': type_grades.count(),
+                'avg_score': type_grades.aggregate(Avg('score'))['score__avg'] or 0,
+            }
+    
+    elif report_type == 'certificate_issuance':
+        # Certificate issuance data
+        certificates = Certificate.objects.filter(
+            issued_at__date__gte=start_date,
+            issued_at__date__lte=end_date
+        )
+        
+        data['certificates'] = {
+            'total_issued': certificates.count(),
+            'by_course': {}
+        }
+        
+        for cert in certificates:
+            course_title = cert.enrollment.course.title
+            if course_title not in data['certificates']['by_course']:
+                data['certificates']['by_course'][course_title] = 0
+            data['certificates']['by_course'][course_title] += 1
+    
+    return data
 
 def create_notification(recipient, title, message, notification_type='general', related_course=None, related_module=None, related_lesson=None):
     """Helper function to create a notification"""
