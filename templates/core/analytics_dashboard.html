@@ -12,7 +12,7 @@
 
 <!-- Key Metrics -->
 <div class="row mb-4">
-    <div class="col-md-3">
+    <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <h5 class="card-title">Total Enrollments</h5>
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-success text-white">
             <div class="card-body">
                 <h5 class="card-title">Course Completions</h5>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-info text-white">
             <div class="card-body">
                 <h5 class="card-title">Lessons Completed</h5>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-warning text-white">
             <div class="card-body">
                 <h5 class="card-title">Quiz Attempts</h5>
@@ -48,7 +48,7 @@
 
 <!-- Charts and Graphs -->
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5>Enrollment Trend (Last 7 Days)</h5>
@@ -58,14 +58,27 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-header">
                 <h5>Quick Actions</h5>
             </div>
             <div class="card-body">
-                <a href="{% url 'generate_report' %}" class="btn btn-primary btn-block mb-2">Generate Report</a>
-                <a href="{% url 'course_list' %}" class="btn btn-outline-primary btn-block">View Courses</a>
+                <a href="{% url 'generate_report' %}" class="btn btn-primary btn-block mb-2 w-100">Generate Report</a>
+                <a href="{% url 'course_list' %}" class="btn btn-outline-primary btn-block w-100">View Courses</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Recent analytics data will appear here.</p>
             </div>
         </div>
     </div>
@@ -98,6 +111,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,

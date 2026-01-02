@@ -6,12 +6,15 @@
     <title>{% block title %}AUA LMS{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS for Responsive Design -->
+    {% load static %}
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">AUA LMS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -82,21 +85,65 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container mt-4">
+    <div class="container-fluid main-content mt-4">
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="row">
+                <div class="col-12">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         {% endif %}
 
         {% block content %}
         {% endblock %}
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p>&copy; 2026 AUA LMS. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Additional responsive scripts -->
+    <script>
+        // Touch-friendly enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add touch-friendly class to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.classList.add('touch-friendly');
+            });
+            
+            // Enhance form inputs for mobile
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.classList.add('touch-friendly');
+            });
+        });
+        
+        // Responsive image handling
+        window.addEventListener('resize', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                // Adjust card heights on mobile for better UX
+                if (window.innerWidth <= 768) {
+                    card.style.height = 'auto';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

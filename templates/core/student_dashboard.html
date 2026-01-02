@@ -8,18 +8,23 @@
         <h2>Student Dashboard</h2>
         <p>Welcome, <strong>{{ user.username }}</strong>!</p>
         <p>Your role: <strong>{{ user_role|title }}</strong></p>
-        
-        <div class="card mt-3">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Your Courses</h5>
+            </div>
             <div class="card-body">
-                <h5 class="card-title">Your Courses</h5>
-                
                 {% if enrollments %}
-                    <div class="row">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {% for enrollment in enrollments %}
-                            <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="col">
                                 <div class="card h-100">
                                     {% if enrollment.course.thumbnail %}
-                                        <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top" alt="{{ enrollment.course.title }}" style="height: 150px; object-fit: cover;">
+                                        <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ enrollment.course.title }}" style="height: 150px; object-fit: cover;">
                                     {% else %}
                                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
                                             <span class="text-muted">No Thumbnail</span>
@@ -46,10 +51,16 @@
                 {% endif %}
             </div>
         </div>
-        
-        <div class="card mt-3">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Your Progress</h5>
+            </div>
             <div class="card-body">
-                <h5 class="card-title">Your Progress</h5>
                 <p class="card-text">
                     {% if enrollments %}
                         <strong>Courses Enrolled:</strong> {{ enrollments|length }}<br>
