@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Accessibility Statement - AUA LMS{% endblock %}
+{% block title %}{% trans "Accessibility Statement" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Accessibility Statement</h2>
-        <p>Learn about our commitment to accessibility and how we support all users.</p>
+        <h2>{% trans "Accessibility Statement" %}</h2>
+        <p>{% trans "Learn about our commitment to accessibility and how we support all users." %}</p>
         
         <div class="card">
             <div class="card-body">
@@ -16,17 +17,17 @@
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5>Current Status</h5>
+                <h5>{% trans "Current Status" %}</h5>
             </div>
             <div class="card-body">
-                <p>Our LMS currently meets:</p>
+                <p>{% trans "Our LMS currently meets:" %}</p>
                 <ul>
-                    <li>WCAG 2.1 Level AA standards</li>
-                    <li>Section 508 compliance</li>
-                    <li>European accessibility requirements</li>
+                    <li>{% trans "WCAG 2.1 Level AA standards" %}</li>
+                    <li>{% trans "Section 508 compliance" %}</li>
+                    <li>{% trans "European accessibility requirements" %}</li>
                 </ul>
                 
-                <p>We regularly update our platform to improve accessibility. Last review: January 2026</p>
+                <p>{% blocktrans %}We regularly update our platform to improve accessibility. Last review: January 2026{% endblocktrans %}</p>
             </div>
         </div>
     </div>

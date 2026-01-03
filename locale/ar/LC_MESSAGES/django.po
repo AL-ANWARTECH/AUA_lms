@@ -1,0 +1,1506 @@
+# Arabic translations for AUA LMS.
+# Copyright (C) 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 17:31+0100\n"
+"PO-Revision-Date: 2026-01-02 17:31+0100\n"
+"Last-Translator: Anwar Sagir Mustapha <info@techaua.com>\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+
+msgid "High Contrast Mode"
+msgstr "وضع التباين العالي"
+
+msgid "Large Text Mode"
+msgstr "وضع النص الكبير"
+
+msgid "Reduced Motion Mode"
+msgstr "وضع الحركة المخفضة"
+
+msgid "Screen Reader Optimized"
+msgstr "مُحسّن لقارئات الشاشة"
+
+msgid "Keyboard Navigation Enabled"
+msgstr "تم تمكين التنقل باللوحة المفاتيح"
+
+msgid "Focus Indicators Enabled"
+msgstr "تم تمكين مؤشرات التركيز"
+
+msgid "Show Captions for Media"
+msgstr "إظهار التسميات التوضيحية للوسائط"
+
+msgid "Audio Volume Level"
+msgstr "مستوى صوت الصوت"
+
+msgid "Preferred Font Size"
+msgstr "حجم الخط المفضل"
+
+msgid "Default volume level for media content (0-100)"
+msgstr "مستوى الصوت الافتراضي لمحتوى الوسائط (0-100)"
+
+msgid "Role"
+msgstr "الدور"
+
+msgid "Basic Information"
+msgstr "المعلومات الأساسية"
+
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Timestamps"
+msgstr "الطوابع الزمنية"
+
+msgid "Progress"
+msgstr "التقدم"
+
+msgid "Student"
+msgstr "الطالب"
+
+msgid "Course"
+msgstr "الدورة"
+
+msgid "Global Template"
+msgstr "القالب العام"
+
+msgid "Start Date"
+msgstr "تاريخ البدء"
+
+msgid "End Date"
+msgstr "تاريخ الانتهاء"
+
+msgid "Report Title"
+msgstr "عنوان التقرير"
+
+msgid "Report Type"
+msgstr "نوع التقرير"
+
+msgid "Widget Type"
+msgstr "نوع عنصر الواجهة"
+
+msgid "Position"
+msgstr "الموضع"
+
+msgid "Is Visible"
+msgstr "مرئي"
+
+msgid "Configuration"
+msgstr "التكوين"
+
+msgid "Assignment Title"
+msgstr "عنوان المهمة"
+
+msgid "Description"
+msgstr "الوصف"
+
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+msgid "Maximum Points"
+msgstr "الحد الأقصى للنقاط"
+
+msgid "Enter a descriptive title for the assignment"
+msgstr "أدخل عنوانًا وصفيًا للمهمة"
+
+msgid "Provide detailed instructions for the assignment"
+msgstr "قدم تعليمات مفصلة للمهمة"
+
+msgid "Set the deadline for the assignment"
+msgstr "حدد الموعد النهائي للمهمة"
+
+msgid "Maximum points that can be earned"
+msgstr "الحد الأقصى للنقاط التي يمكن كسبها"
+
+msgid "Certificate Title"
+msgstr "عنوان الشهادة"
+
+msgid "Background Image"
+msgstr "صورة الخلفية"
+
+msgid "Font Size"
+msgstr "حجم الخط"
+
+msgid "Text Color"
+msgstr "لون النص"
+
+msgid "Active"
+msgstr "نشط"
+
+msgid "The description that appears on the certificate"
+msgstr "الوصف الذي يظهر على الشهادة"
+
+msgid "Optional background image for the certificate"
+msgstr "صورة خلفية اختيارية للشهادة"
+
+msgid "Font size for the certificate text"
+msgstr "حجم الخط لنص الشهادة"
+
+msgid "Color of the text on the certificate"
+msgstr "لون نص الشهادة"
+
+msgid "Course Title"
+msgstr "عنوان الدورة"
+
+msgid "Category"
+msgstr "الفئة"
+
+msgid "Thumbnail"
+msgstr "الصورة المصغرة"
+
+msgid "Enter a descriptive title for your course"
+msgstr "أدخل عنوانًا وصفيًا لدورتك"
+
+msgid "Provide a detailed description of the course content"
+msgstr "قدم وصفًا مفصلًا لمحتوى الدورة"
+
+msgid "Upload an image that represents your course"
+msgstr "قم بتحميل صورة تمثل دورتك"
+
+msgid "Module Title"
+msgstr "عنوان الوحدة"
+
+msgid "Enter a title for this module"
+msgstr "أدخل عنوانًا لهذه الوحدة"
+
+msgid "Provide a brief description of the module content"
+msgstr "قدم وصفًا مختصرًا لمحتوى الوحدة"
+
+msgid "Position of this module in the course sequence"
+msgstr "موضع هذه الوحدة في تسلسل الدورة"
+
+msgid "Lesson Title"
+msgstr "عنوان الدرس"
+
+msgid "Content Type"
+msgstr "نوع المحتوى"
+
+msgid "Content"
+msgstr "المحتوى"
+
+msgid "Video URL"
+msgstr "رابط الفيديو"
+
+msgid "File Upload"
+msgstr "تحميل الملف"
+
+msgid "Enter a title for this lesson"
+msgstr "أدخل عنوانًا لهذا الدرس"
+
+msgid "Select the type of content for this lesson"
+msgstr "حدد نوع المحتوى لهذا الدرس"
+
+msgid "Enter the text content for this lesson"
+msgstr "أدخل محتوى النص لهذا الدرس"
+
+msgid "Enter a URL to a video (YouTube, Vimeo, etc.)"
+msgstr "أدخل رابطًا لفيديو (YouTube، Vimeo، إلخ.)"
+
+msgid "Upload a file (PDF, document, etc.)"
+msgstr "قم بتحميل ملف (PDF، مستند، إلخ.)"
+
+msgid "Position of this lesson in the module sequence"
+msgstr "موضع هذا الدرس في تسلسل الوحدة"
+
+msgid "Instructor"
+msgstr "المعلم"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
+
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "مطلوب. 150 حرفًا أو أقل. الحروف والأرقام و@/./+/-/_ فقط."
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "Password Confirmation"
+msgstr "تأكيد كلمة المرور"
+
+msgid "Admin"
+msgstr "المشرف"
+
+msgid "Categories"
+msgstr "الفئات"
+
+msgid "Text Content"
+msgstr "محتوى النص"
+
+msgid "Video"
+msgstr "الفيديو"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Quiz"
+msgstr "الاختبار"
+
+msgid "Assignment"
+msgstr "المهمة"
+
+msgid "Time limit in minutes"
+msgstr "الحد الأقصى للوقت بالدقائق"
+
+msgid "Maximum number of attempts allowed"
+msgstr "الحد الأقصى لعدد المحاولات المسموح بها"
+
+msgid "Minimum score percentage to pass"
+msgstr "النسبة المئوية الدنيا للدرجة للنجاح"
+
+msgid "Multiple Choice"
+msgstr "اختيار متعدد"
+
+msgid "True/False"
+msgstr "صحيح/خاطئ"
+
+msgid "Short Answer"
+msgstr "إجابة قصيرة"
+
+msgid "Time taken in seconds"
+msgstr "الوقت المستغرق بالثواني"
+
+msgid "Exam"
+msgstr "الامتحان"
+
+msgid "Course Forum"
+msgstr "منتدى الدورة"
+
+msgid "Certificate of Completion"
+msgstr "شهادة الإتمام"
+
+msgid "This is to certify that the student has successfully completed the course."
+msgstr "هذا لتوثيق أن الطالب قد أتم الدورة بنجاح."
+
+msgid "Course Update"
+msgstr "تحديث الدورة"
+
+msgid "Grade Update"
+msgstr "تحديث الدرجة"
+
+msgid "Forum Post"
+msgstr "مشاركة المنتدى"
+
+msgid "Assignment Due"
+msgstr "استحقاق المهمة"
+
+msgid "Certificate Earned"
+msgstr "الشهادة المكتسبة"
+
+msgid "Enrollment"
+msgstr "التسجيل"
+
+msgid "General"
+msgstr "عام"
+
+msgid "Course Enrollment"
+msgstr "تسجيل الدورة"
+
+msgid "Course Completion"
+msgstr "إتمام الدورة"
+
+msgid "Lesson Completion"
+msgstr "إتمام الدرس"
+
+msgid "Quiz Attempt"
+msgstr "محاولة الاختبار"
+
+msgid "Assignment Submission"
+msgstr "تقديم المهمة"
+
+msgid "Forum Activity"
+msgstr "نشاط المنتدى"
+
+msgid "User Engagement"
+msgstr "مشاركة المستخدم"
+
+msgid "Course Performance"
+msgstr "أداء الدورة"
+
+msgid "Student Progress"
+msgstr "تقدم الطالب"
+
+msgid "System Usage"
+msgstr "استخدام النظام"
+
+msgid "Grade Distribution"
+msgstr "توزيع الدرجة"
+
+msgid "Certificate Issuance"
+msgstr "إ issuance الشهادة"
+
+msgid "Enrollment Chart"
+msgstr "مخطط التسجيل"
+
+msgid "Progress Chart"
+msgstr "مخطط التقدم"
+
+msgid "Recent Activities"
+msgstr "الأنشطة الحديثة"
+
+msgid "User Statistics"
+msgstr "إحصائيات المستخدم"
+
+msgid "Course Statistics"
+msgstr "إحصائيات الدورة"
+
+msgid "Default volume level (0-100)"
+msgstr "مستوى الصوت الافتراضي (0-100)"
+
+msgid "Small"
+msgstr "صغير"
+
+msgid "Medium"
+msgstr "متوسط"
+
+msgid "Large"
+msgstr "كبير"
+
+msgid "Extra Large"
+msgstr "كبير جداً"
+
+msgid "Automated Scan"
+msgstr "المسح التلقائي"
+
+msgid "Manual Review"
+msgstr "المراجعة اليدوية"
+
+msgid "User Feedback"
+msgstr "ملاحظات المستخدم"
+
+msgid "Compliance Check"
+msgstr "فحص الامتثال"
+
+msgid "Low"
+msgstr "منخفض"
+
+msgid "High"
+msgstr "مرتفع"
+
+msgid "Critical"
+msgstr "حرج"
+
+msgid "Pending"
+msgstr "معلق"
+
+msgid "Name of the page section"
+msgstr "اسم قسم الصفحة"
+
+msgid "Navigation"
+msgstr "التنقل"
+
+msgid "Form"
+msgstr "النموذج"
+
+msgid "Media"
+msgstr "الوسائط"
+
+msgid "Data Table"
+msgstr "جدول البيانات"
+
+msgid "Chart"
+msgstr "الرسم البياني"
+
+msgid "Other"
+msgstr "أخرى"
+
+msgid "Descriptive text for screen readers"
+msgstr "النص التوصيفي لقارئات الشاشة"
+
+msgid "Navigate to Home"
+msgstr "الانتقال إلى الصفحة الرئيسية"
+
+msgid "Open Menu"
+msgstr "فتح القائمة"
+
+msgid "Focus Search"
+msgstr "البحث"
+
+msgid "Skip to Content"
+msgstr "الانتقال إلى المحتوى"
+
+msgid "Toggle Sidebar"
+msgstr "تبديل الشريط الجانبي"
+
+msgid "Previous Item"
+msgstr "العنصر السابق"
+
+msgid "Next Item"
+msgstr "العنصر التالي"
+
+msgid "Select Item"
+msgstr "تحديد العنصر"
+
+msgid "Close Modal"
+msgstr "إغلاق النافذة"
+
+msgid "Save Changes"
+msgstr "حفظ التغييرات"
+
+msgid "Cancel Action"
+msgstr "إلغاء الإجراء"
+
+msgid "e.g., Ctrl+S, Alt+F, Tab"
+msgstr "مثلاً، Ctrl+S، Alt+F، Tab"
+
+msgid "Available on all pages"
+msgstr "متاح على جميع الصفحات"
+
+msgid "Email Notifications"
+msgstr "إشعارات البريد الإلكتروني"
+
+msgid "In-App Notifications"
+msgstr "إشعارات داخل التطبيق"
+
+msgid "Course Updates"
+msgstr "تحديثات الدورة"
+
+msgid "Grade Updates"
+msgstr "تحديثات الدرجة"
+
+msgid "Forum Posts"
+msgstr "مشاركات المنتدى"
+
+msgid "Assignment Due Dates"
+msgstr "تواريخ استحقاق المهام"
+
+msgid "Quiz Title"
+msgstr "عنوان الاختبار"
+
+msgid "Time Limit (minutes)"
+msgstr "الحد الأقصى للوقت (بالدقائق)"
+
+msgid "Maximum Attempts"
+msgstr "الحد الأقصى للمحاولات"
+
+msgid "Passing Score (%)"
+msgstr "درجة النجاح (%)"
+
+msgid "Enter a descriptive title for the quiz"
+msgstr "أدخل عنوانًا وصفيًا للاختبار"
+
+msgid "Provide a brief description of the quiz"
+msgstr "قدم وصفًا مختصرًا للاختبار"
+
+msgid "Time limit in minutes (leave blank for no limit)"
+msgstr "الحد الأقصى للوقت بالدقائق (اتركه فارغًا لعدم وجود حد)"
+
+msgid "Maximum number of attempts allowed for this quiz"
+msgstr "الحد الأقصى لعدد المحاولات المسموح بها لهذا الاختبار"
+
+msgid "Minimum score percentage required to pass"
+msgstr "النسبة المئوية الدنيا للدرجة المطلوبة للنجاح"
+
+msgid "Question Text"
+msgstr "نص السؤال"
+
+msgid "Question Type"
+msgstr "نوع السؤال"
+
+msgid "Points"
+msgstr "النقاط"
+
+msgid "Enter the question text"
+msgstr "أدخل نص السؤال"
+
+msgid "Select the type of question"
+msgstr "حدد نوع السؤال"
+
+msgid "Points awarded for correct answer"
+msgstr "النقاط الممنوحة للإجابة الصحيحة"
+
+msgid "Position of this question in the quiz"
+msgstr "موضع هذا السؤال في الاختبار"
+
+msgid "Answer Text"
+msgstr "نص الإجابة"
+
+msgid "Is Correct"
+msgstr "صحيح"
+
+msgid "Enter the answer option text"
+msgstr "أدخل نص خيار الإجابة"
+
+msgid "Check this box if this is the correct answer"
+msgstr "حدد هذا المربع إذا كانت هذه هي الإجابة الصحيحة"
+
+msgid "Position of this answer option"
+msgstr "موضع خيار الإجابة هذا"
+
+msgid "Account created successfully! Welcome, %(username)s!"
+msgstr "تم إنشاء الحساب بنجاح! مرحباً، %(username)s!"
+
+msgid "New course created: %(title)s"
+msgstr "تم إنشاء دورة جديدة: %(title)s"
+
+msgid "You have successfully created the course \"%(title)s\"."
+msgstr "لقد قمت بإنشاء الدورة \"%(title)s\" بنجاح."
+
+msgid "New module added: %(title)s"
+msgstr "تمت إضافة وحدة جديدة: %(title)s"
+
+msgid "A new module \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "تمت إضافة وحدة جديدة \"%(title)s\" إلى الدورة \"%(course_title)s\"."
+
+msgid "New lesson added: %(title)s"
+msgstr "تمت إضافة درس جديد: %(title)s"
+
+msgid "A new lesson \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "تمت إضافة درس جديد \"%(title)s\" إلى الدورة \"%(course_title)s\"."
+
+msgid "You have successfully enrolled in %(course_title)s!"
+msgstr "لقد قمت بالتسجيل في %(course_title)s بنجاح!"
+
+msgid "Enrolled in %(course_title)s"
+msgstr "مسجل في %(course_title)s"
+
+msgid "You have successfully enrolled in the course \"%(course_title)s\"."
+msgstr "لقد قمت بالتسجيل في الدورة \"%(course_title)s\" بنجاح."
+
+msgid "New student enrolled: %(username)s"
+msgstr "طالب جديد مسجل: %(username)s"
+
+msgid "%(username)s has enrolled in your course \"%(course_title)s\"."
+msgstr "%(username)s قام بالتسجيل في دورتك \"%(course_title)s\"."
+
+msgid "You are already enrolled in %(course_title)s."
+msgstr "أنت مسجل بالفعل في %(course_title)s."
+
+msgid "You have successfully unenrolled from %(course_title)s."
+msgstr "لقد قمت بإلغاء التسجيل من %(course_title)s بنجاح."
+
+msgid "Unenrolled from %(course_title)s"
+msgstr "تم إلغاء التسجيل من %(course_title)s"
+
+msgid "You have successfully unenrolled from the course \"%(course_title)s\"."
+msgstr "لقد قمت بإلغاء التسجيل من الدورة \"%(course_title)s\" بنجاح."
+
+msgid "You were not enrolled in %(course_title)s."
+msgstr "لم تكن مسجلاً في %(course_title)s."
+
+msgid "You must be enrolled in the course to access this lesson."
+msgstr "يجب أن تكون مسجلاً في الدورة للوصول إلى هذا الدرس."
+
+msgid "You must be enrolled in the course to complete lessons."
+msgstr "يجب أن تكون مسجلاً في الدورة لإكمال الدروس."
+
+msgid "Lesson \"%(title)s\" marked as completed!"
+msgstr "تم وضع علامة على الدرس \"%(title)s\" كمنجز!"
+
+msgid "Lesson completed: %(title)s"
+msgstr "الدرس منجز: %(title)s"
+
+msgid "You have completed the lesson \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "لقد أتممت الدرس \"%(title)s\" في الدورة \"%(course_title)s\"."
+
+msgid "You must be enrolled in the course to modify lesson completion."
+msgstr "يجب أن تكون مسجلاً في الدورة لتعديل إتمام الدرس."
+
+msgid "Lesson \"%(title)s\" marked as incomplete."
+msgstr "تم وضع علامة على الدرس \"%(title)s\" كغير منجز."
+
+msgid "Lesson marked as incomplete: %(title)s"
+msgstr "الدرس معلم كغير منجز: %(title)s"
+
+msgid "You have marked the lesson \"%(title)s\" as incomplete in course \"%(course_title)s\"."
+msgstr "لقد قمت بوضع علامة على الدرس \"%(title)s\" كغير منجز في الدورة \"%(course_title)s\"."
+
+msgid "Quiz \"%(title)s\" created successfully!"
+msgstr "تم إنشاء الاختبار \"%(title)s\" بنجاح!"
+
+msgid "New quiz available: %(title)s"
+msgstr "اختبار جديد متاح: %(title)s"
+
+msgid "A new quiz \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "تمت إضافة اختبار جديد \"%(title)s\" إلى الدورة \"%(course_title)s\"."
+
+msgid "Question updated successfully!"
+msgstr "تم تحديث السؤال بنجاح!"
+
+msgid "You must be enrolled in the course to take this quiz."
+msgstr "يجب أن تكون مسجلاً في الدورة لأخذ هذا الاختبار."
+
+msgid "You have reached the maximum number of attempts for this quiz."
+msgstr "لقد وصلت إلى الحد الأقصى لعدد المحاولات لهذا الاختبار."
+
+msgid "Quiz completed! Score: %(score).1f%% (Passed!)"
+msgstr "اكتمل الاختبار! الدرجة: %(score).1f%% (ناجح!)"
+
+msgid "Quiz passed: %(title)s"
+msgstr "تم اجتياز الاختبار: %(title)s"
+
+msgid "You have passed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "لقد اجتزت الاختبار \"%(title)s\" بدرجة %(score).1f%%."
+
+msgid "Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)"
+msgstr "اكتمل الاختبار! الدرجة: %(score).1f%% (تحتاج %(passing_score)d%% للنجاح)"
+
+msgid "Quiz failed: %(title)s"
+msgstr "فشل الاختبار: %(title)s"
+
+msgid "You have failed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "لقد فشلت في الاختبار \"%(title)s\" بدرجة %(score).1f%%."
+
+msgid "Assignment \"%(title)s\" created successfully!"
+msgstr "تم إنشاء المهمة \"%(title)s\" بنجاح!"
+
+msgid "New assignment: %(title)s"
+msgstr "مهمة جديدة: %(title)s"
+
+msgid "A new assignment \"%(title)s\" has been added to the course \"%(course_title)s\". Due date: %(due_date)s"
+msgstr "تمت إضافة مهمة جديدة \"%(title)s\" إلى الدورة \"%(course_title)s\". الموعد النهائي: %(due_date)s"
+
+msgid "Grade recorded for %(title)s"
+msgstr "تم تسجيل الدرجة لـ %(title)s"
+
+msgid "Your grade for assignment \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "تم تسجيل درجتك للمهمة \"%(title)s\": %(score)d/%(max_points)d"
+
+msgid "Your grade for quiz \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "تم تسجيل درجتك للاختبار \"%(title)s\": %(score)d/%(max_points)d"
+
+msgid "Grade recorded successfully!"
+msgstr "تم تسجيل الدرجة بنجاح!"
+
+msgid "You must be enrolled in the course to access the forum."
+msgstr "يجب أن تكون مسجلاً في الدورة للوصول إلى المنتدى."
+
+msgid "You must be enrolled in the course to create topics."
+msgstr "يجب أن تكون مسجلاً في الدورة لإنشاء المواضيع."
+
+msgid "Topic \"%(title)s\" created successfully!"
+msgstr "تم إنشاء الموضوع \"%(title)s\" بنجاح!"
+
+msgid "New topic created: %(title)s"
+msgstr "تم إنشاء موضوع جديد: %(title)s"
+
+msgid "%(username)s has created a new topic \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s أنشأ موضوعاً جديداً \"%(title)s\" في الدورة \"%(course_title)s\"."
+
+msgid "Please fill in both title and content."
+msgstr "يرجى ملء كل من العنوان والمحتوى."
+
+msgid "You must be enrolled in the course to access this topic."
+msgstr "يجب أن تكون مسجلاً في الدورة للوصول إلى هذا الموضوع."
+
+msgid "You must be enrolled in the course to create posts."
+msgstr "يجب أن تكون مسجلاً في الدورة لإنشاء مشاركات."
+
+msgid "Post created successfully!"
+msgstr "تم إنشاء المشاركة بنجاح!"
+
+msgid "New reply to your topic: %(title)s"
+msgstr "رد جديد على موضوعك: %(title)s"
+
+msgid "%(username)s replied to your topic \"%(title)s\""
+msgstr "%(username)s رد على موضوعك \"%(title)s\""
+
+msgid "New post in %(title)s"
+msgstr "مشاركة جديدة في %(title)s"
+
+msgid "%(username)s made a new post in topic \"%(topic_title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s قام بمشاركة جديدة في الموضوع \"%(topic_title)s\" في الدورة \"%(course_title)s\"."
+
+msgid "Please enter content for your post."
+msgstr "يرجى إدخال محتوى لمشاركتك."
+
+msgid "You don't have permission to access this certificate."
+msgstr "ليس لديك إذن للوصول إلى هذه الشهادة."
+
+msgid "You must complete at least 80% of the course to earn a certificate."
+msgstr "يجب أن تكمل على الأقل 80% من الدورة للحصول على شهادة."
+
+msgid "Certificate generated successfully!"
+msgstr "تم إنشاء الشهادة بنجاح!"
+
+msgid "Certificate earned: %(course_title)s"
+msgstr "الشهادة المكتسبة: %(course_title)s"
+
+msgid "You have earned a certificate for completing the course \"%(course_title)s\"."
+msgstr "لقد حصلت على شهادة لإتمامك الدورة \"%(course_title)s\"."
+
+msgid "for completing the course:"
+msgstr "لإتمام الدورة:"
+
+msgid "Certificate ID: %(id)s"
+msgstr "معرف الشهادة: %(id)s"
+
+msgid "Issued on: %(date)s"
+msgstr "تم الإصدار في: %(date)s"
+
+msgid "Instructor: "
+msgstr "المعلم: "
+
+msgid "Certificate template updated successfully!"
+msgstr "تم تحديث قالب الشهادة بنجاح!"
+
+msgid "You must be enrolled in the course to check certificate eligibility."
+msgstr "يجب أن تكون مسجلاً في الدورة للتحقق من أهلية الشهادة."
+
+msgid "Notification preferences updated successfully!"
+msgstr "تم تحديث تفضيلات الإشعارات بنجاح!"
+
+msgid "All notifications marked as read!"
+msgstr "تم وضع علامة على جميع الإشعارات كمقروءة!"
+
+msgid "Report \"%(title)s\" generated successfully!"
+msgstr "تم إنشاء التقرير \"%(title)s\" بنجاح!"
+
+msgid "Accessibility settings updated successfully!"
+msgstr "تم تحديث إعدادات إمكانية الوصول بنجاح!"
+
+msgid "Missing alt text on 3 images"
+msgstr "نص بديل مفقود على 3 صور"
+
+msgid "Low contrast ratio on 2 elements"
+msgstr "نسبة تباين منخفضة على عنصرين"
+
+msgid "Missing form labels on 1 input"
+msgstr "مسميات نموذج مفقودة على إدخال واحد"
+
+msgid "Keyboard trap detected on modal"
+msgstr "تم اكتشاف مصيدة لوحة مفاتيح على النافذة"
+
+msgid "Accessibility scan completed. Found %(count)d potential issues."
+msgstr "اكتمل مسح إمكانية الوصول. تم العثور على %(count)d مشكلة محتملة."
+
+msgid "Web Content Accessibility Guidelines (WCAG)"
+msgstr "إرشادات إمكانية وصول محتوى الويب (WCAG)"
+
+msgid "Official guidelines for web accessibility"
+msgstr "الإرشادات الرسمية لإمكانية وصول الويب"
+
+msgid "Screen Reader Testing"
+msgstr "اختبار قارئات الشاشة"
+
+msgid "How to test with screen readers"
+msgstr "كيفية الاختبار مع قارئات الشاشة"
+
+msgid "Color Contrast Checker"
+msgstr "متحقق تباين الألوان"
+
+msgid "Tool to check color contrast ratios"
+msgstr "أداة للتحقق من نسب تباين الألوان"
+
+msgid "Keyboard Navigation"
+msgstr "التنقل باللوحة المفاتيح"
+
+msgid "Best practices for keyboard accessibility"
+msgstr "أفضل الممارسات لإمكانية الوصول باللوحة المفاتيح"
+
+msgid "AUA LMS"
+msgstr "نظام إدارة التعلم AUA"
+
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+msgid "Gradebook"
+msgstr "سجل الدرجات"
+
+msgid "Certificates"
+msgstr "الشهادات"
+
+msgid "Analytics"
+msgstr "التحليلات"
+
+msgid "Accessibility"
+msgstr "إمكانية الوصول"
+
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Register"
+msgstr "التسجيل"
+
+msgid "All rights reserved."
+msgstr "جميع الحقوق محفوظة."
+
+msgid "Accessibility Audit Log"
+msgstr "سجل تدقيق إمكانية الوصول"
+
+msgid "Run Accessibility Scan"
+msgstr "تشغيل مسح إمكانية الوصول"
+
+msgid "Type"
+msgstr "النوع"
+
+msgid "Performed By"
+msgstr "تم بواسطة"
+
+msgid "Findings"
+msgstr "النتائج"
+
+msgid "Severity"
+msgstr "الشدة"
+
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "Resolved"
+msgstr "تم الحل"
+
+msgid "Accessibility Resources"
+msgstr "موارد إمكانية الوصول"
+
+msgid "Tools and resources to help improve accessibility."
+msgstr "أدوات وموارد للمساعدة في تحسين إمكانية الوصول."
+
+msgid "Visit Resource"
+msgstr "زيارة المورد"
+
+msgid "Accessibility Testing Tools"
+msgstr "أدوات اختبار إمكانية الوصول"
+
+msgid "Web accessibility evaluation tool"
+msgstr "أداة تقييم إمكانية وصول الويب"
+
+msgid "Accessibility testing engine"
+msgstr "محرك اختبار إمكانية الوصول"
+
+msgid "Performance and accessibility auditing"
+msgstr "تدقيق الأداء وإمكانية الوصول"
+
+msgid "Color blindness simulator"
+msgstr "محاكي عمى الألوان"
+
+msgid "Accessibility Settings"
+msgstr "إعدادات إمكانية الوصول"
+
+msgid "Adjust settings to make the LMS more accessible for your needs."
+msgstr "اضبط الإعدادات لجعل نظام إدارة التعلم أكثر إمكانية للوصول لاحتياجاتك."
+
+msgid "Visual Adjustments"
+msgstr "التعديلات البصرية"
+
+msgid "Motion and Animation"
+msgstr "الحركة والرسوم المتحركة"
+
+msgid "Assistive Technology"
+msgstr "التقنية المساعدة"
+
+msgid "Audio Settings"
+msgstr "إعدادات الصوت"
+
+msgid "Save Settings"
+msgstr "حفظ الإعدادات"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Accessibility Statement"
+msgstr "بيان إمكانية الوصول"
+
+msgid "Learn about our commitment to accessibility and how we support all users."
+msgstr "تعرف على التزامنا بإمكانية الوصول وكيف ندعم جميع المستخدمين."
+
+msgid "Current Status"
+msgstr "الحالة الحالية"
+
+msgid "Our LMS currently meets:"
+msgstr "يلبي نظام إدارة التعلم لدينا حاليًا:"
+
+msgid "WCAG 2.1 Level AA standards"
+msgstr "معايير WCAG 2.1 المستوى AA"
+
+msgid "Section 508 compliance"
+msgstr "الامتثال للقسم 508"
+
+msgid "European accessibility requirements"
+msgstr "متطلبات إمكانية الوصول الأوروبية"
+
+msgid "We regularly update our platform to improve accessibility. Last review: January 2026"
+msgstr "نحن نقوم بتحديث نظامنا بانتظام لتحسين إمكانية الوصول. آخر مراجعة: يناير 2026"
+
+msgid "Admin Dashboard"
+msgstr "لوحة تحكم المشرف"
+
+msgid "Welcome, <strong>%(user.username)s</strong>!"
+msgstr "مرحباً، <strong>%(user.username)s</strong>!"
+
+msgid "Your role: <strong>%(user_role|title)s</strong>"
+msgstr "دورك: <strong>%(user_role|title)s</strong>"
+
+msgid "System Overview"
+msgstr "نظرة عامة على النظام"
+
+msgid "Manage users, courses, and system settings."
+msgstr "إدارة المستخدمين والدورات وإعدادات النظام."
+
+msgid "Access Admin Panel"
+msgstr "الوصول إلى لوحة الإدارة"
+
+msgid "Quick Stats"
+msgstr "إحصائيات سريعة"
+
+msgid "Users: 0 | Courses: 0 | Enrollments: 0"
+msgstr "المستخدمون: 0 | الدورات: 0 | التسجيلات: 0"
+
+msgid "Analytics Dashboard"
+msgstr "لوحة تحليلات"
+
+msgid "View insights and analytics for your courses and students."
+msgstr "عرض الرؤى والتحليلات لدوراتك وطلابك."
+
+msgid "Total Enrollments"
+msgstr "إجمالي التسجيلات"
+
+msgid "Course Completions"
+msgstr "إتمام الدورات"
+
+msgid "Lessons Completed"
+msgstr "الدروس المكتملة"
+
+msgid "Quiz Attempts"
+msgstr "محاولات الاختبار"
+
+msgid "Enrollment Trend (Last 7 Days)"
+msgstr "اتجاه التسجيل (آخر 7 أيام)"
+
+msgid "Quick Actions"
+msgstr "إجراءات سريعة"
+
+msgid "Generate Report"
+msgstr "إنشاء تقرير"
+
+msgid "View Courses"
+msgstr "عرض الدورات"
+
+msgid "Recent Activity"
+msgstr "النشاط الأخير"
+
+msgid "Recent analytics data will appear here."
+msgstr "ستظهر بيانات التحليلات الأخيرة هنا."
+
+msgid "New Enrollments"
+msgstr "تسجيلات جديدة"
+
+msgid "Enrollment Trend"
+msgstr "اتجاه التسجيل"
+
+msgid "Certificate Eligibility"
+msgstr "أهلية الشهادة"
+
+msgid "Certificate Eligibility for %(course.title)s"
+msgstr "أهلية الشهادة لـ %(course.title)s"
+
+msgid "Your Progress"
+msgstr "تقدمك"
+
+msgid "Current Progress:"
+msgstr "التقدم الحالي:"
+
+msgid "Required for Certificate:"
+msgstr "المطلوب للشهادة:"
+
+msgid "Congratulations! 🎉"
+msgstr "تهانينا! 🎉"
+
+msgid "You are eligible for a certificate. You can generate it now."
+msgstr "أنت مؤهل للحصول على شهادة. يمكنك إنشاؤها الآن."
+
+msgid "Generate Certificate"
+msgstr "إنشاء شهادة"
+
+msgid "Keep Going! 📚"
+msgstr "استمر! 📚"
+
+msgid "You need %(80|add:-progress)s%% more progress to earn a certificate."
+msgstr "تحتاج إلى %(80|add:-progress)s%% تقدم إضافي للحصول على شهادة."
+
+msgid "Continue Learning"
+msgstr "واصل التعلم"
+
+msgid "Analytics for %(course.title)s"
+msgstr "التحليلات لـ %(course.title)s"
+
+msgid "View detailed analytics for this course."
+msgstr "عرض التحليلات التفصيلية لهذه الدورة."
+
+msgid "Completions"
+msgstr "الإكمالات"
+
+msgid "Completion Rate"
+msgstr "معدل الإكمال"
+
+msgid "Completed Lessons"
+msgstr "الدروس المكتملة"
+
+msgid "Lesson Completion Rates"
+msgstr "معدلات إكمال الدروس"
+
+msgid "Module"
+msgstr "الوحدة"
+
+msgid "Lesson"
+msgstr "الدرس"
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "Courses"
+msgstr "الدورات"
+
+msgid "Instructor:"
+msgstr "المعلم:"
+
+msgid "Category:"
+msgstr "الفئة:"
+
+msgid "Uncategorized"
+msgstr "غير مصنف"
+
+msgid "Created:"
+msgstr "تم الإنشاء:"
+
+msgid "Unenroll"
+msgstr "إلغاء التسجيل"
+
+msgid "You are enrolled in this course!"
+msgstr "أنت مسجل في هذه الدورة!"
+
+msgid "Progress:"
+msgstr "التقدم:"
+
+msgid "Enroll in Course"
+msgstr "التسجيل في الدورة"
+
+msgid "Add Module"
+msgstr "إضافة وحدة"
+
+msgid "Edit Course"
+msgstr "تعديل الدورة"
+
+msgid "View Dashboard"
+msgstr "عرض لوحة التحكم"
+
+msgid "Login to Enroll"
+msgstr "تسجيل الدخول للتسجيل"
+
+msgid "Register to Enroll"
+msgstr "التسجيل للتسجيل"
+
+msgid "Check Certificate Eligibility"
+msgstr "التحقق من أهلية الشهادة"
+
+msgid "Course Content"
+msgstr "محتوى الدورة"
+
+msgid "Create Quiz"
+msgstr "إنشاء اختبار"
+
+msgid "Take Quiz"
+msgstr "أخذ الاختبار"
+
+msgid "No lessons in this module yet."
+msgstr "لا توجد دروس في هذه الوحدة بعد."
+
+msgid "Add Lesson"
+msgstr "إضافة درس"
+
+msgid "Forum"
+msgstr "المنتدى"
+
+msgid "Create Topic"
+msgstr "إنشاء موضوع"
+
+msgid "Topic"
+msgstr "الموضوع"
+
+msgid "Author"
+msgstr "المؤلف"
+
+msgid "Replies"
+msgstr "الردود"
+
+msgid "Last Post"
+msgstr "آخر مشاركة"
+
+msgid "Pinned"
+msgstr "مثبت"
+
+msgid "Closed"
+msgstr "مغلق"
+
+msgid "by"
+msgstr "بواسطة"
+
+msgid "No posts yet"
+msgstr "لا توجد مشاركات بعد"
+
+msgid "No topics have been created yet. Be the first to start a discussion!"
+msgstr "لم يتم إنشاء أي مواضيع بعد. كن أول من يبدأ نقاشًا!"
+
+msgid "Available Courses"
+msgstr "الدورات المتاحة"
+
+msgid "Browse our collection of courses."
+msgstr "تصفح مجموعة دوراتنا."
+
+msgid "Search courses..."
+msgstr "البحث في الدورات..."
+
+msgid "All Categories"
+msgstr "جميع الفئات"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "No Thumbnail"
+msgstr "لا توجد صورة مصغرة"
+
+msgid "View Course"
+msgstr "عرض الدورة"
+
+msgid "Course pagination"
+msgstr "ترقيم صفحات الدورة"
+
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "No courses found. Try adjusting your search criteria."
+msgstr "لم يتم العثور على دورات. حاول تعديل معايير البحث الخاصة بك."
+
+msgid "Create Course"
+msgstr "إنشاء دورة"
+
+msgid "Create New Course"
+msgstr "إنشاء دورة جديدة"
+
+msgid "Create Lesson"
+msgstr "إنشاء درس"
+
+msgid "Create Lesson for: %(module.title)s"
+msgstr "إنشاء درس لـ: %(module.title)s"
+
+msgid "Create Module"
+msgstr "إنشاء وحدة"
+
+msgid "Create Module for: %(course.title)s"
+msgstr "إنشاء وحدة لـ: %(course.title)s"
+
+msgid "Create Quiz for: %(lesson.title)s"
+msgstr "إنشاء اختبار لـ: %(lesson.title)s"
+
+msgid "Passing Score (%%)"
+msgstr "درجة النجاح (%%)"
+
+msgid "Create custom reports for your courses and students."
+msgstr "إنشاء تقارير مخصصة لدوراتك وطلابك."
+
+msgid "Welcome to AUA Learning Management System"
+msgstr "مرحباً بك في نظام إدارة التعلم AUA"
+
+msgid "Enhance your learning experience with our comprehensive platform."
+msgstr "قم بتحسين تجربة التعلم الخاصة بك مع نظامنا الشامل."
+
+msgid "Go to Dashboard"
+msgstr "الانتقال إلى لوحة التحكم"
+
+msgid "Featured Courses"
+msgstr "الدورات المميزة"
+
+msgid "View All Courses"
+msgstr "عرض جميع الدورات"
+
+msgid "Certificates for %(course.title)s"
+msgstr "الشهادات لـ %(course.title)s"
+
+msgid "Manage certificates for students in this course."
+msgstr "إدارة الشهادات للطلاب في هذه الدورة."
+
+msgid "Manage Certificate Template"
+msgstr "إدارة قالب الشهادة"
+
+msgid "Certificate ID"
+msgstr "معرف الشهادة"
+
+msgid "Issued Date"
+msgstr "تاريخ الإصدار"
+
+msgid "Actions"
+msgstr "الإجراءات"
+
+msgid "View/Download"
+msgstr "عرض/تنزيل"
+
+msgid "No certificates have been issued for this course yet."
+msgstr "لم يتم إصدار أي شهادات لهذه الدورة بعد."
+
+msgid "Instructor Dashboard"
+msgstr "لوحة تحكم المعلم"
+
+msgid "Your Courses"
+msgstr "دوراتك"
+
+msgid "Modules:"
+msgstr "الوحدات:"
+
+msgid "View"
+msgstr "عرض"
+
+msgid "You haven't created any courses yet."
+msgstr "لم تقم بإنشاء أي دورات بعد."
+
+msgid "Create Your First Course"
+msgstr "أنشئ دورتك الأولى"
+
+msgid "Statistics"
+msgstr "الإحصائيات"
+
+msgid "Total Courses:"
+msgstr "إجمالي الدورات:"
+
+msgid "Total Modules:"
+msgstr "إجمالي الوحدات:"
+
+msgid "Manage and view grades for your course."
+msgstr "إدارة وعرض الدرجات لدورتك."
+
+msgid "Course Overview"
+msgstr "نظرة عامة على الدورة"
+
+msgid "Total Students:"
+msgstr "إجمالي الطلاب:"
+
+msgid "Assignments:"
+msgstr "المهام:"
+
+msgid "Quizzes:"
+msgstr "الاختبارات:"
+
+msgid "Final"
+msgstr "نهائي"
+
+msgid "Keyboard Shortcuts"
+msgstr "اختصارات لوحة المفاتيح"
+
+msgid "Use these keyboard shortcuts to navigate the LMS efficiently."
+msgstr "استخدم اختصارات لوحة المفاتيح هذه للتنقل في نظام إدارة التعلم بكفاءة."
+
+msgid "Key Combination"
+msgstr "مزيج المفاتيح"
+
+msgid "Action"
+msgstr "الإجراء"
+
+msgid "General Navigation"
+msgstr "التنقل العام"
+
+msgid "Navigate between interactive elements"
+msgstr "التنقل بين العناصر التفاعلية"
+
+msgid "Navigate backwards"
+msgstr "التنقل للخلف"
+
+msgid "Activate links and buttons"
+msgstr "تفعيل الروابط والأزرار"
+
+msgid "Toggle checkboxes and radio buttons"
+msgstr "تبديل خانات الاختيار وأزرار الراديو"
+
+msgid "Close modals and dropdowns"
+msgstr "إغلاق النوافذ المنبثقة والقوائم المنسدلة"
+
+msgid "Module:"
+msgstr "الوحدة:"
+
+msgid "Type:"
+msgstr "النوع:"
+
+msgid "No video content available."
+msgstr "لا يوجد محتوى فيديو متاح."
+
+msgid "Download PDF"
+msgstr "تنزيل PDF"
+
+msgid "No PDF file available."
+msgstr "لا يوجد ملف PDF متاح."
+
+msgid "This is a quiz lesson. Quiz functionality will be implemented in a future step."
+msgstr "هذا درس اختبار. سيتم تنفيذ وظائف الاختبار في خطوة مستقبلية."
+
+msgid "Completed"
+msgstr "مكتمل"
+
+msgid "Mark as Incomplete"
+msgstr "وضع علامة كغير مكتمل"
+
+msgid "Mark as Complete"
+msgstr "وضع علامة كمكتمل"
+
+msgid "Back to Course"
+msgstr "العودة إلى الدورة"
+
+msgid "Manage Certificate Template for %(course.title)s"
+msgstr "إدارة قالب الشهادة لـ %(course.title)s"
+
+msgid "Customize the certificate template for this course."
+msgstr "تخصيص قالب الشهادة لهذه الدورة."
+
+msgid "Current image:"
+msgstr "الصورة الحالية:"
+
+msgid "Current background"
+msgstr "الخلفية الحالية"
+
+msgid "Save Template"
+msgstr "حفظ القالب"
+
+msgid "Notification Preferences"
+msgstr "تفضيلات الإشعارات"
+
+msgid "Customize what notifications you receive."
+msgstr "تخصيص الإشعارات التي تتلقاها."
+
+msgid "Notification Types"
+msgstr "أنواع الإشعارات"
+
+msgid "Notification Categories"
+msgstr "فئات الإشعارات"
+
+msgid "Save Preferences"
+msgstr "حفظ التفضيلات"
+
+msgid "Notifications"
+msgstr "الإشعارات"
+
+msgid "Mark All as Read"
+msgstr "وضع علامة على الكل كمقروء"
+
+msgid "New"
+msgstr "جديد"
+
+msgid "Mark as Read"
+msgstr "وضع علامة كمقروء"
+
+msgid "You have no notifications yet."
+msgstr "ليس لديك إشعارات بعد."
+
+msgid "Analytics for %(student.username)s"
+msgstr "التحليلات لـ %(student.username)s"
+
+msgid "View detailed analytics for this student."
+msgstr "عرض التحليلات التفصيلية لهذا الطالب."
+
+msgid "Total Courses"
+msgstr "إجمالي الدورات"
+
+msgid "Completed Courses"
+msgstr "الدورات المكتملة"
+
+msgid "Average Progress"
+msgstr "متوسط التقدم"
+
+msgid "Course Progress"
+msgstr "تقدم الدورة"
+
+msgid "Total Lessons"
+msgstr "إجمالي الدروس"
+
+msgid "Grades"
+msgstr "الدرجات"
+
+msgid "Score"
+msgstr "الدرجة"
+
+msgid "Max Points"
+msgstr "الحد الأقصى للنقاط"
+
+msgid "Percentage"
+msgstr "النسبة المئوية"
+
+msgid "No grades available for this student."
+msgstr "لا توجد درجات متاحة لهذا الطالب."
+
+msgid "My Certificates"
+msgstr "شهاداتي"
+
+msgid "Download your course completion certificates."
+msgstr "قم بتنزيل شهادات إكمال دوراتك."
+
+msgid "Student:"
+msgstr "الطالب:"
+
+msgid "Certificate ID:"
+msgstr "معرف الشهادة:"
+
+msgid "Issued:"
+msgstr "تم الإصدار:"
+
+msgid "Download Certificate"
+msgstr "تنزيل الشهادة"
+
+msgid "You haven't earned any certificates yet."
+msgstr "لم تحصل على أي شهادات بعد."
+
+msgid "Browse Courses"
+msgstr "تصفح الدورات"
+
+msgid "Student Dashboard"
+msgstr "لوحة تحكم الطالب"
+
+msgid "You are not enrolled in any courses yet."
+msgstr "أنت غير مسجل في أي دورات بعد."
+
+msgid "Courses Enrolled:"
+msgstr "الدورات المسجل فيها:"
+
+msgid "Average Progress:"
+msgstr "متوسط التقدم:"
+
+msgid "No progress data available yet."
+msgstr "لا توجد بيانات تقدم متاحة بعد."
+
+msgid "My Gradebook"
+msgstr "سجل درجاتي"
+
+msgid "View your grades across all enrolled courses."
+msgstr "عرض درجاتك عبر جميع الدورات المسجل فيها."
+
+msgid "Final Grade:"
+msgstr "الدرجة النهائية:"
+
+msgid "Item"
+msgstr "العنصر"
+
+msgid "N/A"
+msgstr "غير متوفر"
+
+msgid "No grades recorded for this course yet."
+msgstr "لم يتم تسجيل أي درجات لهذه الدورة بعد."
+
+msgid "You are not enrolled in any courses or have no grades yet."
+msgstr "أنت غير مسجل في أي دورات أو ليس لديك درجات بعد."
+
+msgid "Started by <strong>%(topic.author.username)s</strong> on %(topic.created_at|date:\"M d, Y H:i\")s"
+msgstr "بدأه <strong>%(topic.author.username)s</strong> في %(topic.created_at|date:\"M d, Y H:i\")s"
+
+msgid "(edited)"
+msgstr "(تم التعديل)"
+
+msgid "No posts yet. Be the first to reply!"
+msgstr "لا توجد مشاركات بعد. كن أول من يرد!"
+
+msgid "Reply to Topic"
+msgstr "الرد على الموضوع"
+
+msgid "Write your reply here..."
+msgstr "اكتب ردك هنا..."
+
+msgid "Post Reply"
+msgstr "نشر الرد"
+
+msgid "This topic is closed. No new replies are allowed."
+msgstr "هذا الموضوع مغلق. لا يسمح بردود جديدة."

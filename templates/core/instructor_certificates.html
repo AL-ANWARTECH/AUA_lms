@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Certificates - {{ course.title }} - AUA LMS{% endblock %}
+{% block title %}{% trans "Certificates" %} - {{ course.title }} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Certificates for {{ course.title }}</h2>
-        <p>Manage certificates for students in this course.</p>
+        <h2>{% blocktrans %}Certificates for {{ course.title }}{% endblocktrans %}</h2>
+        <p>{% trans "Manage certificates for students in this course." %}</p>
         
         <a href="{% url 'manage_certificate_template' course.pk %}" class="btn btn-primary mb-3">
-            Manage Certificate Template
+            {% trans "Manage Certificate Template" %}
         </a>
         
         {% if certificates %}
@@ -17,11 +18,11 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Certificate ID</th>
-                            <th>Issued Date</th>
-                            <th>Progress</th>
-                            <th>Actions</th>
+                            <th>{% trans "Student" %}</th>
+                            <th>{% trans "Certificate ID" %}</th>
+                            <th>{% trans "Issued Date" %}</th>
+                            <th>{% trans "Progress" %}</th>
+                            <th>{% trans "Actions" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +34,7 @@
                                 <td>{{ cert.enrollment.progress_percentage }}%</td>
                                 <td>
                                     <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-sm btn-outline-primary" target="_blank">
-                                        View/Download
+                                        {% trans "View/Download" %}
                                     </a>
                                 </td>
                             </tr>
@@ -42,7 +43,7 @@
                 </table>
             </div>
         {% else %}
-            <p class="text-muted">No certificates have been issued for this course yet.</p>
+            <p class="text-muted">{% trans "No certificates have been issued for this course yet." %}</p>
         {% endif %}
     </div>
 </div>

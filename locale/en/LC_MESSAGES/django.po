@@ -1,0 +1,1509 @@
+# English translations for AUA LMS.
+# Copyright (C) 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 17:31+0100\n"
+"PO-Revision-Date: 2026-01-02 17:31+0100\n"
+"Last-Translator: Anwar Sagir Mustapha <info@techaua.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "High Contrast Mode"
+msgstr "High Contrast Mode"
+
+msgid "Large Text Mode"
+msgstr "Large Text Mode"
+
+msgid "Reduced Motion Mode"
+msgstr "Reduced Motion Mode"
+
+msgid "Screen Reader Optimized"
+msgstr "Screen Reader Optimized"
+
+msgid "Keyboard Navigation Enabled"
+msgstr "Keyboard Navigation Enabled"
+
+msgid "Focus Indicators Enabled"
+msgstr "Focus Indicators Enabled"
+
+msgid "Show Captions for Media"
+msgstr "Show Captions for Media"
+
+msgid "Audio Volume Level"
+msgstr "Audio Volume Level"
+
+msgid "Preferred Font Size"
+msgstr "Preferred Font Size"
+
+msgid "Default volume level for media content (0-100)"
+msgstr "Default volume level for media content (0-100)"
+
+msgid "Role"
+msgstr "Role"
+
+msgid "Basic Information"
+msgstr "Basic Information"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Timestamps"
+msgstr "Timestamps"
+
+msgid "Progress"
+msgstr "Progress"
+
+msgid "Student"
+msgstr "Student"
+
+msgid "Course"
+msgstr "Course"
+
+msgid "Global Template"
+msgstr "Global Template"
+
+msgid "Start Date"
+msgstr "Start Date"
+
+msgid "End Date"
+msgstr "End Date"
+
+msgid "Report Title"
+msgstr "Report Title"
+
+msgid "Report Type"
+msgstr "Report Type"
+
+msgid "Widget Type"
+msgstr "Widget Type"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Is Visible"
+msgstr "Is Visible"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Assignment Title"
+msgstr "Assignment Title"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Due Date"
+msgstr "Due Date"
+
+msgid "Maximum Points"
+msgstr "Maximum Points"
+
+msgid "Enter a descriptive title for the assignment"
+msgstr "Enter a descriptive title for the assignment"
+
+msgid "Provide detailed instructions for the assignment"
+msgstr "Provide detailed instructions for the assignment"
+
+msgid "Set the deadline for the assignment"
+msgstr "Set the deadline for the assignment"
+
+msgid "Maximum points that can be earned"
+msgstr "Maximum points that can be earned"
+
+msgid "Certificate Title"
+msgstr "Certificate Title"
+
+msgid "Background Image"
+msgstr "Background Image"
+
+msgid "Font Size"
+msgstr "Font Size"
+
+msgid "Text Color"
+msgstr "Text Color"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "The description that appears on the certificate"
+msgstr "The description that appears on the certificate"
+
+msgid "Optional background image for the certificate"
+msgstr "Optional background image for the certificate"
+
+msgid "Font size for the certificate text"
+msgstr "Font size for the certificate text"
+
+msgid "Color of the text on the certificate"
+msgstr "Color of the text on the certificate"
+
+msgid "Course Title"
+msgstr "Course Title"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+msgid "Enter a descriptive title for your course"
+msgstr "Enter a descriptive title for your course"
+
+msgid "Provide a detailed description of the course content"
+msgstr "Provide a detailed description of the course content"
+
+msgid "Upload an image that represents your course"
+msgstr "Upload an image that represents your course"
+
+msgid "Module Title"
+msgstr "Module Title"
+
+msgid "Enter a title for this module"
+msgstr "Enter a title for this module"
+
+msgid "Provide a brief description of the module content"
+msgstr "Provide a brief description of the module content"
+
+msgid "Position of this module in the course sequence"
+msgstr "Position of this module in the course sequence"
+
+msgid "Lesson Title"
+msgstr "Lesson Title"
+
+msgid "Content Type"
+msgstr "Content Type"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "Video URL"
+msgstr "Video URL"
+
+msgid "File Upload"
+msgstr "File Upload"
+
+msgid "Enter a title for this lesson"
+msgstr "Enter a title for this lesson"
+
+msgid "Select the type of content for this lesson"
+msgstr "Select the type of content for this lesson"
+
+msgid "Enter the text content for this lesson"
+msgstr "Enter the text content for this lesson"
+
+msgid "Enter a URL to a video (YouTube, Vimeo, etc.)"
+msgstr "Enter a URL to a video (YouTube, Vimeo, etc.)"
+
+msgid "Upload a file (PDF, document, etc.)"
+msgstr "Upload a file (PDF, document, etc.)"
+
+msgid "Position of this lesson in the module sequence"
+msgstr "Position of this lesson in the module sequence"
+
+msgid "Instructor"
+msgstr "Instructor"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Password Confirmation"
+msgstr "Password Confirmation"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Categories"
+msgstr "Categories"
+
+msgid "Text Content"
+msgstr "Text Content"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Quiz"
+msgstr "Quiz"
+
+msgid "Assignment"
+msgstr "Assignment"
+
+msgid "Time limit in minutes"
+msgstr "Time limit in minutes"
+
+msgid "Maximum number of attempts allowed"
+msgstr "Maximum number of attempts allowed"
+
+msgid "Minimum score percentage to pass"
+msgstr "Minimum score percentage to pass"
+
+msgid "Multiple Choice"
+msgstr "Multiple Choice"
+
+msgid "True/False"
+msgstr "True/False"
+
+msgid "Short Answer"
+msgstr "Short Answer"
+
+msgid "Time taken in seconds"
+msgstr "Time taken in seconds"
+
+msgid "Exam"
+msgstr "Exam"
+
+msgid "Course Forum"
+msgstr "Course Forum"
+
+msgid "Certificate of Completion"
+msgstr "Certificate of Completion"
+
+msgid "This is to certify that the student has successfully completed the course."
+msgstr "This is to certify that the student has successfully completed the course."
+
+msgid "Course Update"
+msgstr "Course Update"
+
+msgid "Grade Update"
+msgstr "Grade Update"
+
+msgid "Forum Post"
+msgstr "Forum Post"
+
+msgid "Assignment Due"
+msgstr "Assignment Due"
+
+msgid "Certificate Earned"
+msgstr "Certificate Earned"
+
+msgid "Enrollment"
+msgstr "Enrollment"
+
+msgid "General"
+msgstr "General"
+
+msgid "Course Enrollment"
+msgstr "Course Enrollment"
+
+msgid "Course Completion"
+msgstr "Course Completion"
+
+msgid "Lesson Completion"
+msgstr "Lesson Completion"
+
+msgid "Quiz Attempt"
+msgstr "Quiz Attempt"
+
+msgid "Assignment Submission"
+msgstr "Assignment Submission"
+
+msgid "Forum Activity"
+msgstr "Forum Activity"
+
+msgid "User Engagement"
+msgstr "User Engagement"
+
+msgid "Course Performance"
+msgstr "Course Performance"
+
+msgid "Student Progress"
+msgstr "Student Progress"
+
+msgid "System Usage"
+msgstr "System Usage"
+
+msgid "Grade Distribution"
+msgstr "Grade Distribution"
+
+msgid "Certificate Issuance"
+msgstr "Certificate Issuance"
+
+msgid "Enrollment Chart"
+msgstr "Enrollment Chart"
+
+msgid "Progress Chart"
+msgstr "Progress Chart"
+
+msgid "Recent Activities"
+msgstr "Recent Activities"
+
+msgid "User Statistics"
+msgstr "User Statistics"
+
+msgid "Course Statistics"
+msgstr "Course Statistics"
+
+msgid "Default volume level (0-100)"
+msgstr "Default volume level (0-100)"
+
+msgid "Small"
+msgstr "Small"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Large"
+msgstr "Large"
+
+msgid "Extra Large"
+msgstr "Extra Large"
+
+msgid "Automated Scan"
+msgstr "Automated Scan"
+
+msgid "Manual Review"
+msgstr "Manual Review"
+
+msgid "User Feedback"
+msgstr "User Feedback"
+
+msgid "Compliance Check"
+msgstr "Compliance Check"
+
+msgid "Low"
+msgstr "Low"
+
+msgid "High"
+msgstr "High"
+
+msgid "Critical"
+msgstr "Critical"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Name of the page section"
+msgstr "Name of the page section"
+
+msgid "Navigation"
+msgstr "Navigation"
+
+msgid "Form"
+msgstr "Form"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Data Table"
+msgstr "Data Table"
+
+msgid "Chart"
+msgstr "Chart"
+
+msgid "Other"
+msgstr "Other"
+
+msgid "Descriptive text for screen readers"
+msgstr "Descriptive text for screen readers"
+
+msgid "Navigate to Home"
+msgstr "Navigate to Home"
+
+msgid "Open Menu"
+msgstr "Open Menu"
+
+msgid "Focus Search"
+msgstr "Focus Search"
+
+msgid "Skip to Content"
+msgstr "Skip to Content"
+
+msgid "Toggle Sidebar"
+msgstr "Toggle Sidebar"
+
+msgid "Previous Item"
+msgstr "Previous Item"
+
+msgid "Next Item"
+msgstr "Next Item"
+
+msgid "Select Item"
+msgstr "Select Item"
+
+msgid "Close Modal"
+msgstr "Close Modal"
+
+msgid "Save Changes"
+msgstr "Save Changes"
+
+msgid "Cancel Action"
+msgstr "Cancel Action"
+
+msgid "e.g., Ctrl+S, Alt+F, Tab"
+msgstr "e.g., Ctrl+S, Alt+F, Tab"
+
+msgid "Available on all pages"
+msgstr "Available on all pages"
+
+msgid "Email Notifications"
+msgstr "Email Notifications"
+
+msgid "In-App Notifications"
+msgstr "In-App Notifications"
+
+msgid "Course Updates"
+msgstr "Course Updates"
+
+msgid "Grade Updates"
+msgstr "Grade Updates"
+
+msgid "Forum Posts"
+msgstr "Forum Posts"
+
+msgid "Assignment Due Dates"
+msgstr "Assignment Due Dates"
+
+msgid "Quiz Title"
+msgstr "Quiz Title"
+
+msgid "Time Limit (minutes)"
+msgstr "Time Limit (minutes)"
+
+msgid "Maximum Attempts"
+msgstr "Maximum Attempts"
+
+msgid "Passing Score (%)"
+msgstr "Passing Score (%)"
+
+msgid "Enter a descriptive title for the quiz"
+msgstr "Enter a descriptive title for the quiz"
+
+msgid "Provide a brief description of the quiz"
+msgstr "Provide a brief description of the quiz"
+
+msgid "Time limit in minutes (leave blank for no limit)"
+msgstr "Time limit in minutes (leave blank for no limit)"
+
+msgid "Maximum number of attempts allowed for this quiz"
+msgstr "Maximum number of attempts allowed for this quiz"
+
+msgid "Minimum score percentage required to pass"
+msgstr "Minimum score percentage required to pass"
+
+msgid "Question Text"
+msgstr "Question Text"
+
+msgid "Question Type"
+msgstr "Question Type"
+
+msgid "Points"
+msgstr "Points"
+
+msgid "Enter the question text"
+msgstr "Enter the question text"
+
+msgid "Select the type of question"
+msgstr "Select the type of question"
+
+msgid "Points awarded for correct answer"
+msgstr "Points awarded for correct answer"
+
+msgid "Position of this question in the quiz"
+msgstr "Position of this question in the quiz"
+
+msgid "Answer Text"
+msgstr "Answer Text"
+
+msgid "Is Correct"
+msgstr "Is Correct"
+
+msgid "Enter the answer option text"
+msgstr "Enter the answer option text"
+
+msgid "Check this box if this is the correct answer"
+msgstr "Check this box if this is the correct answer"
+
+msgid "Position of this answer option"
+msgstr "Position of this answer option"
+
+msgid "Account created successfully! Welcome, %(username)s!"
+msgstr "Account created successfully! Welcome, %(username)s!"
+
+msgid "New course created: %(title)s"
+msgstr "New course created: %(title)s"
+
+msgid "You have successfully created the course \"%(title)s\"."
+msgstr "You have successfully created the course \"%(title)s\"."
+
+msgid "New module added: %(title)s"
+msgstr "New module added: %(title)s"
+
+msgid "A new module \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "A new module \"%(title)s\" has been added to the course \"%(course_title)s\"."
+
+msgid "New lesson added: %(title)s"
+msgstr "New lesson added: %(title)s"
+
+msgid "A new lesson \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "A new lesson \"%(title)s\" has been added to the course \"%(course_title)s\"."
+
+msgid "You have successfully enrolled in %(course_title)s!"
+msgstr "You have successfully enrolled in %(course_title)s!"
+
+msgid "Enrolled in %(course_title)s"
+msgstr "Enrolled in %(course_title)s"
+
+msgid "You have successfully enrolled in the course \"%(course_title)s\"."
+msgstr "You have successfully enrolled in the course \"%(course_title)s\"."
+
+msgid "New student enrolled: %(username)s"
+msgstr "New student enrolled: %(username)s"
+
+msgid "%(username)s has enrolled in your course \"%(course_title)s\"."
+msgstr "%(username)s has enrolled in your course \"%(course_title)s\"."
+
+msgid "You are already enrolled in %(course_title)s."
+msgstr "You are already enrolled in %(course_title)s."
+
+msgid "You have successfully unenrolled from %(course_title)s."
+msgstr "You have successfully unenrolled from %(course_title)s."
+
+msgid "Unenrolled from %(course_title)s"
+msgstr "Unenrolled from %(course_title)s"
+
+msgid "You have successfully unenrolled from the course \"%(course_title)s\"."
+msgstr "You have successfully unenrolled from the course \"%(course_title)s\"."
+
+msgid "You were not enrolled in %(course_title)s."
+msgstr "You were not enrolled in %(course_title)s."
+
+msgid "You must be enrolled in the course to access this lesson."
+msgstr "You must be enrolled in the course to access this lesson."
+
+msgid "You must be enrolled in the course to complete lessons."
+msgstr "You must be enrolled in the course to complete lessons."
+
+msgid "Lesson \"%(title)s\" marked as completed!"
+msgstr "Lesson \"%(title)s\" marked as completed!"
+
+msgid "Lesson completed: %(title)s"
+msgstr "Lesson completed: %(title)s"
+
+msgid "You have completed the lesson \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "You have completed the lesson \"%(title)s\" in course \"%(course_title)s\"."
+
+msgid "You must be enrolled in the course to modify lesson completion."
+msgstr "You must be enrolled in the course to modify lesson completion."
+
+msgid "Lesson \"%(title)s\" marked as incomplete."
+msgstr "Lesson \"%(title)s\" marked as incomplete."
+
+msgid "Lesson marked as incomplete: %(title)s"
+msgstr "Lesson marked as incomplete: %(title)s"
+
+msgid "You have marked the lesson \"%(title)s\" as incomplete in course \"%(course_title)s\"."
+msgstr "You have marked the lesson \"%(title)s\" as incomplete in course \"%(course_title)s\"."
+
+msgid "Quiz \"%(title)s\" created successfully!"
+msgstr "Quiz \"%(title)s\" created successfully!"
+
+msgid "New quiz available: %(title)s"
+msgstr "New quiz available: %(title)s"
+
+msgid "A new quiz \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "A new quiz \"%(title)s\" has been added to the course \"%(course_title)s\"."
+
+msgid "Question updated successfully!"
+msgstr "Question updated successfully!"
+
+msgid "You must be enrolled in the course to take this quiz."
+msgstr "You must be enrolled in the course to take this quiz."
+
+msgid "You have reached the maximum number of attempts for this quiz."
+msgstr "You have reached the maximum number of attempts for this quiz."
+
+msgid "Quiz completed! Score: %(score).1f%% (Passed!)"
+msgstr "Quiz completed! Score: %(score).1f%% (Passed!)"
+
+msgid "Quiz passed: %(title)s"
+msgstr "Quiz passed: %(title)s"
+
+msgid "You have passed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "You have passed the quiz \"%(title)s\" with a score of %(score).1f%%."
+
+msgid "Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)"
+msgstr "Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)"
+
+msgid "Quiz failed: %(title)s"
+msgstr "Quiz failed: %(title)s"
+
+msgid "You have failed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "You have failed the quiz \"%(title)s\" with a score of %(score).1f%%."
+
+msgid "Assignment \"%(title)s\" created successfully!"
+msgstr "Assignment \"%(title)s\" created successfully!"
+
+msgid "New assignment: %(title)s"
+msgstr "New assignment: %(title)s"
+
+msgid "A new assignment \"%(title)s\" has been added to the course \"%(course_title)s\". Due date: %(due_date)s"
+msgstr "A new assignment \"%(title)s\" has been added to the course \"%(course_title)s\". Due date: %(due_date)s"
+
+msgid "Grade recorded for %(title)s"
+msgstr "Grade recorded for %(title)s"
+
+msgid "Your grade for assignment \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Your grade for assignment \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+
+msgid "Your grade for quiz \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Your grade for quiz \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+
+msgid "Grade recorded successfully!"
+msgstr "Grade recorded successfully!"
+
+msgid "You must be enrolled in the course to access the forum."
+msgstr "You must be enrolled in the course to access the forum."
+
+msgid "You must be enrolled in the course to create topics."
+msgstr "You must be enrolled in the course to create topics."
+
+msgid "Topic \"%(title)s\" created successfully!"
+msgstr "Topic \"%(title)s\" created successfully!"
+
+msgid "New topic created: %(title)s"
+msgstr "New topic created: %(title)s"
+
+msgid "%(username)s has created a new topic \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s has created a new topic \"%(title)s\" in course \"%(course_title)s\"."
+
+msgid "Please fill in both title and content."
+msgstr "Please fill in both title and content."
+
+msgid "You must be enrolled in the course to access this topic."
+msgstr "You must be enrolled in the course to access this topic."
+
+msgid "You must be enrolled in the course to create posts."
+msgstr "You must be enrolled in the course to create posts."
+
+msgid "Post created successfully!"
+msgstr "Post created successfully!"
+
+msgid "New reply to your topic: %(title)s"
+msgstr "New reply to your topic: %(title)s"
+
+msgid "%(username)s replied to your topic \"%(title)s\""
+msgstr "%(username)s replied to your topic \"%(title)s\""
+
+msgid "New post in %(title)s"
+msgstr "New post in %(title)s"
+
+msgid "%(username)s made a new post in topic \"%(topic_title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s made a new post in topic \"%(topic_title)s\" in course \"%(course_title)s\"."
+
+msgid "Please enter content for your post."
+msgstr "Please enter content for your post."
+
+msgid "You don't have permission to access this certificate."
+msgstr "You don't have permission to access this certificate."
+
+msgid "You must complete at least 80% of the course to earn a certificate."
+msgstr "You must complete at least 80% of the course to earn a certificate."
+
+msgid "Certificate generated successfully!"
+msgstr "Certificate generated successfully!"
+
+msgid "Certificate earned: %(course_title)s"
+msgstr "Certificate earned: %(course_title)s"
+
+msgid "You have earned a certificate for completing the course \"%(course_title)s\"."
+msgstr "You have earned a certificate for completing the course \"%(course_title)s\"."
+
+msgid "for completing the course:"
+msgstr "for completing the course:"
+
+msgid "Certificate ID: %(id)s"
+msgstr "Certificate ID: %(id)s"
+
+msgid "Issued on: %(date)s"
+msgstr "Issued on: %(date)s"
+
+msgid "Instructor: "
+msgstr "Instructor: "
+
+msgid "Certificate template updated successfully!"
+msgstr "Certificate template updated successfully!"
+
+msgid "You must be enrolled in the course to check certificate eligibility."
+msgstr "You must be enrolled in the course to check certificate eligibility."
+
+msgid "Notification preferences updated successfully!"
+msgstr "Notification preferences updated successfully!"
+
+msgid "All notifications marked as read!"
+msgstr "All notifications marked as read!"
+
+msgid "Report \"%(title)s\" generated successfully!"
+msgstr "Report \"%(title)s\" generated successfully!"
+
+msgid "Accessibility settings updated successfully!"
+msgstr "Accessibility settings updated successfully!"
+
+msgid "Missing alt text on 3 images"
+msgstr "Missing alt text on 3 images"
+
+msgid "Low contrast ratio on 2 elements"
+msgstr "Low contrast ratio on 2 elements"
+
+msgid "Missing form labels on 1 input"
+msgstr "Missing form labels on 1 input"
+
+msgid "Keyboard trap detected on modal"
+msgstr "Keyboard trap detected on modal"
+
+msgid "Accessibility scan completed. Found %(count)d potential issues."
+msgstr "Accessibility scan completed. Found %(count)d potential issues."
+
+msgid "Web Content Accessibility Guidelines (WCAG)"
+msgstr "Web Content Accessibility Guidelines (WCAG)"
+
+msgid "Official guidelines for web accessibility"
+msgstr "Official guidelines for web accessibility"
+
+msgid "Screen Reader Testing"
+msgstr "Screen Reader Testing"
+
+msgid "How to test with screen readers"
+msgstr "How to test with screen readers"
+
+msgid "Color Contrast Checker"
+msgstr "Color Contrast Checker"
+
+msgid "Tool to check color contrast ratios"
+msgstr "Tool to check color contrast ratios"
+
+msgid "Keyboard Navigation"
+msgstr "Keyboard Navigation"
+
+msgid "Best practices for keyboard accessibility"
+msgstr "Best practices for keyboard accessibility"
+
+msgid "AUA LMS"
+msgstr "AUA LMS"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Gradebook"
+msgstr "Gradebook"
+
+msgid "Certificates"
+msgstr "Certificates"
+
+msgid "Analytics"
+msgstr "Analytics"
+
+msgid "Accessibility"
+msgstr "Accessibility"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+msgid "Accessibility Audit Log"
+msgstr "Accessibility Audit Log"
+
+msgid "Run Accessibility Scan"
+msgstr "Run Accessibility Scan"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Performed By"
+msgstr "Performed By"
+
+msgid "Findings"
+msgstr "Findings"
+
+msgid "Severity"
+msgstr "Severity"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Resolved"
+msgstr "Resolved"
+
+msgid "Accessibility Resources"
+msgstr "Accessibility Resources"
+
+msgid "Tools and resources to help improve accessibility."
+msgstr "Tools and resources to help improve accessibility."
+
+msgid "Visit Resource"
+msgstr "Visit Resource"
+
+msgid "Accessibility Testing Tools"
+msgstr "Accessibility Testing Tools"
+
+msgid "Web accessibility evaluation tool"
+msgstr "Web accessibility evaluation tool"
+
+msgid "Accessibility testing engine"
+msgstr "Accessibility testing engine"
+
+msgid "Performance and accessibility auditing"
+msgstr "Performance and accessibility auditing"
+
+msgid "Color blindness simulator"
+msgstr "Color blindness simulator"
+
+msgid "Accessibility Settings"
+msgstr "Accessibility Settings"
+
+msgid "Adjust settings to make the LMS more accessible for your needs."
+msgstr "Adjust settings to make the LMS more accessible for your needs."
+
+msgid "Visual Adjustments"
+msgstr "Visual Adjustments"
+
+msgid "Motion and Animation"
+msgstr "Motion and Animation"
+
+msgid "Assistive Technology"
+msgstr "Assistive Technology"
+
+msgid "Audio Settings"
+msgstr "Audio Settings"
+
+msgid "Save Settings"
+msgstr "Save Settings"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Accessibility Statement"
+msgstr "Accessibility Statement"
+
+msgid "Learn about our commitment to accessibility and how we support all users."
+msgstr "Learn about our commitment to accessibility and how we support all users."
+
+msgid "Current Status"
+msgstr "Current Status"
+
+msgid "Our LMS currently meets:"
+msgstr "Our LMS currently meets:"
+
+msgid "WCAG 2.1 Level AA standards"
+msgstr "WCAG 2.1 Level AA standards"
+
+msgid "Section 508 compliance"
+msgstr "Section 508 compliance"
+
+msgid "European accessibility requirements"
+msgstr "European accessibility requirements"
+
+msgid "We regularly update our platform to improve accessibility. Last review: January 2026"
+msgstr "We regularly update our platform to improve accessibility. Last review: January 2026"
+
+msgid "Admin Dashboard"
+msgstr "Admin Dashboard"
+
+msgid "Welcome, <strong>%(user.username)s</strong>!"
+msgstr "Welcome, <strong>%(user.username)s</strong>!"
+
+msgid "Your role: <strong>%(user_role|title)s</strong>"
+msgstr "Your role: <strong>%(user_role|title)s</strong>"
+
+msgid "System Overview"
+msgstr "System Overview"
+
+msgid "Manage users, courses, and system settings."
+msgstr "Manage users, courses, and system settings."
+
+msgid "Access Admin Panel"
+msgstr "Access Admin Panel"
+
+msgid "Quick Stats"
+msgstr "Quick Stats"
+
+msgid "Users: 0 | Courses: 0 | Enrollments: 0"
+msgstr "Users: 0 | Courses: 0 | Enrollments: 0"
+
+msgid "Analytics Dashboard"
+msgstr "Analytics Dashboard"
+
+msgid "View insights and analytics for your courses and students."
+msgstr "View insights and analytics for your courses and students."
+
+msgid "Total Enrollments"
+msgstr "Total Enrollments"
+
+msgid "Course Completions"
+msgstr "Course Completions"
+
+msgid "Lessons Completed"
+msgstr "Lessons Completed"
+
+msgid "Quiz Attempts"
+msgstr "Quiz Attempts"
+
+msgid "Enrollment Trend (Last 7 Days)"
+msgstr "Enrollment Trend (Last 7 Days)"
+
+msgid "Quick Actions"
+msgstr "Quick Actions"
+
+msgid "Generate Report"
+msgstr "Generate Report"
+
+msgid "View Courses"
+msgstr "View Courses"
+
+msgid "Recent Activity"
+msgstr "Recent Activity"
+
+msgid "Recent analytics data will appear here."
+msgstr "Recent analytics data will appear here."
+
+msgid "New Enrollments"
+msgstr "New Enrollments"
+
+msgid "Enrollment Trend"
+msgstr "Enrollment Trend"
+
+msgid "Certificate Eligibility"
+msgstr "Certificate Eligibility"
+
+msgid "Certificate Eligibility for %(course.title)s"
+msgstr "Certificate Eligibility for %(course.title)s"
+
+msgid "Your Progress"
+msgstr "Your Progress"
+
+msgid "Current Progress:"
+msgstr "Current Progress:"
+
+msgid "Required for Certificate:"
+msgstr "Required for Certificate:"
+
+msgid "Congratulations! 🎉"
+msgstr "Congratulations! 🎉"
+
+msgid "You are eligible for a certificate. You can generate it now."
+msgstr "You are eligible for a certificate. You can generate it now."
+
+msgid "Generate Certificate"
+msgstr "Generate Certificate"
+
+msgid "Keep Going! 📚"
+msgstr "Keep Going! 📚"
+
+msgid "You need %(80|add:-progress)s%% more progress to earn a certificate."
+msgstr "You need %(80|add:-progress)s%% more progress to earn a certificate."
+
+msgid "Continue Learning"
+msgstr "Continue Learning"
+
+msgid "Analytics for %(course.title)s"
+msgstr "Analytics for %(course.title)s"
+
+msgid "View detailed analytics for this course."
+msgstr "View detailed analytics for this course."
+
+msgid "Completions"
+msgstr "Completions"
+
+msgid "Completion Rate"
+msgstr "Completion Rate"
+
+msgid "Completed Lessons"
+msgstr "Completed Lessons"
+
+msgid "Lesson Completion Rates"
+msgstr "Lesson Completion Rates"
+
+msgid "Module"
+msgstr "Module"
+
+msgid "Lesson"
+msgstr "Lesson"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Courses"
+msgstr "Courses"
+
+msgid "Instructor:"
+msgstr "Instructor:"
+
+msgid "Category:"
+msgstr "Category:"
+
+msgid "Uncategorized"
+msgstr "Uncategorized"
+
+msgid "Created:"
+msgstr "Created:"
+
+msgid "Unenroll"
+msgstr "Unenroll"
+
+msgid "You are enrolled in this course!"
+msgstr "You are enrolled in this course!"
+
+msgid "Progress:"
+msgstr "Progress:"
+
+msgid "Enroll in Course"
+msgstr "Enroll in Course"
+
+msgid "Add Module"
+msgstr "Add Module"
+
+msgid "Edit Course"
+msgstr "Edit Course"
+
+msgid "View Dashboard"
+msgstr "View Dashboard"
+
+msgid "Login to Enroll"
+msgstr "Login to Enroll"
+
+msgid "Register to Enroll"
+msgstr "Register to Enroll"
+
+msgid "Check Certificate Eligibility"
+msgstr "Check Certificate Eligibility"
+
+msgid "Course Content"
+msgstr "Course Content"
+
+msgid "Create Quiz"
+msgstr "Create Quiz"
+
+msgid "Take Quiz"
+msgstr "Take Quiz"
+
+msgid "No lessons in this module yet."
+msgstr "No lessons in this module yet."
+
+msgid "Add Lesson"
+msgstr "Add Lesson"
+
+msgid "Forum"
+msgstr "Forum"
+
+msgid "Create Topic"
+msgstr "Create Topic"
+
+msgid "Topic"
+msgstr "Topic"
+
+msgid "Author"
+msgstr "Author"
+
+msgid "Replies"
+msgstr "Replies"
+
+msgid "Last Post"
+msgstr "Last Post"
+
+msgid "Pinned"
+msgstr "Pinned"
+
+msgid "Closed"
+msgstr "Closed"
+
+msgid "by"
+msgstr "by"
+
+msgid "No posts yet"
+msgstr "No posts yet"
+
+msgid "No topics have been created yet. Be the first to start a discussion!"
+msgstr "No topics have been created yet. Be the first to start a discussion!"
+
+msgid "Available Courses"
+msgstr "Available Courses"
+
+msgid "Browse our collection of courses."
+msgstr "Browse our collection of courses."
+
+msgid "Search courses..."
+msgstr "Search courses..."
+
+msgid "All Categories"
+msgstr "All Categories"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "No Thumbnail"
+msgstr "No Thumbnail"
+
+msgid "View Course"
+msgstr "View Course"
+
+msgid "Course pagination"
+msgstr "Course pagination"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "No courses found. Try adjusting your search criteria."
+msgstr "No courses found. Try adjusting your search criteria."
+
+msgid "Create Course"
+msgstr "Create Course"
+
+msgid "Create New Course"
+msgstr "Create New Course"
+
+msgid "Create Lesson"
+msgstr "Create Lesson"
+
+msgid "Create Lesson for: %(module.title)s"
+msgstr "Create Lesson for: %(module.title)s"
+
+msgid "Create Module"
+msgstr "Create Module"
+
+msgid "Create Module for: %(course.title)s"
+msgstr "Create Module for: %(course.title)s"
+
+msgid "Create Quiz for: %(lesson.title)s"
+msgstr "Create Quiz for: %(lesson.title)s"
+
+msgid "Passing Score (%%)"
+msgstr "Passing Score (%%)"
+
+msgid "Create custom reports for your courses and students."
+msgstr "Create custom reports for your courses and students."
+
+msgid "Welcome to AUA Learning Management System"
+msgstr "Welcome to AUA Learning Management System"
+
+msgid "Enhance your learning experience with our comprehensive platform."
+msgstr "Enhance your learning experience with our comprehensive platform."
+
+msgid "Go to Dashboard"
+msgstr "Go to Dashboard"
+
+msgid "Featured Courses"
+msgstr "Featured Courses"
+
+msgid "View All Courses"
+msgstr "View All Courses"
+
+msgid "Certificates for %(course.title)s"
+msgstr "Certificates for %(course.title)s"
+
+msgid "Manage certificates for students in this course."
+msgstr "Manage certificates for students in this course."
+
+msgid "Manage Certificate Template"
+msgstr "Manage Certificate Template"
+
+msgid "Certificate ID"
+msgstr "Certificate ID"
+
+msgid "Issued Date"
+msgstr "Issued Date"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "View/Download"
+msgstr "View/Download"
+
+msgid "No certificates have been issued for this course yet."
+msgstr "No certificates have been issued for this course yet."
+
+msgid "Instructor Dashboard"
+msgstr "Instructor Dashboard"
+
+msgid "Your Courses"
+msgstr "Your Courses"
+
+msgid "Modules:"
+msgstr "Modules:"
+
+msgid "View"
+msgstr "View"
+
+msgid "You haven't created any courses yet."
+msgstr "You haven't created any courses yet."
+
+msgid "Create Your First Course"
+msgstr "Create Your First Course"
+
+msgid "Statistics"
+msgstr "Statistics"
+
+msgid "Total Courses:"
+msgstr "Total Courses:"
+
+msgid "Total Modules:"
+msgstr "Total Modules:"
+
+msgid "Instructor Gradebook"
+msgstr "Instructor Gradebook"
+
+msgid "Manage and view grades for your course."
+msgstr "Manage and view grades for your course."
+
+msgid "Course Overview"
+msgstr "Course Overview"
+
+msgid "Total Students:"
+msgstr "Total Students:"
+
+msgid "Assignments:"
+msgstr "Assignments:"
+
+msgid "Quizzes:"
+msgstr "Quizzes:"
+
+msgid "Final"
+msgstr "Final"
+
+msgid "Keyboard Shortcuts"
+msgstr "Keyboard Shortcuts"
+
+msgid "Use these keyboard shortcuts to navigate the LMS efficiently."
+msgstr "Use these keyboard shortcuts to navigate the LMS efficiently."
+
+msgid "Key Combination"
+msgstr "Key Combination"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "General Navigation"
+msgstr "General Navigation"
+
+msgid "Navigate between interactive elements"
+msgstr "Navigate between interactive elements"
+
+msgid "Navigate backwards"
+msgstr "Navigate backwards"
+
+msgid "Activate links and buttons"
+msgstr "Activate links and buttons"
+
+msgid "Toggle checkboxes and radio buttons"
+msgstr "Toggle checkboxes and radio buttons"
+
+msgid "Close modals and dropdowns"
+msgstr "Close modals and dropdowns"
+
+msgid "Module:"
+msgstr "Module:"
+
+msgid "Type:"
+msgstr "Type:"
+
+msgid "No video content available."
+msgstr "No video content available."
+
+msgid "Download PDF"
+msgstr "Download PDF"
+
+msgid "No PDF file available."
+msgstr "No PDF file available."
+
+msgid "This is a quiz lesson. Quiz functionality will be implemented in a future step."
+msgstr "This is a quiz lesson. Quiz functionality will be implemented in a future step."
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Mark as Incomplete"
+msgstr "Mark as Incomplete"
+
+msgid "Mark as Complete"
+msgstr "Mark as Complete"
+
+msgid "Back to Course"
+msgstr "Back to Course"
+
+msgid "Manage Certificate Template for %(course.title)s"
+msgstr "Manage Certificate Template for %(course.title)s"
+
+msgid "Customize the certificate template for this course."
+msgstr "Customize the certificate template for this course."
+
+msgid "Current image:"
+msgstr "Current image:"
+
+msgid "Current background"
+msgstr "Current background"
+
+msgid "Save Template"
+msgstr "Save Template"
+
+msgid "Notification Preferences"
+msgstr "Notification Preferences"
+
+msgid "Customize what notifications you receive."
+msgstr "Customize what notifications you receive."
+
+msgid "Notification Types"
+msgstr "Notification Types"
+
+msgid "Notification Categories"
+msgstr "Notification Categories"
+
+msgid "Save Preferences"
+msgstr "Save Preferences"
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Mark All as Read"
+msgstr "Mark All as Read"
+
+msgid "New"
+msgstr "New"
+
+msgid "Mark as Read"
+msgstr "Mark as Read"
+
+msgid "You have no notifications yet."
+msgstr "You have no notifications yet."
+
+msgid "Analytics for %(student.username)s"
+msgstr "Analytics for %(student.username)s"
+
+msgid "View detailed analytics for this student."
+msgstr "View detailed analytics for this student."
+
+msgid "Total Courses"
+msgstr "Total Courses"
+
+msgid "Completed Courses"
+msgstr "Completed Courses"
+
+msgid "Average Progress"
+msgstr "Average Progress"
+
+msgid "Course Progress"
+msgstr "Course Progress"
+
+msgid "Total Lessons"
+msgstr "Total Lessons"
+
+msgid "Grades"
+msgstr "Grades"
+
+msgid "Score"
+msgstr "Score"
+
+msgid "Max Points"
+msgstr "Max Points"
+
+msgid "Percentage"
+msgstr "Percentage"
+
+msgid "No grades available for this student."
+msgstr "No grades available for this student."
+
+msgid "My Certificates"
+msgstr "My Certificates"
+
+msgid "Download your course completion certificates."
+msgstr "Download your course completion certificates."
+
+msgid "Student:"
+msgstr "Student:"
+
+msgid "Certificate ID:"
+msgstr "Certificate ID:"
+
+msgid "Issued:"
+msgstr "Issued:"
+
+msgid "Download Certificate"
+msgstr "Download Certificate"
+
+msgid "You haven't earned any certificates yet."
+msgstr "You haven't earned any certificates yet."
+
+msgid "Browse Courses"
+msgstr "Browse Courses"
+
+msgid "Student Dashboard"
+msgstr "Student Dashboard"
+
+msgid "You are not enrolled in any courses yet."
+msgstr "You are not enrolled in any courses yet."
+
+msgid "Courses Enrolled:"
+msgstr "Courses Enrolled:"
+
+msgid "Average Progress:"
+msgstr "Average Progress:"
+
+msgid "No progress data available yet."
+msgstr "No progress data available yet."
+
+msgid "My Gradebook"
+msgstr "My Gradebook"
+
+msgid "View your grades across all enrolled courses."
+msgstr "View your grades across all enrolled courses."
+
+msgid "Final Grade:"
+msgstr "Final Grade:"
+
+msgid "Item"
+msgstr "Item"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "No grades recorded for this course yet."
+msgstr "No grades recorded for this course yet."
+
+msgid "You are not enrolled in any courses or have no grades yet."
+msgstr "You are not enrolled in any courses or have no grades yet."
+
+msgid "Started by <strong>%(topic.author.username)s</strong> on %(topic.created_at|date:\"M d, Y H:i\")s"
+msgstr "Started by <strong>%(topic.author.username)s</strong> on %(topic.created_at|date:\"M d, Y H:i\")s"
+
+msgid "(edited)"
+msgstr "(edited)"
+
+msgid "No posts yet. Be the first to reply!"
+msgstr "No posts yet. Be the first to reply!"
+
+msgid "Reply to Topic"
+msgstr "Reply to Topic"
+
+msgid "Write your reply here..."
+msgstr "Write your reply here..."
+
+msgid "Post Reply"
+msgstr "Post Reply"
+
+msgid "This topic is closed. No new replies are allowed."
+msgstr "This topic is closed. No new replies are allowed."

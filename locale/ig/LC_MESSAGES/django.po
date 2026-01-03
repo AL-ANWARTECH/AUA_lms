@@ -1,0 +1,1503 @@
+# Igbo translations for AUA LMS.
+# Copyright (C) 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 17:31+0100\n"
+"PO-Revision-Date: 2026-01-02 17:31+0100\n"
+"Last-Translator: Anwar Sagir Mustapha <info@techaua.com>\n"
+"Language-Team: Igbo\n"
+"Language: ig\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "High Contrast Mode"
+msgstr "Ọnọdụ Nkwụsị Ebe Ọcha"
+
+msgid "Large Text Mode"
+msgstr "Ọnọdụ Edemede Nnukwu"
+
+msgid "Reduced Motion Mode"
+msgstr "Ọnọdụ Nkwụsị Ụzọ"
+
+msgid "Screen Reader Optimized"
+msgstr "Ezi Nchọpụta Akwụkwọ"
+
+msgid "Keyboard Navigation Enabled"
+msgstr "Ịgba Ụkwụ Na-eme Ezi Ọrụ"
+
+msgid "Focus Indicators Enabled"
+msgstr "Ịgba Ụkwụ Na-eme Ezi Ọrụ"
+
+msgid "Show Captions for Media"
+msgstr "Gosi Ihe Mmepe maka Media"
+
+msgid "Audio Volume Level"
+msgstr "Ọnọdụ Oge Audio"
+
+msgid "Preferred Font Size"
+msgstr "Nnukwu Harafi Chọrọ"
+
+msgid "Default volume level for media content (0-100)"
+msgstr "Ọnọdụ oge gama maka ihe (0-100)"
+
+msgid "Role"
+msgstr "Ọnọdụ"
+
+msgid "Basic Information"
+msgstr "Ozi Ntọala"
+
+msgid "Status"
+msgstr "Ọnọdụ"
+
+msgid "Timestamps"
+msgstr "Oge Ọnọdụ"
+
+msgid "Progress"
+msgstr "Mmetụta"
+
+msgid "Student"
+msgstr "Onye akwụkwọ"
+
+msgid "Course"
+msgstr "Akụkọ"
+
+msgid "Global Template"
+msgstr "Mmado Nke Dụ"
+
+msgid "Start Date"
+msgstr "Ụbọchị Malite"
+
+msgid "End Date"
+msgstr "Ụbọchị Kwụsị"
+
+msgid "Report Title"
+msgstr "Aha Akaụntụ"
+
+msgid "Report Type"
+msgstr "Ụdị Akaụntụ"
+
+msgid "Widget Type"
+msgstr "Ụdị Widget"
+
+msgid "Position"
+msgstr "Ebe"
+
+msgid "Is Visible"
+msgstr "Ọ dị"
+
+msgid "Configuration"
+msgstr "Ezi Ngwa"
+
+msgid "Assignment Title"
+msgstr "Aha Akaụntụ"
+
+msgid "Description"
+msgstr "Nkọwa"
+
+msgid "Due Date"
+msgstr "Ụbọchị Kwụsị"
+
+msgid "Maximum Points"
+msgstr "Nkeji Kacha Ukwa"
+
+msgid "Enter a descriptive title for the assignment"
+msgstr "Tinye aha maka akaụntụ"
+
+msgid "Provide detailed instructions for the assignment"
+msgstr "Kọwaa usoro maka akaụntụ"
+
+msgid "Set the deadline for the assignment"
+msgstr "Tinye ụbọchị kwụsị maka akaụntụ"
+
+msgid "Maximum points that can be earned"
+msgstr "Nkeji kacha ukwa nke nwere ike ịgba"
+
+msgid "Certificate Title"
+msgstr "Aha Isi-nti"
+
+msgid "Background Image"
+msgstr "Foto Nso"
+
+msgid "Font Size"
+msgstr "Nnukwu Harafi"
+
+msgid "Text Color"
+msgstr "Agba Edemede"
+
+msgid "Active"
+msgstr "Ọ dị ime"
+
+msgid "The description that appears on the certificate"
+msgstr "Nkọwa nke na-egosi na isi-nti"
+
+msgid "Optional background image for the certificate"
+msgstr "Foto nso maka isi-nti (nzere)"
+
+msgid "Font size for the certificate text"
+msgstr "Nnukwu harafi maka edemede isi-nti"
+
+msgid "Color of the text on the certificate"
+msgstr "Agba edemede na isi-nti"
+
+msgid "Course Title"
+msgstr "Aha Akụkọ"
+
+msgid "Category"
+msgstr "Ụdị"
+
+msgid "Thumbnail"
+msgstr "Foto Ntakịrị"
+
+msgid "Enter a descriptive title for your course"
+msgstr "Tinye aha maka akụkọ gị"
+
+msgid "Provide a detailed description of the course content"
+msgstr "Kọwaa ihe dị n'ime akụkọ gị"
+
+msgid "Upload an image that represents your course"
+msgstr "Bipụta foto nke na-enye aka akụkọ gị"
+
+msgid "Module Title"
+msgstr "Aha Module"
+
+msgid "Enter a title for this module"
+msgstr "Tinye aha maka module a"
+
+msgid "Provide a brief description of the module content"
+msgstr "Kọwaa ihe dị n'ime module a"
+
+msgid "Position of this module in the course sequence"
+msgstr "Ebe module a n'ime akụkọ"
+
+msgid "Lesson Title"
+msgstr "Aha Ụlọ Akwụkwọ"
+
+msgid "Content Type"
+msgstr "Ụdị Ihe"
+
+msgid "Content"
+msgstr "Ihe"
+
+msgid "Video URL"
+msgstr "URL Bidiyo"
+
+msgid "File Upload"
+msgstr "Bipụta Faịlụ"
+
+msgid "Enter a title for this lesson"
+msgstr "Tinye aha maka ụlọ akwụkwọ a"
+
+msgid "Select the type of content for this lesson"
+msgstr "Họrọ ụdị ihe maka ụlọ akwụkwọ a"
+
+msgid "Enter the text content for this lesson"
+msgstr "Tinye ihe edemede maka ụlọ akwụkwọ a"
+
+msgid "Enter a URL to a video (YouTube, Vimeo, etc.)"
+msgstr "Tinye URL maka bidiyo (YouTube, Vimeo, wdgz.)"
+
+msgid "Upload a file (PDF, document, etc.)"
+msgstr "Bipụta faịlụ (PDF, akwụkwọ, wdgz.)"
+
+msgid "Position of this lesson in the module sequence"
+msgstr "Ebe ụlọ akwụkwọ a n'ime module"
+
+msgid "Instructor"
+msgstr "Onye nkuzi"
+
+msgid "Username"
+msgstr "Aha onye ozi"
+
+msgid "Email Address"
+msgstr "Adreesị Imeeli"
+
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Achọrọ. Haruffa 150 ma ọ bụ karịa. Haruffa, lambobi, na @/./+/-/_ kawai."
+
+msgid "Password"
+msgstr "Ọrụ igwe"
+
+msgid "Password Confirmation"
+msgstr "Ịkwenye Ọrụ Igwe"
+
+msgid "Admin"
+msgstr "Onye njikwa"
+
+msgid "Categories"
+msgstr "Ụdị"
+
+msgid "Text Content"
+msgstr "Ihe Edemede"
+
+msgid "Video"
+msgstr "Bidiyo"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Quiz"
+msgstr "Ajụjụ"
+
+msgid "Assignment"
+msgstr "Akaụntụ"
+
+msgid "Time limit in minutes"
+msgstr "Oge nwere ike ịgba n'ụzọ nkeji"
+
+msgid "Maximum number of attempts allowed"
+msgstr "Ọnụọgụgụ oge akpụ nwere ike ịgba"
+
+msgid "Minimum score percentage to pass"
+msgstr "Ọnụọgụgụ akaụntụ kacha nta maka ịgba"
+
+msgid "Multiple Choice"
+msgstr "Ntụnyere"
+
+msgid "True/False"
+msgstr "Eziokwu/Ndụ"
+
+msgid "Short Answer"
+msgstr "Azịza Ntakịrị"
+
+msgid "Time taken in seconds"
+msgstr "Oge gụnyere n'ụzọ sekọnd"
+
+msgid "Exam"
+msgstr "Ajụjụ"
+
+msgid "Course Forum"
+msgstr "Agụmakwụkwọ Akụkọ"
+
+msgid "Certificate of Completion"
+msgstr "Isi-nti nke Ịme"
+
+msgid "This is to certify that the student has successfully completed the course."
+msgstr "A na-akọwa na onye akwụkwọ amaliteela akụkọ a."
+
+msgid "Course Update"
+msgstr "Mmezi Akụkọ"
+
+msgid "Grade Update"
+msgstr "Mmezi Akaụntụ"
+
+msgid "Forum Post"
+msgstr "Ozi n'agụmakwụkwọ"
+
+msgid "Assignment Due"
+msgstr "Akaụntụ Kwụsịrị"
+
+msgid "Certificate Earned"
+msgstr "Isi-nti gbara"
+
+msgid "Enrollment"
+msgstr "Ịgba"
+
+msgid "General"
+msgstr "Na Kpọtụrụ"
+
+msgid "Course Enrollment"
+msgstr "Ịgba Akụkọ"
+
+msgid "Course Completion"
+msgstr "Ịme Akụkọ"
+
+msgid "Lesson Completion"
+msgstr "Ịme Ụlọ Akwụkwọ"
+
+msgid "Quiz Attempt"
+msgstr "Ịgba Ajụjụ"
+
+msgid "Assignment Submission"
+msgstr "Ịgba Akaụntụ"
+
+msgid "Forum Activity"
+msgstr "Ọrụ n'agụmakwụkwọ"
+
+msgid "User Engagement"
+msgstr "Ọrụ Onye ozi"
+
+msgid "Course Performance"
+msgstr "Mmetụta Akụkọ"
+
+msgid "Student Progress"
+msgstr "Mmetụta Onye akwụkwọ"
+
+msgid "System Usage"
+msgstr "Ịgba Mmado"
+
+msgid "Grade Distribution"
+msgstr "Ịgba Akaụntụ"
+
+msgid "Certificate Issuance"
+msgstr "Ịgba Isi-nti"
+
+msgid "Enrollment Chart"
+msgstr "Ihe nkọwa maka ịgba"
+
+msgid "Progress Chart"
+msgstr "Ihe nkọwa maka mmetụta"
+
+msgid "Recent Activities"
+msgstr "Ọrụ Ntakịrị"
+
+msgid "User Statistics"
+msgstr "Ihe nkọwa maka onye ozi"
+
+msgid "Course Statistics"
+msgstr "Ihe nkọwa maka akụkọ"
+
+msgid "Default volume level (0-100)"
+msgstr "Ọnọdụ oge gama (0-100)"
+
+msgid "Small"
+msgstr "Ntakịrị"
+
+msgid "Medium"
+msgstr "Ntụnye"
+
+msgid "Large"
+msgstr "Ukwa"
+
+msgid "Extra Large"
+msgstr "Ukwa nke ukwa"
+
+msgid "Automated Scan"
+msgstr "Ịhụ Nchọpụta"
+
+msgid "Manual Review"
+msgstr "Ịhụ Ntụnyere"
+
+msgid "User Feedback"
+msgstr "Azịza Onye ozi"
+
+msgid "Compliance Check"
+msgstr "Ịhụ Nchọpụta"
+
+msgid "Low"
+msgstr "Ntakịrị"
+
+msgid "High"
+msgstr "Ukwa"
+
+msgid "Critical"
+msgstr "Mmetụta"
+
+msgid "Pending"
+msgstr "Jụọ"
+
+msgid "Name of the page section"
+msgstr "Aha akwụkwọ nkeji"
+
+msgid "Navigation"
+msgstr "Ịgba Ụkwụ"
+
+msgid "Form"
+msgstr "Usoro"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Data Table"
+msgstr "Ihe nkọwa maka data"
+
+msgid "Chart"
+msgstr "Ihe nkọwa"
+
+msgid "Other"
+msgstr "Ọzọ"
+
+msgid "Descriptive text for screen readers"
+msgstr "Edemede maka nchọpụta akwụkwọ"
+
+msgid "Navigate to Home"
+msgstr "Gaa n'ụlọ"
+
+msgid "Open Menu"
+msgstr "Mepe Menu"
+
+msgid "Focus Search"
+msgstr "Chọpụta"
+
+msgid "Skip to Content"
+msgstr "Bido na ihe"
+
+msgid "Toggle Sidebar"
+msgstr "Gbanwee Ebe Nsọ"
+
+msgid "Previous Item"
+msgstr "Ihe gara aga"
+
+msgid "Next Item"
+msgstr "Ihe nke gara aga"
+
+msgid "Select Item"
+msgstr "Họrọ Ihe"
+
+msgid "Close Modal"
+msgstr "Mkpụpụ Modal"
+
+msgid "Save Changes"
+msgstr "Chekwa Mmetụta"
+
+msgid "Cancel Action"
+msgstr "Kagbuo Ọrụ"
+
+msgid "e.g., Ctrl+S, Alt+F, Tab"
+msgstr "dịka, Ctrl+S, Alt+F, Tab"
+
+msgid "Available on all pages"
+msgstr "Dị na akwụkwọ niile"
+
+msgid "Email Notifications"
+msgstr "Azịza n'imeeli"
+
+msgid "In-App Notifications"
+msgstr "Azịza n'ime App"
+
+msgid "Course Updates"
+msgstr "Mmezi Akụkọ"
+
+msgid "Grade Updates"
+msgstr "Mmezi Akaụntụ"
+
+msgid "Forum Posts"
+msgstr "Ozi n'agụmakwụkwọ"
+
+msgid "Assignment Due Dates"
+msgstr "Ụbọchị Akaụntụ Kwụsịrị"
+
+msgid "Quiz Title"
+msgstr "Aha Ajụjụ"
+
+msgid "Time Limit (minutes)"
+msgstr "Oge Nwere Ike (nkeji)"
+
+msgid "Maximum Attempts"
+msgstr "Ọnụọgụgụ Oge Akpụ"
+
+msgid "Passing Score (%)"
+msgstr "Akaụntụ maka Ịgba (%)"
+
+msgid "Enter a descriptive title for the quiz"
+msgstr "Tinye aha maka ajụjụ"
+
+msgid "Provide a brief description of the quiz"
+msgstr "Kọwaa ajụjụ a"
+
+msgid "Time limit in minutes (leave blank for no limit)"
+msgstr "Oge nwere ike n'ụzọ nkeji (hapụ ihe ma ọ bụrụ na ọ dịghị ihe)"
+
+msgid "Maximum number of attempts allowed for this quiz"
+msgstr "Ọnụọgụgụ oge akpụ nwere ike ịgba maka ajụjụ a"
+
+msgid "Minimum score percentage required to pass"
+msgstr "Ọnụọgụgụ akaụntụ kacha nta maka ịgba"
+
+msgid "Question Text"
+msgstr "Edemede Ajụjụ"
+
+msgid "Question Type"
+msgstr "Ụdị Ajụjụ"
+
+msgid "Points"
+msgstr "Nkeji"
+
+msgid "Enter the question text"
+msgstr "Tinye edemede ajụjụ"
+
+msgid "Select the type of question"
+msgstr "Họrọ ụdị ajụjụ"
+
+msgid "Points awarded for correct answer"
+msgstr "Nkeji nke ga-ebukarị maka azịza ziri ezi"
+
+msgid "Position of this question in the quiz"
+msgstr "Ebe ajụjụ a n'ime ajụjụ"
+
+msgid "Answer Text"
+msgstr "Edemede Azịza"
+
+msgid "Is Correct"
+msgstr "Ọ dị ezi"
+
+msgid "Enter the answer option text"
+msgstr "Tinye edemede maka azịza"
+
+msgid "Check this box if this is the correct answer"
+msgstr "Tụnyekwaa akwụkwọ a ma ọ bụrụ na ọ bụ azịza ziri ezi"
+
+msgid "Position of this answer option"
+msgstr "Ebe azịza a"
+
+msgid "Account created successfully! Welcome, %(username)s!"
+msgstr "Akaụntụ amalitela! Bada kara, %(username)s!"
+
+msgid "New course created: %(title)s"
+msgstr "Akụkọ ọhụrụ amalitela: %(title)s"
+
+msgid "You have successfully created the course \"%(title)s\"."
+msgstr "I malitereela akụkọ \"%(title)s\"."
+
+msgid "New module added: %(title)s"
+msgstr "Module ọhụrụ akpụrụ: %(title)s"
+
+msgid "A new module \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Module ọhụrụ \"%(title)s\" akpụrụla na akụkọ \"%(course_title)s\"."
+
+msgid "New lesson added: %(title)s"
+msgstr "Ụlọ akwụkwọ ọhụrụ akpụrụ: %(title)s"
+
+msgid "A new lesson \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Ụlọ akwụkwọ ọhụrụ \"%(title)s\" akpụrụla na akụkọ \"%(course_title)s\"."
+
+msgid "You have successfully enrolled in %(course_title)s!"
+msgstr "I gbara na %(course_title)s!"
+
+msgid "Enrolled in %(course_title)s"
+msgstr "Gbara na %(course_title)s"
+
+msgid "You have successfully enrolled in the course \"%(course_title)s\"."
+msgstr "I gbara na akụkọ \"%(course_title)s\"."
+
+msgid "New student enrolled: %(username)s"
+msgstr "Onye akwụkwọ ọhụrụ gbara: %(username)s"
+
+msgid "%(username)s has enrolled in your course \"%(course_title)s\"."
+msgstr "%(username)s gbara na akụkọ gị \"%(course_title)s\"."
+
+msgid "You are already enrolled in %(course_title)s."
+msgstr "I gbara n'ime %(course_title)s."
+
+msgid "You have successfully unenrolled from %(course_title)s."
+msgstr "I kagburula ịgba na %(course_title)s."
+
+msgid "Unenrolled from %(course_title)s"
+msgstr "Kagburula ịgba na %(course_title)s"
+
+msgid "You have successfully unenrolled from the course \"%(course_title)s\"."
+msgstr "I kagburula ịgba na akụkọ \"%(course_title)s\"."
+
+msgid "You were not enrolled in %(course_title)s."
+msgstr "I gbara n'ime %(course_title)s."
+
+msgid "You must be enrolled in the course to access this lesson."
+msgstr "Ị ga-ebu ịgba na akụkọ iji nweta ụlọ akwụkwọ a."
+
+msgid "You must be enrolled in the course to complete lessons."
+msgstr "Ị ga-ebu ịgba na akụkọ iji mebie ụlọ akwụkwọ."
+
+msgid "Lesson \"%(title)s\" marked as completed!"
+msgstr "Ụlọ akwụkwọ \"%(title)s\" apụtara dịka amalitela!"
+
+msgid "Lesson completed: %(title)s"
+msgstr "Ụlọ akwụkwọ amalitela: %(title)s"
+
+msgid "You have completed the lesson \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "I malitereela ụlọ akwụkwọ \"%(title)s\" n'ime akụkọ \"%(course_title)s\"."
+
+msgid "You must be enrolled in the course to modify lesson completion."
+msgstr "Ị ga-ebu ịgba na akụkọ iji gbanwee ụlọ akwụkwọ amaliteela."
+
+msgid "Lesson \"%(title)s\" marked as incomplete."
+msgstr "Ụlọ akwụkwọ \"%(title)s\" apụtara dịka ọ dịghịzi amaliteela."
+
+msgid "Lesson marked as incomplete: %(title)s"
+msgstr "Ụlọ akwụkwọ apụtara dịka ọ dịghịzi amaliteela: %(title)s"
+
+msgid "You have marked the lesson \"%(title)s\" as incomplete in course \"%(course_title)s\"."
+msgstr "I tinyere ụlọ akwụkwọ \"%(title)s\" dịka ọ dịghịzi amaliteela n'ime akụkọ \"%(course_title)s\"."
+
+msgid "Quiz \"%(title)s\" created successfully!"
+msgstr "Ajụjụ \"%(title)s\" amalitela!"
+
+msgid "New quiz available: %(title)s"
+msgstr "Ajụjụ ọhụrụ dị: %(title)s"
+
+msgid "A new quiz \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Ajụjụ ọhụrụ \"%(title)s\" akpụrụla na akụkọ \"%(course_title)s\"."
+
+msgid "Question updated successfully!"
+msgstr "Ajụjụ ameziri!"
+
+msgid "You must be enrolled in the course to take this quiz."
+msgstr "Ị ga-ebu ịgba na akụkọ iji gbaa ajụjụ a."
+
+msgid "You have reached the maximum number of attempts for this quiz."
+msgstr "I gara n'ụzọ nkeji kacha ukwa maka ajụjụ a."
+
+msgid "Quiz completed! Score: %(score).1f%% (Passed!)"
+msgstr "Ajụjụ amalitela! Akaụntụ: %(score).1f%% (Gbaa!)"
+
+msgid "Quiz passed: %(title)s"
+msgstr "Ajụjụ gbara: %(title)s"
+
+msgid "You have passed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "I gbara ajụjụ \"%(title)s\" n'akaụntụ %(score).1f%%."
+
+msgid "Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)"
+msgstr "Ajụjụ amalitela! Akaụntụ: %(score).1f%% (Chọrọ %(passing_score)d%% iji gbaa)"
+
+msgid "Quiz failed: %(title)s"
+msgstr "Ajụjụ agaghị eme: %(title)s"
+
+msgid "You have failed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "Ajụjụ \"%(title)s\" agaghị eme gị n'akaụntụ %(score).1f%%."
+
+msgid "Assignment \"%(title)s\" created successfully!"
+msgstr "Akaụntụ \"%(title)s\" amalitela!"
+
+msgid "New assignment: %(title)s"
+msgstr "Akaụntụ ọhụrụ: %(title)s"
+
+msgid "A new assignment \"%(title)s\" has been added to the course \"%(course_title)s\". Due date: %(due_date)s"
+msgstr "Akaụntụ ọhụrụ \"%(title)s\" akpụrụla na akụkọ \"%(course_title)s\". Ụbọchị kwụsị: %(due_date)s"
+
+msgid "Grade recorded for %(title)s"
+msgstr "Akaụntụ egosipụtara maka %(title)s"
+
+msgid "Your grade for assignment \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Akaụntụ gị maka akaụntụ \"%(title)s\" egosipụtara: %(score)d/%(max_points)d"
+
+msgid "Your grade for quiz \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Akaụntụ gị maka ajụjụ \"%(title)s\" egosipụtara: %(score)d/%(max_points)d"
+
+msgid "Grade recorded successfully!"
+msgstr "Akaụntụ egosipụtara!"
+
+msgid "You must be enrolled in the course to access the forum."
+msgstr "Ị ga-ebu ịgba na akụkọ iji nweta agụmakwụkwọ."
+
+msgid "You must be enrolled in the course to create topics."
+msgstr "Ị ga-ebu ịgba na akụkọ iji malite ihe."
+
+msgid "Topic \"%(title)s\" created successfully!"
+msgstr "Ihe \"%(title)s\" amalitela!"
+
+msgid "New topic created: %(title)s"
+msgstr "Ihe ọhụrụ amalitela: %(title)s"
+
+msgid "%(username)s has created a new topic \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s malitereela ihe ọhụrụ \"%(title)s\" n'ime akụkọ \"%(course_title)s\"."
+
+msgid "Please fill in both title and content."
+msgstr "Biko tinye aha na ihe."
+
+msgid "You must be enrolled in the course to access this topic."
+msgstr "Ị ga-ebu ịgba na akụkọ iji nweta ihe a."
+
+msgid "You must be enrolled in the course to create posts."
+msgstr "Ị ga-ebu ịgba na akụkọ iji debanye ozi."
+
+msgid "Post created successfully!"
+msgstr "Ozi emelitela!"
+
+msgid "New reply to your topic: %(title)s"
+msgstr "Azịza ọhụrụ zuo ihe gị: %(title)s"
+
+msgid "%(username)s replied to your topic \"%(title)s\""
+msgstr "%(username)s zitereela ihe gị \"%(title)s\""
+
+msgid "New post in %(title)s"
+msgstr "Ozi ọhụrụ n'ime %(title)s"
+
+msgid "%(username)s made a new post in topic \"%(topic_title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s debanyere ozi ọhụrụ n'ime ihe \"%(topic_title)s\" n'ime akụkọ \"%(course_title)s\"."
+
+msgid "Please enter content for your post."
+msgstr "Biko tinye ihe maka ozi gị."
+
+msgid "You don't have permission to access this certificate."
+msgstr "Ị nweghị ikike iji nweta isi-nti a."
+
+msgid "You must complete at least 80% of the course to earn a certificate."
+msgstr "Ị ga-ebu ime kama 80% nke akụkọ iji nweta isi-nti."
+
+msgid "Certificate generated successfully!"
+msgstr "Isi-nti emelitela!"
+
+msgid "Certificate earned: %(course_title)s"
+msgstr "Isi-nti gbara: %(course_title)s"
+
+msgid "You have earned a certificate for completing the course \"%(course_title)s\"."
+msgstr "I nwetere isi-nti maka ime akụkọ \"%(course_title)s\"."
+
+msgid "for completing the course:"
+msgstr "maka ime akụkọ:"
+
+msgid "Certificate ID: %(id)s"
+msgstr "ID Isi-nti: %(id)s"
+
+msgid "Issued on: %(date)s"
+msgstr "Emelitereela na: %(date)s"
+
+msgid "Instructor: "
+msgstr "Onye nkuzi: "
+
+msgid "Certificate template updated successfully!"
+msgstr "Mmado isi-nti ameziri!"
+
+msgid "You must be enrolled in the course to check certificate eligibility."
+msgstr "Ị ga-ebu ịgba na akụkọ iji hụ ma ị nwere ike nweta isi-nti."
+
+msgid "Notification preferences updated successfully!"
+msgstr "Ezi ngwa azịza ameziri!"
+
+msgid "All notifications marked as read!"
+msgstr "Azịza niile apụtara dịka achọpụtara!"
+
+msgid "Report \"%(title)s\" generated successfully!"
+msgstr "Akaụntụ \"%(title)s\" emelitela!"
+
+msgid "Accessibility settings updated successfully!"
+msgstr "Ezi ngwa nwere ike emelitela!"
+
+msgid "Missing alt text on 3 images"
+msgstr "Edemede alt dịghị na foto 3"
+
+msgid "Low contrast ratio on 2 elements"
+msgstr "Nkwụsị ebe ọcha dịghị na ihe 2"
+
+msgid "Missing form labels on 1 input"
+msgstr "Aha usoro dịghị na 1 tinye"
+
+msgid "Keyboard trap detected on modal"
+msgstr "Ịgba ụkwụ gbara na modal"
+
+msgid "Accessibility scan completed. Found %(count)d potential issues."
+msgstr "Nchọpụta nwere ike emeziela. Anyị hụrụ %(count)d nsogbu nwere ike."
+
+msgid "Web Content Accessibility Guidelines (WCAG)"
+msgstr "Usoro Nwee Ike Emegide (WCAG)"
+
+msgid "Official guidelines for web accessibility"
+msgstr "Usoro gọọmenti maka nwee ike emegide"
+
+msgid "Screen Reader Testing"
+msgstr "Ịhụ Nchọpụta Akwụkwọ"
+
+msgid "How to test with screen readers"
+msgstr "Kedụ ihe ị ga-eme iji hụ na nchọpụta akwụkwọ"
+
+msgid "Color Contrast Checker"
+msgstr "Ịhụ Nkwụsị Agba"
+
+msgid "Tool to check color contrast ratios"
+msgstr "Ngwaọrụ iji hụ agba nkwụsị"
+
+msgid "Keyboard Navigation"
+msgstr "Ịgba Ụkwụ"
+
+msgid "Best practices for keyboard accessibility"
+msgstr "Ụzọ kacha mma maka ịgba ụkwụ nwere ike"
+
+msgid "AUA LMS"
+msgstr "MMADO AKWỤKWỌ AUA"
+
+msgid "Dashboard"
+msgstr "Ụzọ Ọrụ"
+
+msgid "Gradebook"
+msgstr "Akaụntụ"
+
+msgid "Certificates"
+msgstr "Isi-nti"
+
+msgid "Analytics"
+msgstr "Ihe nkọwa"
+
+msgid "Accessibility"
+msgstr "Nwere Ike"
+
+msgid "Logout"
+msgstr "Pụọ"
+
+msgid "Login"
+msgstr "Banye"
+
+msgid "Register"
+msgstr "Debanye Nka"
+
+msgid "All rights reserved."
+msgstr "Ike niile chekwara."
+
+msgid "Accessibility Audit Log"
+msgstr "Ihe Nkọwa maka Nchọpụta"
+
+msgid "Run Accessibility Scan"
+msgstr "Bido Nchọpụta Nwere Ike"
+
+msgid "Type"
+msgstr "Ụdị"
+
+msgid "Performed By"
+msgstr "Emeela Site Na"
+
+msgid "Findings"
+msgstr "Ihe Hụrụ"
+
+msgid "Severity"
+msgstr "Ọnọdụ"
+
+msgid "Date"
+msgstr "Ụbọchị"
+
+msgid "Resolved"
+msgstr "Mepụtara"
+
+msgid "Accessibility Resources"
+msgstr "Ihe Nwere Ike"
+
+msgid "Tools and resources to help improve accessibility."
+msgstr "Ngwaọrụ na ihe nwere ike nnye aka imezi nwere ike."
+
+msgid "Visit Resource"
+msgstr "Gaa N'ihu Ihe"
+
+msgid "Accessibility Testing Tools"
+msgstr "Ngwaọrụ Nchọpụta Nwere Ike"
+
+msgid "Web accessibility evaluation tool"
+msgstr "Ngwaọrụ ịchọpụta nwere ike emegide"
+
+msgid "Accessibility testing engine"
+msgstr "Mmado nchọpụta nwere ike"
+
+msgid "Performance and accessibility auditing"
+msgstr "Nchọpụta mmetụta na nwere ike"
+
+msgid "Color blindness simulator"
+msgstr "Ngwaọrụ ịchọpụta agba"
+
+msgid "Accessibility Settings"
+msgstr "Ezi Ngwa Nwere Ike"
+
+msgid "Adjust settings to make the LMS more accessible for your needs."
+msgstr "Gbanwee ezi ngwa iji mezi mmado akwụkwọ maka mkpa gị."
+
+msgid "Visual Adjustments"
+msgstr "Mmetụta N'ihu"
+
+msgid "Motion and Animation"
+msgstr "Ụzọ na Ụzọ Obi"
+
+msgid "Assistive Technology"
+msgstr "Ngwaọrụ Nnye Aka"
+
+msgid "Audio Settings"
+msgstr "Ezi Ngwa Audio"
+
+msgid "Save Settings"
+msgstr "Chekwa Ezi Ngwa"
+
+msgid "Cancel"
+msgstr "Kagbuo"
+
+msgid "Accessibility Statement"
+msgstr "Okwu Nwere Ike"
+
+msgid "Learn about our commitment to accessibility and how we support all users."
+msgstr "Mụta maka ikike anyị maka nwere ike na kedu ihe anyị nnye aka onye ọbụla."
+
+msgid "Current Status"
+msgstr "Ọnọdụ Ugbu A"
+
+msgid "Our LMS currently meets:"
+msgstr "Mmado anyị ugbu a na-ezute:"
+
+msgid "WCAG 2.1 Level AA standards"
+msgstr "Usoro WCAG 2.1 Nkeji AA"
+
+msgid "Section 508 compliance"
+msgstr "Nchọpụta Section 508"
+
+msgid "European accessibility requirements"
+msgstr "Mkpa nwere ike nke Europe"
+
+msgid "We regularly update our platform to improve accessibility. Last review: January 2026"
+msgstr "Anyị na-mezu mmado anyị mgbe niile iji mejupụta nwere ike. Nchọpụta kọwapụta: Jenụwarị 2026"
+
+msgid "Admin Dashboard"
+msgstr "Ụzọ Ọrụ Onye Njikwa"
+
+msgid "Welcome, <strong>%(user.username)s</strong>!"
+msgstr "Nnọọ, <strong>%(user.username)s</strong>!"
+
+msgid "Your role: <strong>%(user_role|title)s</strong>"
+msgstr "Ọrụ gị: <strong>%(user_role|title)s</strong>"
+
+msgid "System Overview"
+msgstr "Nkọwa Mmado"
+
+msgid "Manage users, courses, and system settings."
+msgstr "Gwakwuo onye ozi, akụkọ, na ezi ngwa mmado."
+
+msgid "Access Admin Panel"
+msgstr "Nweta Ụzọ Ọrụ Onye Njikwa"
+
+msgid "Quick Stats"
+msgstr "Ihe Nkọwa Ntakịrị"
+
+msgid "Users: 0 | Courses: 0 | Enrollments: 0"
+msgstr "Onye Ozi: 0 | Akụkọ: 0 | Ịgba: 0"
+
+msgid "Analytics Dashboard"
+msgstr "Ụzọ Ọrụ Ihe Nkọwa"
+
+msgid "View insights and analytics for your courses and students."
+msgstr "Lee ihe nkọwa maka akụkọ gị na onye akwụkwọ."
+
+msgid "Total Enrollments"
+msgstr "Ihe Karịrị Ịgba"
+
+msgid "Course Completions"
+msgstr "Ịme Akụkọ"
+
+msgid "Lessons Completed"
+msgstr "Ụlọ Akwụkwọ Amaliteela"
+
+msgid "Quiz Attempts"
+msgstr "Ịgba Ajụjụ"
+
+msgid "Enrollment Trend (Last 7 Days)"
+msgstr "Mmetụta Ịgba (Ụbọchị 7 Gara Aga)"
+
+msgid "Quick Actions"
+msgstr "Ọrụ Ntakịrị"
+
+msgid "Generate Report"
+msgstr "Emezi Akaụntụ"
+
+msgid "View Courses"
+msgstr "Lee Akụkọ"
+
+msgid "Recent Activity"
+msgstr "Ọrụ Ntakịrị"
+
+msgid "Recent analytics data will appear here."
+msgstr "Ihe nkọwa ntakịrị ga-egosi ebe a."
+
+msgid "New Enrollments"
+msgstr "Ịgba Ọhụrụ"
+
+msgid "Enrollment Trend"
+msgstr "Mmetụta Ịgba"
+
+msgid "Certificate Eligibility"
+msgstr "Ike Isi-nti"
+
+msgid "Certificate Eligibility for %(course.title)s"
+msgstr "Ike Isi-nti maka %(course.title)s"
+
+msgid "Your Progress"
+msgstr "Mmetụta Gị"
+
+msgid "Current Progress:"
+msgstr "Mmetụta Ugbu A:"
+
+msgid "Required for Certificate:"
+msgstr "Achọrọ maka Isi-nti:"
+
+msgid "Congratulations! 🎉"
+msgstr "Ọ dị mma! 🎉"
+
+msgid "You are eligible for a certificate. You can generate it now."
+msgstr "Ị nwere ike isi-nti. Ị nwere ike imezi ya ugbu a."
+
+msgid "Generate Certificate"
+msgstr "Emezi Isi-nti"
+
+msgid "Keep Going! 📚"
+msgstr "Gaa N'ihu! 📚"
+
+msgid "You need %(80|add:-progress)s%% more progress to earn a certificate."
+msgstr "Ị chọrọ %(80|add:-progress)s%% karịa iji nweta isi-nti."
+
+msgid "Continue Learning"
+msgstr "Gaa N'ihu Ịmụta"
+
+msgid "Analytics for %(course.title)s"
+msgstr "Ihe nkọwa maka %(course.title)s"
+
+msgid "View detailed analytics for this course."
+msgstr "Lee ihe nkọwa maka akụkọ a."
+
+msgid "Completions"
+msgstr "Ịme"
+
+msgid "Completion Rate"
+msgstr "Ọnụọgụgụ Ịme"
+
+msgid "Module"
+msgstr "Module"
+
+msgid "Lesson"
+msgstr "Ụlọ Akwụkwọ"
+
+msgid "Home"
+msgstr "Ụlọ"
+
+msgid "Courses"
+msgstr "Akụkọ"
+
+msgid "Instructor:"
+msgstr "Onye nkuzi:"
+
+msgid "Category:"
+msgstr "Ụdị:"
+
+msgid "Uncategorized"
+msgstr "Dịghị Ụdị"
+
+msgid "Created:"
+msgstr "Emelitereela:"
+
+msgid "Unenroll"
+msgstr "Kagbuo Ịgba"
+
+msgid "You are enrolled in this course!"
+msgstr "Ị gbara na akụkọ a!"
+
+msgid "Progress:"
+msgstr "Mmetụta:"
+
+msgid "Enroll in Course"
+msgstr "Gbaa Na Akụkọ"
+
+msgid "Add Module"
+msgstr "Tinye Module"
+
+msgid "Edit Course"
+msgstr "Dezie Akụkọ"
+
+msgid "View Dashboard"
+msgstr "Lee Ụzọ Ọrụ"
+
+msgid "Login to Enroll"
+msgstr "Banye Iji Gbaa"
+
+msgid "Register to Enroll"
+msgstr "Debanye Nka Iji Gbaa"
+
+msgid "Check Certificate Eligibility"
+msgstr "Hụ Ike Isi-nti"
+
+msgid "Course Content"
+msgstr "Ihe Akụkọ"
+
+msgid "Create Quiz"
+msgstr "Malite Ajụjụ"
+
+msgid "Take Quiz"
+msgstr "Gbaa Ajụjụ"
+
+msgid "No lessons in this module yet."
+msgstr "Ọ dịghị ụlọ akwụkwọ n'ime module a ugbu a."
+
+msgid "Add Lesson"
+msgstr "Tinye Ụlọ Akwụkwọ"
+
+msgid "Forum"
+msgstr "Agụmakwụkwọ"
+
+msgid "Create Topic"
+msgstr "Malite Ihe"
+
+msgid "Topic"
+msgstr "Ihe"
+
+msgid "Author"
+msgstr "Onye Ozi"
+
+msgid "Replies"
+msgstr "Azịza"
+
+msgid "Last Post"
+msgstr "Ozi Kọwapụta"
+
+msgid "Pinned"
+msgstr "Pịn"
+
+msgid "Closed"
+msgstr "Mkpụpụ"
+
+msgid "by"
+msgstr "site na"
+
+msgid "No posts yet"
+msgstr "Ọ dịghị ozi ugbu a"
+
+msgid "No topics have been created yet. Be the first to start a discussion!"
+msgstr "Ọ dịghị ihe malitere ugbu a. Bido ọkọwa!"
+
+msgid "Available Courses"
+msgstr "Akụkọ Dị"
+
+msgid "Browse our collection of courses."
+msgstr "Chọpụta akụkọ anyị."
+
+msgid "Search courses..."
+msgstr "Chọpụta akụkọ..."
+
+msgid "All Categories"
+msgstr "Ụdị Niile"
+
+msgid "Search"
+msgstr "Chọpụta"
+
+msgid "No Thumbnail"
+msgstr "Ọ dịghị Foto Ntakịrị"
+
+msgid "View Course"
+msgstr "Lee Akụkọ"
+
+msgid "Course pagination"
+msgstr "Akụkọ nkeji"
+
+msgid "Previous"
+msgstr "Gara Aga"
+
+msgid "Next"
+msgstr "Nke Gara Aga"
+
+msgid "No courses found. Try adjusting your search criteria."
+msgstr "Anyị hụghị akụkọ. Gaa n'ihu tinye mkpa gị."
+
+msgid "Create Course"
+msgstr "Malite Akụkọ"
+
+msgid "Create New Course"
+msgstr "Malite Akụkọ Ọhụrụ"
+
+msgid "Create Lesson"
+msgstr "Malite Ụlọ Akwụkwọ"
+
+msgid "Create Lesson for: %(module.title)s"
+msgstr "Malite Ụlọ Akwụkwọ maka: %(module.title)s"
+
+msgid "Create Module"
+msgstr "Malite Module"
+
+msgid "Create Module for: %(course.title)s"
+msgstr "Malite Module maka: %(course.title)s"
+
+msgid "Create Quiz for: %(lesson.title)s"
+msgstr "Malite Ajụjụ maka: %(lesson.title)s"
+
+msgid "Passing Score (%%)"
+msgstr "Akaụntụ maka Ịgba (%%)"
+
+msgid "Create custom reports for your courses and students."
+msgstr "Malite akaụntụ maka akụkọ gị na onye akwụkwọ."
+
+msgid "Welcome to AUA Learning Management System"
+msgstr "Nnọọ na Mmado Akwụkwọ AUA"
+
+msgid "Enhance your learning experience with our comprehensive platform."
+msgstr "Mejupụta ụzọ ịmụtara gị na mmado anyị."
+
+msgid "Go to Dashboard"
+msgstr "Gaa na Ụzọ Ọrụ"
+
+msgid "Featured Courses"
+msgstr "Akụkọ Nwere Ihe"
+
+msgid "View All Courses"
+msgstr "Lee Akụkọ Niile"
+
+msgid "Certificates for %(course.title)s"
+msgstr "Isi-nti maka %(course.title)s"
+
+msgid "Manage certificates for students in this course."
+msgstr "Gwakwuo isi-nti maka onye akwụkwọ n'ime akụkọ a."
+
+msgid "Manage Certificate Template"
+msgstr "Gwakwuo Mmado Isi-nti"
+
+msgid "Certificate ID"
+msgstr "ID Isi-nti"
+
+msgid "Issued Date"
+msgstr "Ụbọchị Emelitereela"
+
+msgid "Actions"
+msgstr "Ọrụ"
+
+msgid "View/Download"
+msgstr "Lee/Saukọ"
+
+msgid "No certificates have been issued for this course yet."
+msgstr "Ọ dịghị isi-nti emelitereela maka akụkọ a ugbu a."
+
+msgid "Instructor Dashboard"
+msgstr "Ụzọ Ọrụ Onye Nkuzi"
+
+msgid "Your Courses"
+msgstr "Akụkọ Gị"
+
+msgid "Modules:"
+msgstr "Module:"
+
+msgid "View"
+msgstr "Lee"
+
+msgid "You haven't created any courses yet."
+msgstr "Ị malitereghị akụkọ ọbụla ugbu a."
+
+msgid "Create Your First Course"
+msgstr "Malite Akụkọ Mbụ Gị"
+
+msgid "Statistics"
+msgstr "Ihe Nkọwa"
+
+msgid "Total Courses:"
+msgstr "Ihe Karịrị Akụkọ:"
+
+msgid "Total Modules:"
+msgstr "Ihe Karịrị Module:"
+
+msgid "Manage and view grades for your course."
+msgstr "Gwakwuo na lee akaụntụ maka akụkọ gị."
+
+msgid "Course Overview"
+msgstr "Nkọwa Akụkọ"
+
+msgid "Total Students:"
+msgstr "Ihe Karịrị Onye Akwụkwọ:"
+
+msgid "Assignments:"
+msgstr "Akaụntụ:"
+
+msgid "Quizzes:"
+msgstr "Ajụjụ:"
+
+msgid "Final"
+msgstr "Kọwapụta"
+
+msgid "Keyboard Shortcuts"
+msgstr "Ụzọ Ụfọdụ"
+
+msgid "Use these keyboard shortcuts to navigate the LMS efficiently."
+msgstr "Ji ụzọ ụfọdụ a iji gbaa mmado akwụkwọ nke ọma."
+
+msgid "Key Combination"
+msgstr "Ihe Ntụnyere"
+
+msgid "Action"
+msgstr "Ọrụ"
+
+msgid "General Navigation"
+msgstr "Ịgba Ụkwụ Nke Dụ"
+
+msgid "Navigate between interactive elements"
+msgstr "Gbaa n'etiti ihe dị ime"
+
+msgid "Navigate backwards"
+msgstr "Gbaa gafee"
+
+msgid "Activate links and buttons"
+msgstr "Mezie njikọ na mgbawa"
+
+msgid "Toggle checkboxes and radio buttons"
+msgstr "Gbanwee akwụkwọ na mgbawa radio"
+
+msgid "Close modals and dropdowns"
+msgstr "Mkpụpụ modal na dropdown"
+
+msgid "Module:"
+msgstr "Module:"
+
+msgid "Type:"
+msgstr "Ụdị:"
+
+msgid "No video content available."
+msgstr "Ọ dịghị ihe bidiyo dị."
+
+msgid "Download PDF"
+msgstr "Saukọ PDF"
+
+msgid "No PDF file available."
+msgstr "Ọ dịghị faịlụ PDF dị."
+
+msgid "This is a quiz lesson. Quiz functionality will be implemented in a future step."
+msgstr "Aha ụlọ akwụkwọ ajụjụ. Ọrụ ajụjụ ga-emezuo n'ọsọ ọhụrụ."
+
+msgid "Completed"
+msgstr "Amaliteela"
+
+msgid "Mark as Incomplete"
+msgstr "Tụnyekwaa dịka Ọ Dịghịzi Amaliteela"
+
+msgid "Mark as Complete"
+msgstr "Tụnyekwaa dịka Amaliteela"
+
+msgid "Back to Course"
+msgstr "Laghachite Akụkọ"
+
+msgid "Manage Certificate Template for %(course.title)s"
+msgstr "Gwakwuo Mmado Isi-nti maka %(course.title)s"
+
+msgid "Customize the certificate template for this course."
+msgstr "Dezie mmado isi-nti maka akụkọ a."
+
+msgid "Current image:"
+msgstr "Foto Ugbu A:"
+
+msgid "Current background"
+msgstr "Ebe Nso Ugbu A"
+
+msgid "Save Template"
+msgstr "Chekwa Mmado"
+
+msgid "Notification Preferences"
+msgstr "Ezi Ngwa Azịza"
+
+msgid "Customize what notifications you receive."
+msgstr "Dezie azịza ịga nwere."
+
+msgid "Notification Types"
+msgstr "Ụdị Azịza"
+
+msgid "Notification Categories"
+msgstr "Ụdị Azịza"
+
+msgid "Save Preferences"
+msgstr "Chekwa Ezi Ngwa"
+
+msgid "Notifications"
+msgstr "Azịza"
+
+msgid "Mark All as Read"
+msgstr "Tụnyekwaa Ntụnye dịka Achọpụtara"
+
+msgid "New"
+msgstr "Ọhụrụ"
+
+msgid "Mark as Read"
+msgstr "Tụnyekwaa dịka Achọpụtara"
+
+msgid "You have no notifications yet."
+msgstr "Ị nweghị azịza ugbu a."
+
+msgid "Analytics for %(student.username)s"
+msgstr "Ihe nkọwa maka %(student.username)s"
+
+msgid "View detailed analytics for this student."
+msgstr "Lee ihe nkọwa maka onye akwụkwọ a."
+
+msgid "Total Courses"
+msgstr "Ihe Karịrị Akụkọ"
+
+msgid "Completed Courses"
+msgstr "Akụkọ Amaliteela"
+
+msgid "Average Progress"
+msgstr "Mmetụta Nsogbu"
+
+msgid "Course Progress"
+msgstr "Mmetụta Akụkọ"
+
+msgid "Total Lessons"
+msgstr "Ihe Karịrị Ụlọ Akwụkwọ"
+
+msgid "Grades"
+msgstr "Akaụntụ"
+
+msgid "Score"
+msgstr "Akaụntụ"
+
+msgid "Max Points"
+msgstr "Nkeji Kacha Ukwa"
+
+msgid "Percentage"
+msgstr "Ọnụọgụgụ"
+
+msgid "No grades available for this student."
+msgstr "Ọ dịghị akaụntụ maka onye akwụkwọ a."
+
+msgid "My Certificates"
+msgstr "Isi-nti M"
+
+msgid "Download your course completion certificates."
+msgstr "Saukọ isi-nti ime akụkọ gị."
+
+msgid "Student:"
+msgstr "Onye akwụkwọ:"
+
+msgid "Certificate ID:"
+msgstr "ID Isi-nti:"
+
+msgid "Issued:"
+msgstr "Emelitereela:"
+
+msgid "Download Certificate"
+msgstr "Saukọ Isi-nti"
+
+msgid "You haven't earned any certificates yet."
+msgstr "Ị nwetaghị isi-nti ọbụla ugbu a."
+
+msgid "Browse Courses"
+msgstr "Chọpụta Akụkọ"
+
+msgid "Student Dashboard"
+msgstr "Ụzọ Ọrụ Onye Akwụkwọ"
+
+msgid "You are not enrolled in any courses yet."
+msgstr "Ị gbaghị n'ime akụkọ ọbụla ugbu a."
+
+msgid "Courses Enrolled:"
+msgstr "Akụkọ Gbara:"
+
+msgid "Average Progress:"
+msgstr "Mmetụta Nsogbu:"
+
+msgid "No progress data available yet."
+msgstr "Ọ dịghị ihe mmetụta dị ugbu a."
+
+msgid "My Gradebook"
+msgstr "Akaụntụ M"
+
+msgid "View your grades across all enrolled courses."
+msgstr "Lee akaụntụ gị n'ime akụkọ niile ị gbara."
+
+msgid "Final Grade:"
+msgstr "Akaụntụ Kọwapụta:"
+
+msgid "Item"
+msgstr "Ihe"
+
+msgid "N/A"
+msgstr "Ọ dịghị"
+
+msgid "No grades recorded for this course yet."
+msgstr "Ọ dịghị akaụntụ egosipụtara maka akụkọ a ugbu a."
+
+msgid "You are not enrolled in any courses or have no grades yet."
+msgstr "Ị gbaghị n'ime akụkọ ọbụla ma ọ bụ ị nweghị akaụntụ ugbu a."
+
+msgid "Started by <strong>%(topic.author.username)s</strong> on %(topic.created_at|date:\"M d, Y H:i\")s"
+msgstr "Malitere site na <strong>%(topic.author.username)s</strong> na %(topic.created_at|date:\"M d, Y H:i\")s"
+
+msgid "(edited)"
+msgstr "(dezie)"
+
+msgid "No posts yet. Be the first to reply!"
+msgstr "Ọ dịghị ozi ugbu a. Zie mbụ!"
+
+msgid "Reply to Topic"
+msgstr "Azịza Ihe"
+
+msgid "Write your reply here..."
+msgstr "Dee azịza gị ebe a..."
+
+msgid "Post Reply"
+msgstr "Debanye Azịza"
+
+msgid "This topic is closed. No new replies are allowed."
+msgstr "Ihe a kpụpụrụ. Azịza ọhụrụ adịghị ekwe."
+
+msgid "Order"
+msgstr "Usoro"

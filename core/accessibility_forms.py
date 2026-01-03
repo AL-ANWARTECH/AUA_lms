@@ -1,5 +1,6 @@
 from django import forms
 from .models import AccessibilitySettings
+from django.utils.translation import gettext_lazy as _
 
 class AccessibilitySettingsForm(forms.ModelForm):
     class Meta:
@@ -15,6 +16,20 @@ class AccessibilitySettingsForm(forms.ModelForm):
             'audio_volume_level',
             'preferred_font_size'
         ]
+        labels = {
+            'high_contrast_mode': _('High Contrast Mode'),
+            'large_text_mode': _('Large Text Mode'),
+            'reduced_motion_mode': _('Reduced Motion Mode'),
+            'screen_reader_optimized': _('Screen Reader Optimized'),
+            'keyboard_navigation_enabled': _('Keyboard Navigation Enabled'),
+            'focus_indicator_enabled': _('Focus Indicators Enabled'),
+            'caption_preference': _('Show Captions for Media'),
+            'audio_volume_level': _('Audio Volume Level'),
+            'preferred_font_size': _('Preferred Font Size'),
+        }
+        help_texts = {
+            'audio_volume_level': _('Default volume level for media content (0-100)'),
+        }
         widgets = {
             'high_contrast_mode': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'large_text_mode': forms.CheckboxInput(attrs={'class': 'form-check-input'}),

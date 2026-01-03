@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Accessibility Resources - AUA LMS{% endblock %}
+{% block title %}{% trans "Accessibility Resources" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Accessibility Resources</h2>
-        <p>Tools and resources to help improve accessibility.</p>
+        <h2>{% trans "Accessibility Resources" %}</h2>
+        <p>{% trans "Tools and resources to help improve accessibility." %}</p>
         
         <div class="row">
             {% for resource in resources %}
@@ -15,7 +16,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ resource.title }}</h5>
                             <p class="card-text">{{ resource.description }}</p>
-                            <a href="{{ resource.url }}" class="btn btn-primary" target="_blank">Visit Resource</a>
+                            <a href="{{ resource.url }}" class="btn btn-primary" target="_blank">{% trans "Visit Resource" %}</a>
                         </div>
                     </div>
                 </div>
@@ -24,14 +25,14 @@
         
         <div class="card mt-4">
             <div class="card-header">
-                <h5>Accessibility Testing Tools</h5>
+                <h5>{% trans "Accessibility Testing Tools" %}</h5>
             </div>
             <div class="card-body">
                 <ul>
-                    <li><strong>WAVE</strong> - Web accessibility evaluation tool</li>
-                    <li><strong>axe</strong> - Accessibility testing engine</li>
-                    <li><strong>Lighthouse</strong> - Performance and accessibility auditing</li>
-                    <li><strong>Color Oracle</strong> - Color blindness simulator</li>
+                    <li><strong>WAVE</strong> - {% trans "Web accessibility evaluation tool" %}</li>
+                    <li><strong>axe</strong> - {% trans "Accessibility testing engine" %}</li>
+                    <li><strong>Lighthouse</strong> - {% trans "Performance and accessibility auditing" %}</li>
+                    <li><strong>Color Oracle</strong> - {% trans "Color blindness simulator" %}</li>
                 </ul>
             </div>
         </div>

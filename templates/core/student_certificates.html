@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}My Certificates - AUA LMS{% endblock %}
+{% block title %}{% trans "My Certificates" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>My Certificates</h2>
-        <p>Download your course completion certificates.</p>
+        <h2>{% trans "My Certificates" %}</h2>
+        <p>{% trans "Download your course completion certificates." %}</p>
         
         {% if certificates %}
             <div class="row">
@@ -16,13 +17,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ cert.enrollment.course.title }}</h5>
                                 <p class="card-text">
-                                    <strong>Student:</strong> {{ cert.enrollment.student.username }}<br>
-                                    <strong>Certificate ID:</strong> {{ cert.certificate_id }}<br>
-                                    <strong>Issued:</strong> {{ cert.issued_at|date:"M d, Y" }}<br>
-                                    <strong>Progress:</strong> {{ cert.enrollment.progress_percentage }}%
+                                    <strong>{% trans "Student:" %}</strong> {{ cert.enrollment.student.username }}<br>
+                                    <strong>{% trans "Certificate ID:" %}</strong> {{ cert.certificate_id }}<br>
+                                    <strong>{% trans "Issued:" %}</strong> {{ cert.issued_at|date:"M d, Y" }}<br>
+                                    <strong>{% trans "Progress:" %}</strong> {{ cert.enrollment.progress_percentage }}%
                                 </p>
                                 <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-primary">
-                                    Download Certificate
+                                    {% trans "Download Certificate" %}
                                 </a>
                             </div>
                         </div>
@@ -30,8 +31,8 @@
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-muted">You haven't earned any certificates yet.</p>
-            <a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a>
+            <p class="text-muted">{% trans "You haven't earned any certificates yet." %}</p>
+            <a href="{% url 'course_list' %}" class="btn btn-primary">{% trans "Browse Courses" %}</a>
         {% endif %}
     </div>
 </div>

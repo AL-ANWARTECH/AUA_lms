@@ -1,22 +1,24 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, AccessibilityAudit, ScreenReaderContent, KeyboardShortcut
+from django.utils.translation import gettext_lazy as _
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'role', 'is_staff', 'is_active')
     list_filter = ('role', 'is_staff', 'is_active')
     fieldsets = UserAdmin.fieldsets + (
-        ('Role', {'fields': ('role',)}),
+        (_('Role'), {'fields': ('role',)}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Role', {'fields': ('role',)}),
+        (_('Role'), {'fields': ('role',)}),
     )
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
     search_fields = ('name',)
+    list_display_links = ('name',)
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
@@ -26,17 +28,18 @@ class CourseAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
     
     fieldsets = (
-        ('Basic Information', {
+        (_('Basic Information'), {
             'fields': ('title', 'description', 'instructor', 'category', 'thumbnail')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
-        ('Timestamps', {
+        (_('Timestamps'), {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
     )
+    list_display_links = ('title',)
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
@@ -44,6 +47,7 @@ class ModuleAdmin(admin.ModelAdmin):
     list_filter = ('course',)
     search_fields = ('title', 'course__title')
     ordering = ('course', 'order')
+    list_display_links = ('title',)
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
@@ -51,6 +55,7 @@ class LessonAdmin(admin.ModelAdmin):
     list_filter = ('content_type', 'module__course')
     search_fields = ('title', 'module__title', 'module__course__title')
     ordering = ('module', 'order')
+    list_display_links = ('title',)
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
@@ -60,25 +65,28 @@ class EnrollmentAdmin(admin.ModelAdmin):
     
     def get_progress(self, obj):
         return f"{obj.progress_percentage()}%"
-    get_progress.short_description = 'Progress'
+    get_progress.short_description = _('Progress')
 
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
     list_display = ('title', 'lesson', 'time_limit', 'max_attempts', 'passing_score')
     list_filter = ('lesson__module__course',)
     search_fields = ('title', 'lesson__title')
+    list_display_links = ('title',)
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('text', 'quiz', 'question_type', 'points', 'order')
     list_filter = ('quiz__lesson__module__course', 'question_type')
     search_fields = ('text', 'quiz__title')
+    list_display_links = ('text',)
 
 @admin.register(AnswerOption)
 class AnswerOptionAdmin(admin.ModelAdmin):
     list_display = ('text', 'question', 'is_correct', 'order')
     list_filter = ('question__quiz__lesson__module__course', 'is_correct')
     search_fields = ('text', 'question__text')
+    list_display_links = ('text',)
 
 @admin.register(QuizAttempt)
 class QuizAttemptAdmin(admin.ModelAdmin):
@@ -96,6 +104,7 @@ class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('title', 'lesson', 'due_date', 'max_points')
     list_filter = ('lesson__module__course', 'due_date')
     search_fields = ('title', 'lesson__title')
+    list_display_links = ('title',)
 
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
@@ -111,11 +120,11 @@ class GradeAdmin(admin.ModelAdmin):
     
     def get_student_name(self, obj):
         return obj.enrollment.student.username
-    get_student_name.short_description = 'Student'
+    get_student_name.short_description = _('Student')
     
     def get_course_name(self, obj):
         return obj.enrollment.course.title
-    get_course_name.short_description = 'Course'
+    get_course_name.short_description = _('Course')
 
 @admin.register(CourseGrade)
 class CourseGradeAdmin(admin.ModelAdmin):
@@ -128,12 +137,14 @@ class ForumAdmin(admin.ModelAdmin):
     list_display = ('course', 'title', 'is_active')
     list_filter = ('is_active', 'course__title')
     search_fields = ('course__title', 'title')
+    list_display_links = ('title',)
 
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
     list_display = ('title', 'forum', 'author', 'created_at', 'is_pinned', 'is_closed')
     list_filter = ('forum__course__title', 'author', 'is_pinned', 'is_closed', 'created_at')
     search_fields = ('title', 'content', 'author__username')
+    list_display_links = ('title',)
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -161,11 +172,11 @@ class CertificateAdmin(admin.ModelAdmin):
     
     def get_student_name(self, obj):
         return obj.enrollment.student.username
-    get_student_name.short_description = 'Student'
+    get_student_name.short_description = _('Student')
     
     def get_course_name(self, obj):
         return obj.enrollment.course.title
-    get_course_name.short_description = 'Course'
+    get_course_name.short_description = _('Course')
 
 @admin.register(CertificateTemplate)
 class CertificateTemplateAdmin(admin.ModelAdmin):
@@ -174,8 +185,8 @@ class CertificateTemplateAdmin(admin.ModelAdmin):
     search_fields = ('title', 'course__title')
     
     def get_course_name(self, obj):
-        return obj.course.title if obj.course else "Global Template"
-    get_course_name.short_description = 'Course'
+        return obj.course.title if obj.course else _("Global Template")
+    get_course_name.short_description = _('Course')
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
@@ -202,6 +213,7 @@ class ReportAdmin(admin.ModelAdmin):
     list_display = ('title', 'report_type', 'generated_by', 'generated_at', 'is_active')
     list_filter = ('report_type', 'generated_at', 'generated_by__username', 'is_active')
     search_fields = ('title', 'generated_by__username')
+    list_display_links = ('title',)
 
 @admin.register(DashboardWidget)
 class DashboardWidgetAdmin(admin.ModelAdmin):

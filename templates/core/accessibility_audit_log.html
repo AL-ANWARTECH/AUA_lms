@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Accessibility Audit Log - AUA LMS{% endblock %}
+{% block title %}{% trans "Accessibility Audit Log" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Accessibility Audit Log</h2>
+            <h2>{% trans "Accessibility Audit Log" %}</h2>
             <a href="{% url 'run_accessibility_scan' %}" class="btn btn-primary">
-                Run Accessibility Scan
+                {% trans "Run Accessibility Scan" %}
             </a>
         </div>
         
@@ -18,12 +19,12 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Type</th>
-                                <th>Performed By</th>
-                                <th>Findings</th>
-                                <th>Severity</th>
-                                <th>Status</th>
-                                <th>Date</th>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Performed By" %}</th>
+                                <th>{% trans "Findings" %}</th>
+                                <th>{% trans "Severity" %}</th>
+                                <th>{% trans "Status" %}</th>
+                                <th>{% trans "Date" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,9 +40,9 @@
                                     </td>
                                     <td>
                                         {% if audit.resolved %}
-                                            <span class="badge bg-success">Resolved</span>
+                                            <span class="badge bg-success">{% trans "Resolved" %}</span>
                                         {% else %}
-                                            <span class="badge bg-warning">Pending</span>
+                                            <span class="badge bg-warning">{% trans "Pending" %}</span>
                                         {% endif %}
                                     </td>
                                     <td>{{ audit.created_at|date:"M d, Y" }}</td>

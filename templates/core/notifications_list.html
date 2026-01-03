@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Notifications - AUA LMS{% endblock %}
+{% block title %}{% trans "Notifications" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Notifications</h2>
+            <h2>{% trans "Notifications" %}</h2>
             <a href="{% url 'mark_all_notifications_read' %}" class="btn btn-outline-primary btn-sm">
-                Mark All as Read
+                {% trans "Mark All as Read" %}
             </a>
         </div>
         
@@ -19,7 +20,7 @@
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">
                                 {% if not notification.is_read %}
-                                    <span class="badge bg-primary">New</span>
+                                    <span class="badge bg-primary">{% trans "New" %}</span>
                                 {% endif %}
                                 {{ notification.title }}
                             </h5>
@@ -30,7 +31,7 @@
                             <span class="badge bg-secondary">{{ notification.notification_type|title }}</span>
                             {% if not notification.is_read %}
                                 <a href="{% url 'mark_notification_read' notification.pk %}?redirect_url=notifications_list" class="btn btn-sm btn-outline-primary">
-                                    Mark as Read
+                                    {% trans "Mark as Read" %}
                                 </a>
                             {% endif %}
                         </div>
@@ -39,7 +40,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                <p>You have no notifications yet.</p>
+                <p>{% trans "You have no notifications yet." %}</p>
             </div>
         {% endif %}
     </div>

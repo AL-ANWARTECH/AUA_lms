@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Analytics Dashboard - AUA LMS{% endblock %}
+{% block title %}{% trans "Analytics Dashboard" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Analytics Dashboard</h2>
-        <p>View insights and analytics for your courses and students.</p>
+        <h2>{% trans "Analytics Dashboard" %}</h2>
+        <p>{% trans "View insights and analytics for your courses and students." %}</p>
     </div>
 </div>
 
@@ -15,7 +16,7 @@
     <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-primary text-white">
             <div class="card-body">
-                <h5 class="card-title">Total Enrollments</h5>
+                <h5 class="card-title">{% trans "Total Enrollments" %}</h5>
                 <h2 class="card-text">{{ total_enrollments }}</h2>
             </div>
         </div>
@@ -23,7 +24,7 @@
     <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-success text-white">
             <div class="card-body">
-                <h5 class="card-title">Course Completions</h5>
+                <h5 class="card-title">{% trans "Course Completions" %}</h5>
                 <h2 class="card-text">{{ total_completions }}</h2>
             </div>
         </div>
@@ -31,7 +32,7 @@
     <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-info text-white">
             <div class="card-body">
-                <h5 class="card-title">Lessons Completed</h5>
+                <h5 class="card-title">{% trans "Lessons Completed" %}</h5>
                 <h2 class="card-text">{{ total_lessons_completed }}</h2>
             </div>
         </div>
@@ -39,7 +40,7 @@
     <div class="col-md-6 col-lg-3 mb-3">
         <div class="card bg-warning text-white">
             <div class="card-body">
-                <h5 class="card-title">Quiz Attempts</h5>
+                <h5 class="card-title">{% trans "Quiz Attempts" %}</h5>
                 <h2 class="card-text">{{ total_quiz_attempts }}</h2>
             </div>
         </div>
@@ -51,7 +52,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5>Enrollment Trend (Last 7 Days)</h5>
+                <h5>{% trans "Enrollment Trend (Last 7 Days)" %}</h5>
             </div>
             <div class="card-body">
                 <canvas id="enrollmentChart"></canvas>
@@ -64,21 +65,21 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5>Quick Actions</h5>
+                <h5>{% trans "Quick Actions" %}</h5>
             </div>
             <div class="card-body">
-                <a href="{% url 'generate_report' %}" class="btn btn-primary btn-block mb-2 w-100">Generate Report</a>
-                <a href="{% url 'course_list' %}" class="btn btn-outline-primary btn-block w-100">View Courses</a>
+                <a href="{% url 'generate_report' %}" class="btn btn-primary btn-block mb-2 w-100">{% trans "Generate Report" %}</a>
+                <a href="{% url 'course_list' %}" class="btn btn-outline-primary btn-block w-100">{% trans "View Courses" %}</a>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5>Recent Activity</h5>
+                <h5>{% trans "Recent Activity" %}</h5>
             </div>
             <div class="card-body">
-                <p class="text-muted">Recent analytics data will appear here.</p>
+                <p class="text-muted">{% trans "Recent analytics data will appear here." %}</p>
             </div>
         </div>
     </div>
@@ -98,7 +99,7 @@
                 {% endfor %}
             ],
             datasets: [{
-                label: 'New Enrollments',
+                label: '{% trans "New Enrollments" %}',
                  [
                     {% for item in enrollment_trend %}
                         {{ item.count }},
@@ -115,7 +116,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Enrollment Trend'
+                    text: '{% trans "Enrollment Trend" %}'
                 }
             }
         }

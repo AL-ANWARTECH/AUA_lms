@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}{{ course.title }} - Forum - AUA LMS{% endblock %}
+{% block title %}{{ course.title }} - {% trans "Forum" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">{% trans "Courses" %}</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
-                <li class="breadcrumb-item active">Forum</li>
+                <li class="breadcrumb-item active">{% trans "Forum" %}</li>
             </ol>
         </nav>
     </div>
@@ -22,7 +23,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3>{{ forum.title }}</h3>
-                    <a href="{% url 'create_topic' forum.pk %}" class="btn btn-primary">Create Topic</a>
+                    <a href="{% url 'create_topic' forum.pk %}" class="btn btn-primary">{% trans "Create Topic" %}</a>
                 </div>
                 <p class="text-muted">{{ forum.description }}</p>
             </div>
@@ -32,10 +33,10 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Topic</th>
-                                    <th>Author</th>
-                                    <th>Replies</th>
-                                    <th>Last Post</th>
+                                    <th>{% trans "Topic" %}</th>
+                                    <th>{% trans "Author" %}</th>
+                                    <th>{% trans "Replies" %}</th>
+                                    <th>{% trans "Last Post" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,10 +46,10 @@
                                             <a href="{% url 'topic_detail' topic.pk %}" class="text-decoration-none">
                                                 <strong>{{ topic.title }}</strong>
                                                 {% if topic.is_pinned %}
-                                                    <span class="badge bg-primary ms-1">Pinned</span>
+                                                    <span class="badge bg-primary ms-1">{% trans "Pinned" %}</span>
                                                 {% endif %}
                                                 {% if topic.is_closed %}
-                                                    <span class="badge bg-secondary ms-1">Closed</span>
+                                                    <span class="badge bg-secondary ms-1">{% trans "Closed" %}</span>
                                                 {% endif %}
                                             </a>
                                             <br>
@@ -59,9 +60,9 @@
                                         <td>
                                             {% if topic.posts.last %}
                                                 {{ topic.posts.last.created_at|date:"M d, Y H:i" }}<br>
-                                                by {{ topic.posts.last.author.username }}
+                                                {% trans "by" %} {{ topic.posts.last.author.username }}
                                             {% else %}
-                                                No posts yet
+                                                {% trans "No posts yet" %}
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -70,7 +71,7 @@
                         </table>
                     </div>
                 {% else %}
-                    <p class="text-muted">No topics have been created yet. Be the first to start a discussion!</p>
+                    <p class="text-muted">{% trans "No topics have been created yet. Be the first to start a discussion!" %}</p>
                 {% endif %}
             </div>
         </div>

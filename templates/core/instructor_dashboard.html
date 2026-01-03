@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Instructor Dashboard - AUA LMS{% endblock %}
+{% block title %}{% trans "Instructor Dashboard" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Instructor Dashboard</h2>
-        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
-        <p>Your role: <strong>{{ user_role|title }}</strong></p>
+        <h2>{% trans "Instructor Dashboard" %}</h2>
+        <p>{% blocktrans %}Welcome, <strong>{{ user.username }}</strong>!{% endblocktrans %}</p>
+        <p>{% blocktrans %}Your role: <strong>{{ user_role|title }}</strong>{% endblocktrans %}</p>
         
         <div class="card mt-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">Your Courses</h5>
-                    <a href="{% url 'create_course' %}" class="btn btn-primary">Create New Course</a>
+                    <h5 class="card-title">{% trans "Your Courses" %}</h5>
+                    <a href="{% url 'create_course' %}" class="btn btn-primary">{% trans "Create New Course" %}</a>
                 </div>
                 
                 {% if courses %}
@@ -25,20 +26,20 @@
                                         <img src="{{ course.thumbnail.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 150px; object-fit: cover;">
                                     {% else %}
                                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                                            <span class="text-muted">No Thumbnail</span>
+                                            <span class="text-muted">{% trans "No Thumbnail" %}</span>
                                         </div>
                                     {% endif %}
                                     <div class="card-body d-flex flex-column">
                                         <h6 class="card-title">{{ course.title }}</h6>
                                         <p class="card-text small text-muted">{{ course.description|truncatewords:15 }}</p>
                                         <p class="text-muted small">
-                                            <strong>Category:</strong> {{ course.category.name|default:"Uncategorized" }}<br>
-                                            <strong>Created:</strong> {{ course.created_at|date:"M d, Y" }}<br>
-                                            <strong>Modules:</strong> {{ course.modules.count }}
+                                            <strong>{% trans "Category:" %}</strong> {{ course.category.name|default:_("Uncategorized") }}<br>
+                                            <strong>{% trans "Created:" %}</strong> {{ course.created_at|date:"M d, Y" }}<br>
+                                            <strong>{% trans "Modules:" %}</strong> {{ course.modules.count }}
                                         </p>
                                         <div class="mt-auto">
-                                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-sm btn-outline-primary">View</a>
-                                            <a href="{% url 'create_module' course.pk %}" class="btn btn-sm btn-outline-success">Add Module</a>
+                                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-sm btn-outline-primary">{% trans "View" %}</a>
+                                            <a href="{% url 'create_module' course.pk %}" class="btn btn-sm btn-outline-success">{% trans "Add Module" %}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -46,18 +47,22 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <p class="text-muted">You haven't created any courses yet.</p>
-                    <p><a href="{% url 'create_course' %}" class="btn btn-primary">Create Your First Course</a></p>
+                    <p class="text-muted">{% trans "You haven't created any courses yet." %}</p>
+                    <p><a href="{% url 'create_course' %}" class="btn btn-primary">{% trans "Create Your First Course" %}</a></p>
                 {% endif %}
             </div>
         </div>
         
         <div class="card mt-3">
             <div class="card-body">
-                <h5 class="card-title">Statistics</h5>
+                <h5 class="card-title">{% trans "Statistics" %}</h5>
                 <p class="card-text">
-                    <strong>Total Courses:</strong> {{ courses.count }}<br>
-                    <strong>Total Modules:</strong> {% for course in courses %}{{ course.modules.count }}{% if not forloop.last %} + {% endif %}{% endfor %} <!-- Will be updated in next step -->
+                    <strong>{% trans "Total Courses:" %}</strong> {{ courses.count }}<br>
+                    <strong>{% trans "Total Modules:" %}</strong> 
+                    {% for course in courses %}
+                        {{ course.modules.count }}
+                        {% if not forloop.last %} + {% endif %}
+                    {% endfor %} <!-- Will be updated in next step -->
                 </p>
             </div>
         </div>

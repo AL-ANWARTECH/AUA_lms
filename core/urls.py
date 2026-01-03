@@ -1,8 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.views.i18n import set_language
 from . import views
 
 urlpatterns = [
+    path('set_language/', set_language, name='set_language'),  # Add this for language switching
     path('', views.home, name='home'),
     path('register/', views.register, name='register'),
     path('login/', views.CustomLoginView.as_view(), name='login'),

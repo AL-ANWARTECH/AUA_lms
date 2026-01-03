@@ -22,6 +22,7 @@ from .accessibility_forms import AccessibilitySettingsForm
 from django.db.models import Count, Avg, Sum
 from datetime import datetime, timedelta
 import json
+from django.utils.translation import gettext as _
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -146,7 +147,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, f'Account created successfully! Welcome, {user.username}!')
+            messages.success(request, _('Account created successfully! Welcome, %(username)s!') % {'username': user.username})
             login(request, user)  # Automatically log in the user after registration
             return redirect('dashboard')
     else:
@@ -252,8 +253,8 @@ def create_course(request):
             # Create notification for all enrolled students
             create_notification(
                 recipient=course.instructor,
-                title=f"New course created: {course.title}",
-                message=f"You have successfully created the course '{course.title}'.",
+                title=_('New course created: %(title)s') % {'title': course.title},
+                message=_('You have successfully created the course "%(title)s".') % {'title': course.title},
                 notification_type='course_update',
                 related_course=course
             )
@@ -297,12 +298,20 @@ def create_module(request, course_pk):
             for enrollment in course.enrollments.all():
                 create_notification(
                     recipient=enrollment.student,
-                    title=f"New module added: {module.title}",
-                    message=f"A new module '{module.title}' has been added to the course '{course.title}'.",
+                    title=_('New module added: %(title)s') % {'title': module.title},
+                    message=_('A new module "%(title)s" has been added to the course "%(course_title)s".') % {'title': module.title, 'course_title': course.title},
                     notification_type='course_update',
                     related_course=course,
                     related_module=module
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=course,
+                user=course.instructor,
+                value=1.0,
+                metadata={'action': 'create_module', 'module_id': module.id}
+            )
             return redirect('course_detail', pk=course.pk)
     else:
         from .course_forms import ModuleForm
@@ -339,13 +348,21 @@ def create_lesson(request, module_pk):
             for enrollment in module.course.enrollments.all():
                 create_notification(
                     recipient=enrollment.student,
-                    title=f"New lesson added: {lesson.title}",
-                    message=f"A new lesson '{lesson.title}' has been added to the course '{module.course.title}'.",
+                    title=_('New lesson added: %(title)s') % {'title': lesson.title},
+                    message=_('A new lesson "%(title)s" has been added to the course "%(course_title)s".') % {'title': lesson.title, 'course_title': module.course.title},
                     notification_type='course_update',
                     related_course=module.course,
                     related_module=module,
                     related_lesson=lesson
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=module.course,
+                user=module.course.instructor,
+                value=1.0,
+                metadata={'action': 'create_lesson', 'lesson_id': lesson.id}
+            )
             return redirect('course_detail', pk=module.course.pk)
     else:
         from .course_forms import LessonForm
@@ -378,25 +395,33 @@ def enroll_course(request, pk):
     )
     
     if created:
-        messages.success(request, f'You have successfully enrolled in {course.title}!')
+        messages.success(request, _('You have successfully enrolled in %(course_title)s!') % {'course_title': course.title})
         # Create notification for the student
         create_notification(
             recipient=request.user,
-            title=f"Enrolled in {course.title}",
-            message=f"You have successfully enrolled in the course '{course.title}'.",
+            title=_('Enrolled in %(course_title)s') % {'course_title': course.title},
+            message=_('You have successfully enrolled in the course "%(course_title)s".') % {'course_title': course.title},
             notification_type='enrollment',
             related_course=course
         )
         # Create notification for the instructor
         create_notification(
             recipient=course.instructor,
-            title=f"New student enrolled: {request.user.username}",
-            message=f"{request.user.username} has enrolled in your course '{course.title}'.",
+            title=_('New student enrolled: %(username)s') % {'username': request.user.username},
+            message=_('%(username)s has enrolled in your course "%(course_title)s".') % {'username': request.user.username, 'course_title': course.title},
             notification_type='enrollment',
             related_course=course
         )
+        # Log analytics event
+        log_analytics_event(
+            'course_enrollment',
+            course=course,
+            user=request.user,
+            value=1.0,
+            metadata={'action': 'enroll_course'}
+        )
     else:
-        messages.info(request, f'You are already enrolled in {course.title}.')
+        messages.info(request, _('You are already enrolled in %(course_title)s.') % {'course_title': course.title})
     
     return redirect('course_detail', pk=pk)
 
@@ -417,17 +442,25 @@ def unenroll_course(request, pk):
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
         enrollment.delete()
-        messages.success(request, f'You have successfully unenrolled from {course.title}.')
+        messages.success(request, _('You have successfully unenrolled from %(course_title)s.') % {'course_title': course.title})
         # Create notification for the student
         create_notification(
             recipient=request.user,
-            title=f"Unenrolled from {course.title}",
-            message=f"You have successfully unenrolled from the course '{course.title}'.",
+            title=_('Unenrolled from %(course_title)s') % {'course_title': course.title},
+            message=_('You have successfully unenrolled from the course "%(course_title)s".') % {'course_title': course.title},
             notification_type='enrollment',
             related_course=course
         )
+        # Log analytics event
+        log_analytics_event(
+            'course_enrollment',
+            course=course,
+            user=request.user,
+            value=-1.0,
+            metadata={'action': 'unenroll_course'}
+        )
     except Enrollment.DoesNotExist:
-        messages.warning(request, f'You were not enrolled in {course.title}.')
+        messages.warning(request, _('You were not enrolled in %(course_title)s.') % {'course_title': course.title})
     
     return redirect('student_dashboard')
 
@@ -450,7 +483,7 @@ def lesson_detail(request, pk):
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
     except Enrollment.DoesNotExist:
-        messages.error(request, "You must be enrolled in the course to access this lesson.")
+        messages.error(request, _("You must be enrolled in the course to access this lesson."))
         return redirect('course_detail', pk=course.pk)
     
     # Check if lesson is already completed
@@ -484,22 +517,31 @@ def complete_lesson(request, pk):
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
     except Enrollment.DoesNotExist:
-        messages.error(request, "You must be enrolled in the course to complete lessons.")
+        messages.error(request, _("You must be enrolled in the course to complete lessons."))
         return redirect('course_detail', pk=course.pk)
     
     # Add lesson to completed lessons
     enrollment.completed_lessons.add(lesson)
-    messages.success(request, f'Lesson "{lesson.title}" marked as completed!')
+    messages.success(request, _('Lesson "%(title)s" marked as completed!') % {'title': lesson.title})
     
     # Create notification for the student
     create_notification(
         recipient=request.user,
-        title=f"Lesson completed: {lesson.title}",
-        message=f"You have completed the lesson '{lesson.title}' in course '{course.title}'.",
+        title=_('Lesson completed: %(title)s') % {'title': lesson.title},
+        message=_('You have completed the lesson "%(title)s" in course "%(course_title)s".') % {'title': lesson.title, 'course_title': course.title},
         notification_type='course_update',
         related_course=course,
         related_module=lesson.module,
         related_lesson=lesson
+    )
+    
+    # Log analytics event
+    log_analytics_event(
+        'lesson_completion',
+        course=course,
+        user=request.user,
+        value=1.0,
+        metadata={'action': 'complete_lesson', 'lesson_id': lesson.id}
     )
     
     # Redirect to next lesson or back to course
@@ -544,22 +586,31 @@ def uncomplete_lesson(request, pk):
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
     except Enrollment.DoesNotExist:
-        messages.error(request, "You must be enrolled in the course to modify lesson completion.")
+        messages.error(request, _("You must be enrolled in the course to modify lesson completion."))
         return redirect('course_detail', pk=course.pk)
     
     # Remove lesson from completed lessons
     enrollment.completed_lessons.remove(lesson)
-    messages.success(request, f'Lesson "{lesson.title}" marked as incomplete.')
+    messages.success(request, _('Lesson "%(title)s" marked as incomplete.') % {'title': lesson.title})
     
     # Create notification for the student
     create_notification(
         recipient=request.user,
-        title=f"Lesson marked as incomplete: {lesson.title}",
-        message=f"You have marked the lesson '{lesson.title}' as incomplete in course '{course.title}'.",
+        title=_('Lesson marked as incomplete: %(title)s') % {'title': lesson.title},
+        message=_('You have marked the lesson "%(title)s" as incomplete in course "%(course_title)s".') % {'title': lesson.title, 'course_title': course.title},
         notification_type='course_update',
         related_course=course,
         related_module=lesson.module,
         related_lesson=lesson
+    )
+    
+    # Log analytics event
+    log_analytics_event(
+        'lesson_completion',
+        course=course,
+        user=request.user,
+        value=-1.0,
+        metadata={'action': 'uncomplete_lesson', 'lesson_id': lesson.id}
     )
     
     return redirect('lesson_detail', pk=pk)
@@ -585,17 +636,25 @@ def create_quiz(request, lesson_pk):
             quiz = form.save(commit=False)
             quiz.lesson = lesson
             quiz.save()
-            messages.success(request, f'Quiz "{quiz.title}" created successfully!')
+            messages.success(request, _('Quiz "%(title)s" created successfully!') % {'title': quiz.title})
             # Create notification for all enrolled students
             for enrollment in lesson.module.course.enrollments.all():
                 create_notification(
                     recipient=enrollment.student,
-                    title=f"New quiz available: {quiz.title}",
-                    message=f"A new quiz '{quiz.title}' has been added to the course '{lesson.module.course.title}'.",
+                    title=_('New quiz available: %(title)s') % {'title': quiz.title},
+                    message=_('A new quiz "%(title)s" has been added to the course "%(course_title)s".') % {'title': quiz.title, 'course_title': lesson.module.course.title},
                     notification_type='course_update',
                     related_course=lesson.module.course,
                     related_module=lesson.module
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=lesson.module.course,
+                user=lesson.module.course.instructor,
+                value=1.0,
+                metadata={'action': 'create_quiz', 'quiz_id': quiz.id}
+            )
             return redirect('manage_quiz', pk=quiz.pk)
     else:
         from .quiz_forms import QuizForm
@@ -684,7 +743,7 @@ def edit_question(request, pk):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            messages.success(request, "Question updated successfully!")
+            messages.success(request, _("Question updated successfully!"))
             return redirect('manage_quiz', pk=question.quiz.pk)
     else:
         from .quiz_forms import QuestionForm, AnswerOptionFormSet
@@ -718,7 +777,7 @@ def take_quiz(request, quiz_pk):
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
     except Enrollment.DoesNotExist:
-        messages.error(request, "You must be enrolled in the course to take this quiz.")
+        messages.error(request, _("You must be enrolled in the course to take this quiz."))
         return redirect('course_detail', pk=course.pk)
     
     # Check if user can take the quiz
@@ -728,7 +787,7 @@ def take_quiz(request, quiz_pk):
     ).count()
     
     if attempt_count >= quiz.max_attempts:
-        messages.error(request, "You have reached the maximum number of attempts for this quiz.")
+        messages.error(request, _("You have reached the maximum number of attempts for this quiz."))
         return redirect('lesson_detail', pk=lesson.pk)
     
     questions = quiz.questions.all().prefetch_related('answer_options')
@@ -851,15 +910,15 @@ def submit_quiz(request, quiz_pk):
         if quiz_attempt.score >= quiz.passing_score:
             messages.success(
                 request, 
-                f"Quiz completed! Score: {quiz_attempt.score:.1f}% (Passed!)"
+                _('Quiz completed! Score: %(score).1f%% (Passed!)') % {'score': quiz_attempt.score}
             )
             # Mark lesson as completed if quiz was passed
             enrollment.completed_lessons.add(lesson)
             # Create notification for the student
             create_notification(
                 recipient=request.user,
-                title=f"Quiz passed: {quiz.title}",
-                message=f"You have passed the quiz '{quiz.title}' with a score of {quiz_attempt.score:.1f}%.",
+                title=_('Quiz passed: %(title)s') % {'title': quiz.title},
+                message=_('You have passed the quiz "%(title)s" with a score of %(score).1f%%.') % {'title': quiz.title, 'score': quiz_attempt.score},
                 notification_type='grade_update',
                 related_course=course,
                 related_module=lesson.module
@@ -867,17 +926,26 @@ def submit_quiz(request, quiz_pk):
         else:
             messages.info(
                 request, 
-                f"Quiz completed! Score: {quiz_attempt.score:.1f}% (Need {quiz.passing_score}% to pass)"
+                _('Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)') % {'score': quiz_attempt.score, 'passing_score': quiz.passing_score}
             )
             # Create notification for the student
             create_notification(
                 recipient=request.user,
-                title=f"Quiz failed: {quiz.title}",
-                message=f"You have failed the quiz '{quiz.title}' with a score of {quiz_attempt.score:.1f}%.",
+                title=_('Quiz failed: %(title)s') % {'title': quiz.title},
+                message=_('You have failed the quiz "%(title)s" with a score of %(score).1f%%.') % {'title': quiz.title, 'score': quiz_attempt.score},
                 notification_type='grade_update',
                 related_course=course,
                 related_module=lesson.module
             )
+        
+        # Log analytics event
+        log_analytics_event(
+            'quiz_attempt',
+            course=course,
+            user=request.user,
+            value=quiz_attempt.score,
+            metadata={'action': 'submit_quiz', 'quiz_id': quiz.id, 'score': quiz_attempt.score}
+        )
         
         return redirect('lesson_detail', pk=lesson.pk)
     
@@ -904,17 +972,29 @@ def create_assignment(request, lesson_pk):
             assignment = form.save(commit=False)
             assignment.lesson = lesson
             assignment.save()
-            messages.success(request, f'Assignment "{assignment.title}" created successfully!')
+            messages.success(request, _('Assignment "%(title)s" created successfully!') % {'title': assignment.title})
             # Create notification for all enrolled students
             for enrollment in lesson.module.course.enrollments.all():
                 create_notification(
                     recipient=enrollment.student,
-                    title=f"New assignment: {assignment.title}",
-                    message=f"A new assignment '{assignment.title}' has been added to the course '{lesson.module.course.title}'. Due date: {assignment.due_date.strftime('%B %d, %Y')}",
+                    title=_('New assignment: %(title)s') % {'title': assignment.title},
+                    message=_('A new assignment "%(title)s" has been added to the course "%(course_title)s". Due date: %(due_date)s') % {
+                        'title': assignment.title,
+                        'course_title': lesson.module.course.title,
+                        'due_date': assignment.due_date.strftime('%B %d, %Y')
+                    },
                     notification_type='assignment_due',
                     related_course=lesson.module.course,
                     related_module=lesson.module
                 )
+            # Log analytics event
+            log_analytics_event(
+                'course_enrollment',
+                course=lesson.module.course,
+                user=lesson.module.course.instructor,
+                value=1.0,
+                metadata={'action': 'create_assignment', 'assignment_id': assignment.id}
+            )
             return redirect('lesson_detail', pk=lesson.pk)
     else:
         from .assignment_forms import AssignmentForm
@@ -1083,21 +1163,21 @@ def record_grade(request, enrollment_pk, grade_type, item_pk):
         if grade_type == 'assignment':
             create_notification(
                 recipient=enrollment.student,
-                title=f"Grade recorded for {assignment.title}",
-                message=f"Your grade for assignment '{assignment.title}' has been recorded: {score}/{max_points}",
+                title=_('Grade recorded for %(title)s') % {'title': assignment.title},
+                message=_('Your grade for assignment "%(title)s" has been recorded: %(score)d/%(max_points)d') % {'title': assignment.title, 'score': score, 'max_points': max_points},
                 notification_type='grade_update',
                 related_course=enrollment.course
             )
         elif grade_type == 'quiz':
             create_notification(
                 recipient=enrollment.student,
-                title=f"Grade recorded for {quiz.title}",
-                message=f"Your grade for quiz '{quiz.title}' has been recorded: {score}/{max_points}",
+                title=_('Grade recorded for %(title)s') % {'title': quiz.title},
+                message=_('Your grade for quiz "%(title)s" has been recorded: %(score)d/%(max_points)d') % {'title': quiz.title, 'score': score, 'max_points': max_points},
                 notification_type='grade_update',
                 related_course=enrollment.course
             )
         
-        messages.success(request, "Grade recorded successfully!")
+        messages.success(request, _("Grade recorded successfully!"))
     
     redirect_url = request.POST.get('redirect_url', 'dashboard')
     return redirect(redirect_url)
@@ -1123,7 +1203,7 @@ def course_forum(request, course_pk):
     
     # Only enrolled students and instructors can access the forum
     if not (is_enrolled or is_instructor):
-        messages.error(request, "You must be enrolled in the course to access the forum.")
+        messages.error(request, _("You must be enrolled in the course to access the forum."))
         return redirect('course_detail', pk=course.pk)
     
     # Get forum for this course
@@ -1162,7 +1242,7 @@ def create_topic(request, forum_pk):
     
     # Only enrolled students and instructors can create topics
     if not (is_enrolled or is_instructor):
-        messages.error(request, "You must be enrolled in the course to create topics.")
+        messages.error(request, _("You must be enrolled in the course to create topics."))
         return redirect('course_forum', course_pk=course.pk)
     
     if request.method == 'POST':
@@ -1176,18 +1256,26 @@ def create_topic(request, forum_pk):
                 content=content,
                 author=request.user
             )
-            messages.success(request, f'Topic "{topic.title}" created successfully!')
+            messages.success(request, _('Topic "%(title)s" created successfully!') % {'title': topic.title})
             # Create notification for the instructor
             create_notification(
                 recipient=course.instructor,
-                title=f"New topic created: {topic.title}",
-                message=f"{request.user.username} has created a new topic '{topic.title}' in course '{course.title}'.",
+                title=_('New topic created: %(title)s') % {'title': topic.title},
+                message=_('%(username)s has created a new topic "%(title)s" in course "%(course_title)s".') % {'username': request.user.username, 'title': topic.title, 'course_title': course.title},
                 notification_type='forum_post',
                 related_course=course
             )
+            # Log analytics event
+            log_analytics_event(
+                'forum_activity',
+                course=course,
+                user=request.user,
+                value=1.0,
+                metadata={'action': 'create_topic', 'topic_id': topic.id}
+            )
             return redirect('topic_detail', topic_pk=topic.pk)
         else:
-            messages.error(request, "Please fill in both title and content.")
+            messages.error(request, _("Please fill in both title and content."))
     
     context = {
         'forum': forum,
@@ -1219,7 +1307,7 @@ def topic_detail(request, topic_pk):
     
     # Only enrolled students and instructors can access the topic
     if not (is_enrolled or is_instructor):
-        messages.error(request, "You must be enrolled in the course to access this topic.")
+        messages.error(request, _("You must be enrolled in the course to access this topic."))
         return redirect('course_forum', course_pk=course.pk)
     
     posts = topic.posts.all().prefetch_related('author')
@@ -1256,7 +1344,7 @@ def create_post(request, topic_pk):
     
     # Only enrolled students and instructors can create posts
     if not (is_enrolled or is_instructor):
-        messages.error(request, "You must be enrolled in the course to create posts.")
+        messages.error(request, _("You must be enrolled in the course to create posts."))
         return redirect('topic_detail', topic_pk=topic.pk)
     
     if request.method == 'POST':
@@ -1268,27 +1356,35 @@ def create_post(request, topic_pk):
                 content=content,
                 author=request.user
             )
-            messages.success(request, "Post created successfully!")
+            messages.success(request, _("Post created successfully!"))
             # Create notification for the topic author
             if post.topic.author != request.user:
                 create_notification(
                     recipient=post.topic.author,
-                    title=f"New reply to your topic: {post.topic.title}",
-                    message=f"{request.user.username} replied to your topic '{post.topic.title}'",
+                    title=_('New reply to your topic: %(title)s') % {'title': post.topic.title},
+                    message=_('%(username)s replied to your topic "%(title)s"') % {'username': request.user.username, 'title': post.topic.title},
                     notification_type='forum_post',
                     related_course=course
                 )
             # Create notification for the instructor
             create_notification(
                 recipient=course.instructor,
-                title=f"New post in {post.topic.title}",
-                message=f"{request.user.username} made a new post in topic '{post.topic.title}' in course '{course.title}'.",
+                title=_('New post in %(title)s') % {'title': post.topic.title},
+                message=_('%(username)s made a new post in topic "%(topic_title)s" in course "%(course_title)s".') % {'username': request.user.username, 'topic_title': post.topic.title, 'course_title': course.title},
                 notification_type='forum_post',
                 related_course=course
             )
+            # Log analytics event
+            log_analytics_event(
+                'forum_activity',
+                course=course,
+                user=request.user,
+                value=1.0,
+                metadata={'action': 'create_post', 'post_id': post.id}
+            )
             return redirect('topic_detail', topic_pk=topic.pk)
         else:
-            messages.error(request, "Please enter content for your post.")
+            messages.error(request, _("Please enter content for your post."))
     
     return redirect('topic_detail', topic_pk=topic.pk)
 
@@ -1308,12 +1404,12 @@ def generate_certificate(request, enrollment_pk):
     is_instructor = (request.user.role == 'instructor' and enrollment.course.instructor == request.user)
     
     if not (is_student or is_instructor):
-        messages.error(request, "You don't have permission to access this certificate.")
+        messages.error(request, _("You don't have permission to access this certificate."))
         return redirect('dashboard')
     
     # Check if course is completed (80% or more progress)
     if enrollment.progress_percentage() < 80:
-        messages.error(request, "You must complete at least 80% of the course to earn a certificate.")
+        messages.error(request, _("You must complete at least 80% of the course to earn a certificate."))
         return redirect('course_detail', pk=enrollment.course.pk)
     
     # Check if certificate already exists
@@ -1321,14 +1417,22 @@ def generate_certificate(request, enrollment_pk):
     
     if created:
         # Certificate was just created
-        messages.success(request, "Certificate generated successfully!")
+        messages.success(request, _("Certificate generated successfully!"))
         # Create notification for the student
         create_notification(
             recipient=enrollment.student,
-            title=f"Certificate earned: {enrollment.course.title}",
-            message=f"You have earned a certificate for completing the course '{enrollment.course.title}'.",
+            title=_('Certificate earned: %(course_title)s') % {'course_title': enrollment.course.title},
+            message=_('You have earned a certificate for completing the course "%(course_title)s".') % {'course_title': enrollment.course.title},
             notification_type='certificate_earned',
             related_course=enrollment.course
+        )
+        # Log analytics event
+        log_analytics_event(
+            'certificate_issuance',
+            course=enrollment.course,
+            user=enrollment.student,
+            value=1.0,
+            metadata={'action': 'generate_certificate', 'certificate_id': certificate.certificate_id}
         )
     
     # Generate PDF certificate
@@ -1343,8 +1447,8 @@ def generate_certificate(request, enrollment_pk):
         # Create a default template if none exists
         template = CertificateTemplate.objects.create(
             course=enrollment.course,
-            title="Certificate of Completion",
-            description="This is to certify that the student has successfully completed the course."
+            title=_("Certificate of Completion"),
+            description=_("This is to certify that the student has successfully completed the course.")
         )
     
     # Use default values if template is not set
@@ -1382,16 +1486,16 @@ def generate_certificate(request, enrollment_pk):
     p.drawCentredString(width/2.0, height - 3.5*inch, enrollment.student.get_full_name() or enrollment.student.username)
     
     p.setFont("Helvetica", font_size)
-    p.drawCentredString(width/2.0, height - 4*inch, f"for completing the course:")
+    p.drawCentredString(width/2.0, height - 4*inch, _("for completing the course:"))
     p.setFont("Helvetica-Bold", font_size + 2)
     p.drawCentredString(width/2.0, height - 4.5*inch, enrollment.course.title)
     
     p.setFont("Helvetica", font_size - 2)
-    p.drawCentredString(width/2.0, height - 6*inch, f"Certificate ID: {certificate.certificate_id}")
-    p.drawCentredString(width/2.0, height - 6.3*inch, f"Issued on: {certificate.issued_at.strftime('%B %d, %Y')}")
+    p.drawCentredString(width/2.0, height - 6*inch, _("Certificate ID: %(id)s") % {'id': certificate.certificate_id})
+    p.drawCentredString(width/2.0, height - 6.3*inch, _("Issued on: %(date)s") % {'date': certificate.issued_at.strftime('%B %d, %Y')})
     
     p.setFont("Helvetica-Oblique", font_size - 4)
-    p.drawCentredString(width/2.0, height - 7*inch, "Instructor: " + enrollment.course.instructor.get_full_name() or enrollment.course.instructor.username)
+    p.drawCentredString(width/2.0, height - 7*inch, _("Instructor: ") + enrollment.course.instructor.get_full_name() or enrollment.course.instructor.username)
     
     p.showPage()
     p.save()
@@ -1480,7 +1584,7 @@ def manage_certificate_template(request, course_pk):
         form = CertificateTemplateForm(request.POST, request.FILES, instance=template)
         if form.is_valid():
             form.save()
-            messages.success(request, "Certificate template updated successfully!")
+            messages.success(request, _("Certificate template updated successfully!"))
             return redirect('manage_certificate_template', course_pk=course.pk)
     else:
         form = CertificateTemplateForm(instance=template)
@@ -1508,7 +1612,7 @@ def check_certificate_eligibility(request, course_pk):
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
     except Enrollment.DoesNotExist:
-        messages.error(request, "You must be enrolled in the course to check certificate eligibility.")
+        messages.error(request, _("You must be enrolled in the course to check certificate eligibility."))
         return redirect('course_detail', pk=course.pk)
     
     progress = enrollment.progress_percentage()
@@ -1557,7 +1661,7 @@ def notification_preference(request):
         form = NotificationPreferenceForm(request.POST, instance=preferences)
         if form.is_valid():
             form.save()
-            messages.success(request, "Notification preferences updated successfully!")
+            messages.success(request, _("Notification preferences updated successfully!"))
             return redirect('notification_preference')
     else:
         form = NotificationPreferenceForm(instance=preferences)
@@ -1583,7 +1687,7 @@ def mark_notification_read(request, notification_pk):
 def mark_all_notifications_read(request):
     """Mark all notifications as read"""
     Notification.objects.filter(recipient=request.user, is_read=False).update(is_read=True)
-    messages.success(request, "All notifications marked as read!")
+    messages.success(request, _("All notifications marked as read!"))
     
     # Redirect to the original page or notifications list
     redirect_url = request.GET.get('redirect_url', 'notifications_list')
@@ -1667,7 +1771,7 @@ def generate_report(request):
             report.data = report_data
             
             report.save()
-            messages.success(request, f"Report '{report.title}' generated successfully!")
+            messages.success(request, _('Report "%(title)s" generated successfully!') % {'title': report.title})
             return redirect('view_report', report_pk=report.pk)
     else:
         form = ReportGenerationForm()
@@ -1704,16 +1808,16 @@ def course_analytics(request, course_pk):
     """Analytics for a specific course"""
     course = get_object_or_404(Course, pk=course_pk)
     
+    if request.user.role == 'instructor' and course.instructor != request.user:
+        return redirect('dashboard')
+    elif request.user.role not in ['instructor', 'admin']:
+        return redirect('dashboard')
+    
     # Calculate unread notifications count
     unread_notifications = Notification.objects.filter(
         recipient=request.user, 
         is_read=False
     ).count()
-    
-    if request.user.role == 'instructor' and course.instructor != request.user:
-        return redirect('dashboard')
-    elif request.user.role not in ['instructor', 'admin']:
-        return redirect('dashboard')
     
     # Get course-specific analytics
     analytics_data = Analytics.objects.filter(course=course)
@@ -1772,14 +1876,14 @@ def student_analytics(request, student_pk):
     """Analytics for a specific student"""
     student = get_object_or_404(CustomUser, pk=student_pk)
     
+    if request.user.role not in ['instructor', 'admin']:
+        return redirect('dashboard')
+    
     # Calculate unread notifications count
     unread_notifications = Notification.objects.filter(
         recipient=request.user, 
         is_read=False
     ).count()
-    
-    if request.user.role not in ['instructor', 'admin']:
-        return redirect('dashboard')
     
     # Check if user can view this student's data
     if request.user.role == 'instructor':
@@ -1845,7 +1949,7 @@ def accessibility_settings(request):
         form = AccessibilitySettingsForm(request.POST, instance=settings)
         if form.is_valid():
             form.save()
-            messages.success(request, "Accessibility settings updated successfully!")
+            messages.success(request, _("Accessibility settings updated successfully!"))
             return redirect('accessibility_settings')
     else:
         form = AccessibilitySettingsForm(instance=settings)
@@ -1893,24 +1997,24 @@ def accessibility_statement(request):
     
     context = {
         'statement': """
-        <h2>Accessibility Statement</h2>
-        <p>We are committed to ensuring digital accessibility for all users. Our website and application are designed to meet WCAG 2.1 AA standards.</p>
+        <h2>{% trans "Accessibility Statement" %}</h2>
+        <p>{% trans "We are committed to ensuring digital accessibility for all users. Our website and application are designed to meet WCAG 2.1 AA standards." %}</p>
         
-        <h3>Our Commitment</h3>
-        <p>We continuously work to improve the accessibility of our platform for people with disabilities and older adults.</p>
+        <h3>{% trans "Our Commitment" %}</h3>
+        <p>{% trans "We continuously work to improve the accessibility of our platform for people with disabilities and older adults." %}</p>
         
-        <h3>Features Available</h3>
+        <h3>{% trans "Features Available" %}</h3>
         <ul>
-            <li>Keyboard navigation support</li>
-            <li>Screen reader compatibility</li>
-            <li>High contrast mode</li>
-            <li>Large text option</li>
-            <li>Reduced motion settings</li>
-            <li>Focus indicators</li>
+            <li>{% trans "Keyboard navigation support" %}</li>
+            <li>{% trans "Screen reader compatibility" %}</li>
+            <li>{% trans "High contrast mode" %}</li>
+            <li>{% trans "Large text option" %}</li>
+            <li>{% trans "Reduced motion settings" %}</li>
+            <li>{% trans "Focus indicators" %}</li>
         </ul>
         
-        <h3>Feedback</h3>
-        <p>If you encounter any accessibility barriers, please contact us at accessibility@example.com</p>
+        <h3>{% trans "Feedback" %}</h3>
+        <p>{% trans "If you encounter any accessibility barriers, please contact us at accessibility@example.com" %}</p>
         """,
         'unread_notifications': unread_notifications
     }
@@ -1965,10 +2069,10 @@ def run_accessibility_scan(request):
     # For now, we'll simulate finding some issues
     
     findings = [
-        "Missing alt text on 3 images",
-        "Low contrast ratio on 2 elements",
-        "Missing form labels on 1 input",
-        "Keyboard trap detected on modal",
+        _("Missing alt text on 3 images"),
+        _("Low contrast ratio on 2 elements"),
+        _("Missing form labels on 1 input"),
+        _("Keyboard trap detected on modal"),
     ]
     
     for finding in findings:
@@ -1979,7 +2083,7 @@ def run_accessibility_scan(request):
             severity='medium'
         )
     
-    messages.success(request, f"Accessibility scan completed. Found {len(findings)} potential issues.")
+    messages.success(request, _("Accessibility scan completed. Found %(count)d potential issues.") % {'count': len(findings)})
     return redirect('accessibility_audit_log')
 
 def accessibility_resources(request):
@@ -1994,24 +2098,24 @@ def accessibility_resources(request):
     
     resources = [
         {
-            'title': 'Web Content Accessibility Guidelines (WCAG)',
+            'title': _('Web Content Accessibility Guidelines (WCAG)'),
             'url': 'https://www.w3.org/WAI/WCAG21/quickref/',
-            'description': 'Official guidelines for web accessibility'
+            'description': _('Official guidelines for web accessibility')
         },
         {
-            'title': 'Screen Reader Testing',
+            'title': _('Screen Reader Testing'),
             'url': 'https://webaim.org/articles/screenreader_testing/',
-            'description': 'How to test with screen readers'
+            'description': _('How to test with screen readers')
         },
         {
-            'title': 'Color Contrast Checker',
+            'title': _('Color Contrast Checker'),
             'url': 'https://webaim.org/resources/contrastchecker/',
-            'description': 'Tool to check color contrast ratios'
+            'description': _('Tool to check color contrast ratios')
         },
         {
-            'title': 'Keyboard Navigation',
+            'title': _('Keyboard Navigation'),
             'url': 'https://webaim.org/articles/keyboard/',
-            'description': 'Best practices for keyboard accessibility'
+            'description': _('Best practices for keyboard accessibility')
         },
     ]
     

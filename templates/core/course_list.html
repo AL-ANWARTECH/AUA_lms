@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Courses - AUA LMS{% endblock %}
+{% block title %}{% trans "Courses" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Available Courses</h2>
-        <p>Browse our collection of courses.</p>
+        <h2>{% trans "Available Courses" %}</h2>
+        <p>{% trans "Browse our collection of courses." %}</p>
         
         <!-- Search and Filter -->
         <form method="get" class="mb-4">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <input type="text" name="q" class="form-control" placeholder="Search courses..." value="{{ query }}">
+                    <input type="text" name="q" class="form-control" placeholder="{% trans "Search courses..." %}" value="{{ query }}">
                 </div>
                 <div class="col-md-4 mb-3">
                     <select name="category" class="form-select">
-                        <option value="">All Categories</option>
+                        <option value="">{% trans "All Categories" %}</option>
                         {% for cat in categories %}
                             <option value="{{ cat.id }}" {% if selected_category == cat.id %}selected{% endif %}>
                                 {{ cat.name }}
@@ -25,7 +26,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                    <button type="submit" class="btn btn-primary w-100">{% trans "Search" %}</button>
                 </div>
             </div>
         </form>
@@ -41,18 +42,18 @@
                         <img src="{{ course.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ course.title }}" style="height: 200px; object-fit: cover;">
                     {% else %}
                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                            <span class="text-muted">No Thumbnail</span>
+                            <span class="text-muted">{% trans "No Thumbnail" %}</span>
                         </div>
                     {% endif %}
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ course.title }}</h5>
                         <p class="card-text">{{ course.description|truncatewords:15 }}</p>
                         <p class="text-muted">
-                            <strong>Instructor:</strong> {{ course.instructor.username }}<br>
-                            <strong>Category:</strong> {{ course.category.name|default:"Uncategorized" }}
+                            <strong>{% trans "Instructor:" %}</strong> {{ course.instructor.username }}<br>
+                            <strong>{% trans "Category:" %}</strong> {{ course.category.name|default:_("Uncategorized") }}
                         </p>
                         <div class="mt-auto">
-                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">View Course</a>
+                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">{% trans "View Course" %}</a>
                         </div>
                     </div>
                 </div>
@@ -63,11 +64,11 @@
     {% if courses.has_other_pages %}
         <div class="row mt-4">
             <div class="col-12">
-                <nav aria-label="Course pagination">
+                <nav aria-label="{% trans "Course pagination" %}">
                     <ul class="pagination justify-content-center">
                         {% if courses.has_previous %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ courses.previous_page_number }}">Previous</a>
+                                <a class="page-link" href="?page={{ courses.previous_page_number }}&q={{ query }}&category={{ selected_category|default:'' }}">{% trans "Previous" %}</a>
                             </li>
                         {% endif %}
                         
@@ -78,14 +79,14 @@
                                 </li>
                             {% elif num > courses.number|add:'-3' and num < courses.number|add:'3' %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    <a class="page-link" href="?page={{ num }}&q={{ query }}&category={{ selected_category|default:'' }}">{{ num }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
                         
                         {% if courses.has_next %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ courses.next_page_number }}">Next</a>
+                                <a class="page-link" href="?page={{ courses.next_page_number }}&q={{ query }}&category={{ selected_category|default:'' }}">{% trans "Next" %}</a>
                             </li>
                         {% endif %}
                     </ul>
@@ -96,7 +97,7 @@
 {% else %}
     <div class="row">
         <div class="col-12">
-            <p class="text-muted">No courses found. Try adjusting your search criteria.</p>
+            <p class="text-muted">{% trans "No courses found. Try adjusting your search criteria." %}</p>
         </div>
     </div>
 {% endif %}

@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Keyboard Shortcuts - AUA LMS{% endblock %}
+{% block title %}{% trans "Keyboard Shortcuts" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Keyboard Shortcuts</h2>
-        <p>Use these keyboard shortcuts to navigate the LMS efficiently.</p>
+        <h2>{% trans "Keyboard Shortcuts" %}</h2>
+        <p>{% trans "Use these keyboard shortcuts to navigate the LMS efficiently." %}</p>
         
         <div class="card">
             <div class="card-body">
@@ -14,9 +15,9 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Key Combination</th>
-                                <th>Action</th>
-                                <th>Description</th>
+                                <th>{% trans "Key Combination" %}</th>
+                                <th>{% trans "Action" %}</th>
+                                <th>{% trans "Description" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,13 +32,13 @@
                     </table>
                 </div>
                 
-                <h5>General Navigation</h5>
+                <h5>{% trans "General Navigation" %}</h5>
                 <ul>
-                    <li><kbd>Tab</kbd> - Navigate between interactive elements</li>
-                    <li><kbd>Shift + Tab</kbd> - Navigate backwards</li>
-                    <li><kbd>Enter</kbd> - Activate links and buttons</li>
-                    <li><kbd>Space</kbd> - Toggle checkboxes and radio buttons</li>
-                    <li><kbd>Escape</kbd> - Close modals and dropdowns</li>
+                    <li><kbd>Tab</kbd> - {% trans "Navigate between interactive elements" %}</li>
+                    <li><kbd>Shift + Tab</kbd> - {% trans "Navigate backwards" %}</li>
+                    <li><kbd>Enter</kbd> - {% trans "Activate links and buttons" %}</li>
+                    <li><kbd>Space</kbd> - {% trans "Toggle checkboxes and radio buttons" %}</li>
+                    <li><kbd>Escape</kbd> - {% trans "Close modals and dropdowns" %}</li>
                 </ul>
             </div>
         </div>

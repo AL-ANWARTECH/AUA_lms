@@ -1,5 +1,6 @@
 from django import forms
 from .models import NotificationPreference
+from django.utils.translation import gettext_lazy as _
 
 class NotificationPreferenceForm(forms.ModelForm):
     class Meta:
@@ -12,6 +13,14 @@ class NotificationPreferenceForm(forms.ModelForm):
             'forum_posts', 
             'assignment_due'
         ]
+        labels = {
+            'email_notifications': _('Email Notifications'),
+            'in_app_notifications': _('In-App Notifications'),
+            'course_updates': _('Course Updates'),
+            'grade_updates': _('Grade Updates'),
+            'forum_posts': _('Forum Posts'),
+            'assignment_due': _('Assignment Due Dates'),
+        }
         widgets = {
             'email_notifications': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'in_app_notifications': forms.CheckboxInput(attrs={'class': 'form-check-input'}),

@@ -1,0 +1,1500 @@
+# Hausa translations for AUA LMS.
+# Copyright (C) 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 17:31+0100\n"
+"PO-Revision-Date: 2026-01-02 17:31+0100\n"
+"Last-Translator: Anwar Sagir Mustapha <info@techaua.com>\n"
+"Language-Team: Hausa\n"
+"Language: ha\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "High Contrast Mode"
+msgstr "Yanayin Farawa Mai Tsari"
+
+msgid "Large Text Mode"
+msgstr "Yanayin Rubutu Mai Tsari"
+
+msgid "Reduced Motion Mode"
+msgstr "Yanayin Rarraba na Hali"
+
+msgid "Screen Reader Optimized"
+msgstr "Masu Karantawa Ta Atomatik"
+
+msgid "Keyboard Navigation Enabled"
+msgstr "Tafiyar da Keyboard Ta Mmekpa"
+
+msgid "Focus Indicators Enabled"
+msgstr "Alamar Bincike Ta Mmekpa"
+
+msgid "Show Captions for Media"
+msgstr "Nuna Rubutu na Al'amura"
+
+msgid "Audio Volume Level"
+msgstr "Matsayin Lissafi na Audio"
+
+msgid "Preferred Font Size"
+msgstr "Girman Harfin da Ake So"
+
+msgid "Default volume level for media content (0-100)"
+msgstr "Matsayin lissafi na kowa don abun ciki na al'amura (0-100)"
+
+msgid "Role"
+msgstr "Ruwawa"
+
+msgid "Basic Information"
+msgstr "Bayanai Na Kasa"
+
+msgid "Status"
+msgstr "Matsayi"
+
+msgid "Timestamps"
+msgstr "Tsarin Lokaci"
+
+msgid "Progress"
+msgstr "Ci gaba"
+
+msgid "Student"
+msgstr "Daliban"
+
+msgid "Course"
+msgstr "Kursa"
+
+msgid "Global Template"
+msgstr "Gabatar da Tsari na Duniya"
+
+msgid "Start Date"
+msgstr "Lokacin Fara"
+
+msgid "End Date"
+msgstr "Lokacin Kammala"
+
+msgid "Report Title"
+msgstr "Takardun Lissafi"
+
+msgid "Report Type"
+msgstr "Irin Lissafi"
+
+msgid "Widget Type"
+msgstr "Irin Widjet"
+
+msgid "Position"
+msgstr "Gurjiya"
+
+msgid "Is Visible"
+msgstr "Ya Hanu"
+
+msgid "Configuration"
+msgstr "Saituna"
+
+msgid "Assignment Title"
+msgstr "Sunan Aikin"
+
+msgid "Description"
+msgstr "Bayani"
+
+msgid "Due Date"
+msgstr "Lokacin Da Ake Buƙata"
+
+msgid "Maximum Points"
+msgstr "Jimlar Nauyi"
+
+msgid "Enter a descriptive title for the assignment"
+msgstr "Shigar da suna mai bayani domin aikin"
+
+msgid "Provide detailed instructions for the assignment"
+msgstr "Bayar da umarni mai fuskantar domin aikin"
+
+msgid "Set the deadline for the assignment"
+msgstr "Saita lokacin da ake buƙata aikin"
+
+msgid "Maximum points that can be earned"
+msgstr "Jimlar nauyi da za a iya samun"
+
+msgid "Certificate Title"
+msgstr "Sunan Shahada"
+
+msgid "Background Image"
+msgstr "Hoto na Fice-Fice"
+
+msgid "Font Size"
+msgstr "Girman Harafi"
+
+msgid "Text Color"
+msgstr "Lanƙwar Rubutu"
+
+msgid "Active"
+msgstr "Mai Aiki"
+
+msgid "The description that appears on the certificate"
+msgstr "Bayanin da ke hanu a kan shahadar"
+
+msgid "Optional background image for the certificate"
+msgstr "Hoto na fice-fice (zaɓi) domin shahadar"
+
+msgid "Font size for the certificate text"
+msgstr "Girman harafi domin rubutun shahadar"
+
+msgid "Color of the text on the certificate"
+msgstr "Lanƙwar rubutu a kan shahadar"
+
+msgid "Course Title"
+msgstr "Sunan Kursar"
+
+msgid "Category"
+msgstr "Ruwuwa"
+
+msgid "Thumbnail"
+msgstr "Hoto Ƙanan"
+
+msgid "Enter a descriptive title for your course"
+msgstr "Shigar da suna mai bayani domin kursarka"
+
+msgid "Provide a detailed description of the course content"
+msgstr "Bayar da bayani mai fuskantar game da abun ciki na kursar"
+
+msgid "Upload an image that represents your course"
+msgstr "Bipụta hoto wanda ke nuna kursarka"
+
+msgid "Module Title"
+msgstr "Sunan Modulan"
+
+msgid "Enter a title for this module"
+msgstr "Shigar da suna domin wannan modulan"
+
+msgid "Provide a brief description of the module content"
+msgstr "Bayar da bayani ƙanan domin abun ciki na modulan"
+
+msgid "Position of this module in the course sequence"
+msgstr "Matsayin wannan modulan a cikin tsarin kursa"
+
+msgid "Lesson Title"
+msgstr "Sunan Darshen"
+
+msgid "Content Type"
+msgstr "Irin Abun Ciki"
+
+msgid "Content"
+msgstr "Abun Ciki"
+
+msgid "Video URL"
+msgstr "Adireshin Bidiyo"
+
+msgid "File Upload"
+msgstr "Bipụta Fayil"
+
+msgid "Enter a title for this lesson"
+msgstr "Shigar da suna domin wannan darshen"
+
+msgid "Select the type of content for this lesson"
+msgstr "Zaɓi irin abun ciki domin wannan darshen"
+
+msgid "Enter the text content for this lesson"
+msgstr "Shigar da abun ciki na rubutu domin wannan darshen"
+
+msgid "Enter a URL to a video (YouTube, Vimeo, etc.)"
+msgstr "Shigar da URL na bidiyo (YouTube, Vimeo, wdgz.)"
+
+msgid "Upload a file (PDF, document, etc.)"
+msgstr "Bipụta fayil (PDF, takarda, wdgz.)"
+
+msgid "Position of this lesson in the module sequence"
+msgstr "Matsayin wannan darshen a cikin tsarin modulan"
+
+msgid "Instructor"
+msgstr "Malamin"
+
+msgid "Username"
+msgstr "Sunan mallaka"
+
+msgid "Email Address"
+msgstr "Adireshin Imel"
+
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Ake buƙata. Haruffa 150 ko kasa. Haruffa, lambobi, da @/./+/-/_ kawai."
+
+msgid "Password"
+msgstr "Kalmar sirri"
+
+msgid "Password Confirmation"
+msgstr "Tabbatar da Kalmar Sirri"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Categories"
+msgstr "Ruwuwa"
+
+msgid "Text Content"
+msgstr "Abun ciki na rubutu"
+
+msgid "Video"
+msgstr "Bidiyo"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Quiz"
+msgstr "Gwaji"
+
+msgid "Assignment"
+msgstr "Aikin"
+
+msgid "Time limit in minutes"
+msgstr "Lokaci da ake iya yin amin da dakika"
+
+msgid "Maximum number of attempts allowed"
+msgstr "Jimlar yawan gwaje da ake yarda"
+
+msgid "Minimum score percentage to pass"
+msgstr "Ƙanƙanta na ƙididdigar da ake buƙata don tsalle"
+
+msgid "Multiple Choice"
+msgstr "Zabi da yawa"
+
+msgid "True/False"
+msgstr "Gaskiya/Yaudara"
+
+msgid "Short Answer"
+msgstr "Amsa kankanta"
+
+msgid "Time taken in seconds"
+msgstr "Lokaci da aka yi amin da sakin"
+
+msgid "Exam"
+msgstr "Gwaji"
+
+msgid "Course Forum"
+msgstr "Lambar Kursar"
+
+msgid "Certificate of Completion"
+msgstr "Shigar da Sarari na Gama"
+
+msgid "This is to certify that the student has successfully completed the course."
+msgstr "Wannan shine don tabbatar da cewa daliban ya gama kursa da nasara."
+
+msgid "Course Update"
+msgstr "Sabunta Kursa"
+
+msgid "Grade Update"
+msgstr "Sabunta Daga"
+
+msgid "Forum Post"
+msgstr "Fuskar Hira"
+
+msgid "Assignment Due"
+msgstr "Aikin da ake buƙata"
+
+msgid "Certificate Earned"
+msgstr "Sarari da Daliban"
+
+msgid "Enrollment"
+msgstr "Shiga"
+
+msgid "General"
+msgstr "Na Kowa"
+
+msgid "Course Enrollment"
+msgstr "Shiga na Kursa"
+
+msgid "Course Completion"
+msgstr "Gama na Kursa"
+
+msgid "Lesson Completion"
+msgstr "Gama na Darshe"
+
+msgid "Quiz Attempt"
+msgstr "Gwaje da Gwaje"
+
+msgid "Assignment Submission"
+msgstr "Aika aikin"
+
+msgid "Forum Activity"
+msgstr "Ayyukan Hira"
+
+msgid "User Engagement"
+msgstr "Haɗin Mallaka"
+
+msgid "Course Performance"
+msgstr "Ayyukan Kursa"
+
+msgid "Student Progress"
+msgstr "Ci gaban Daliban"
+
+msgid "System Usage"
+msgstr "Amfani da Tsari"
+
+msgid "Grade Distribution"
+msgstr "Rarraba Daga"
+
+msgid "Certificate Issuance"
+msgstr "Bayar da Sarari"
+
+msgid "Enrollment Chart"
+msgstr "Tsarin Shiga"
+
+msgid "Progress Chart"
+msgstr "Tsarin Ci gaba"
+
+msgid "Recent Activities"
+msgstr "Ayyukan Kwanan"
+
+msgid "User Statistics"
+msgstr "Lissafi na Mallaka"
+
+msgid "Course Statistics"
+msgstr "Lissafi na Kursa"
+
+msgid "Default volume level (0-100)"
+msgstr "Matsayin lissafi na kowa (0-100)"
+
+msgid "Small"
+msgstr "Ƙanan"
+
+msgid "Medium"
+msgstr "Tsaka"
+
+msgid "Large"
+msgstr "Babba"
+
+msgid "Extra Large"
+msgstr "Babban Taru"
+
+msgid "Automated Scan"
+msgstr "Bincika Ta Atomatik"
+
+msgid "Manual Review"
+msgstr "Gyara Ta Hand"
+
+msgid "User Feedback"
+msgstr "Bayanai na Mallaka"
+
+msgid "Compliance Check"
+msgstr "Bincika Tabbata"
+
+msgid "Low"
+msgstr "Ƙanan"
+
+msgid "High"
+msgstr "Sama"
+
+msgid "Critical"
+msgstr "Muhimmanci"
+
+msgid "Pending"
+msgstr "Jira"
+
+msgid "Name of the page section"
+msgstr "Sunan shafin da ake amfani da shi"
+
+msgid "Navigation"
+msgstr "Tafiyar"
+
+msgid "Form"
+msgstr "Tsarin"
+
+msgid "Media"
+msgstr "Al'amura"
+
+msgid "Data Table"
+msgstr "Tsarin Bayanai"
+
+msgid "Chart"
+msgstr "Tsari"
+
+msgid "Other"
+msgstr "Wani"
+
+msgid "Descriptive text for screen readers"
+msgstr "Rubutu mai bayani domin masu karantawa"
+
+msgid "Navigate to Home"
+msgstr "Tafi zuwa Gida"
+
+msgid "Open Menu"
+msgstr "Bude Tsarin"
+
+msgid "Focus Search"
+msgstr "Ƙoƙarin Bincike"
+
+msgid "Skip to Content"
+msgstr "Ƙiyo zuwa Abun Ciki"
+
+msgid "Toggle Sidebar"
+msgstr "Sauya Rana na Ƙasa"
+
+msgid "Previous Item"
+msgstr "Abu da Ya Gabata"
+
+msgid "Next Item"
+msgstr "Abu Na Gaba"
+
+msgid "Select Item"
+msgstr "Zaɓi Abu"
+
+msgid "Close Modal"
+msgstr "Rufe Tsarin"
+
+msgid "Save Changes"
+msgstr "Ajiye Canje-canje"
+
+msgid "Cancel Action"
+msgstr "Soke Aiki"
+
+msgid "e.g., Ctrl+S, Alt+F, Tab"
+msgstr "misali, Ctrl+S, Alt+F, Tab"
+
+msgid "Available on all pages"
+msgstr "Yana samuwa a kan duka shafuka"
+
+msgid "Email Notifications"
+msgstr "Sanarwar Imel"
+
+msgid "In-App Notifications"
+msgstr "Sanarwa a cikin App"
+
+msgid "Course Updates"
+msgstr "Sabbin Abubuwa na Kursa"
+
+msgid "Grade Updates"
+msgstr "Sabbin Abubuwa na Daga"
+
+msgid "Forum Posts"
+msgstr "Fuskar Labarai"
+
+msgid "Assignment Due Dates"
+msgstr "Lokutan da Ake buƙata Aikin"
+
+msgid "Quiz Title"
+msgstr "Sunan Gwajin"
+
+msgid "Time Limit (minutes)"
+msgstr "Iyakar Lokaci (dakika)"
+
+msgid "Maximum Attempts"
+msgstr "Jimlar Yawan Gwaje"
+
+msgid "Passing Score (%)"
+msgstr "Ƙididdiga da Ake Binci (%)"
+
+msgid "Enter a descriptive title for the quiz"
+msgstr "Shigar da suna mai bayani domin gwajin"
+
+msgid "Provide a brief description of the quiz"
+msgstr "Bayar da bayani ƙanan domin gwajin"
+
+msgid "Time limit in minutes (leave blank for no limit)"
+msgstr "Iyakar lokaci da dakika (bar shaye domin ba taka)"
+
+msgid "Maximum number of attempts allowed for this quiz"
+msgstr "Jimlar yawan gwaje da ake yarda domin wannan gwajin"
+
+msgid "Minimum score percentage required to pass"
+msgstr "Ƙanƙanta na ƙididdigar da ake buƙata don tsalle"
+
+msgid "Question Text"
+msgstr "Rubutun Tambayar"
+
+msgid "Question Type"
+msgstr "Irin Tambayar"
+
+msgid "Points"
+msgstr "Nauyi"
+
+msgid "Enter the question text"
+msgstr "Shigar da rubutun tambayar"
+
+msgid "Select the type of question"
+msgstr "Zaɓi irin tambayar"
+
+msgid "Points awarded for correct answer"
+msgstr "Nauyi da aka ba kuskuren amsa"
+
+msgid "Position of this question in the quiz"
+msgstr "Matsayin wannan tambayar a cikin gwajin"
+
+msgid "Answer Text"
+msgstr "Rubutun Amsa"
+
+msgid "Is Correct"
+msgstr "Ya Dace"
+
+msgid "Enter the answer option text"
+msgstr "Shigar da rubutun zaɓin amsa"
+
+msgid "Check this box if this is the correct answer"
+msgstr "Danna wannan kwas (box) idan wannan ne amsar da ta dace"
+
+msgid "Position of this answer option"
+msgstr "Matsayin wannan zaɓin amsa"
+
+msgid "Account created successfully! Welcome, %(username)s!"
+msgstr "Asusu ya ƙirƙiri! Bada kara, %(username)s!"
+
+msgid "New course created: %(title)s"
+msgstr "Kursa sabuwa ta ƙirƙiri: %(title)s"
+
+msgid "You have successfully created the course \"%(title)s\"."
+msgstr "Ka ƙirƙiri kursar \"%(title)s\" da nasara."
+
+msgid "New module added: %(title)s"
+msgstr "Modulan sabuwa ta ƙara: %(title)s"
+
+msgid "A new module \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Modulan sabuwa \"%(title)s\" ta ƙara zuwa kursar \"%(course_title)s\"."
+
+msgid "New lesson added: %(title)s"
+msgstr "Darshen sabuwa ta ƙara: %(title)s"
+
+msgid "A new lesson \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Darshen sabuwa \"%(title)s\" ta ƙara zuwa kursar \"%(course_title)s\"."
+
+msgid "You have successfully enrolled in %(course_title)s!"
+msgstr "Ka shiga cikin %(course_title)s da nasara!"
+
+msgid "Enrolled in %(course_title)s"
+msgstr "Shiga cikin %(course_title)s"
+
+msgid "You have successfully enrolled in the course \"%(course_title)s\"."
+msgstr "Ka shiga cikin kursar \"%(course_title)s\" da nasara."
+
+msgid "New student enrolled: %(username)s"
+msgstr "Daliban sabuwa ya shiga: %(username)s"
+
+msgid "%(username)s has enrolled in your course \"%(course_title)s\"."
+msgstr "%(username)s ya shiga cikin kursarka \"%(course_title)s\"."
+
+msgid "You are already enrolled in %(course_title)s."
+msgstr "Kana shiga a cikin %(course_title)s."
+
+msgid "You have successfully unenrolled from %(course_title)s."
+msgstr "Ka soke shigowa daga %(course_title)s da nasara."
+
+msgid "Unenrolled from %(course_title)s"
+msgstr "Soke shigowa daga %(course_title)s"
+
+msgid "You have successfully unenrolled from the course \"%(course_title)s\"."
+msgstr "Ka soke shigowa daga kursar \"%(course_title)s\" da nasara."
+
+msgid "You were not enrolled in %(course_title)s."
+msgstr "Ba ka shiga cikin %(course_title)s ba."
+
+msgid "You must be enrolled in the course to access this lesson."
+msgstr "Dole ka shiga cikin kursa don samun wannan darshen."
+
+msgid "You must be enrolled in the course to complete lessons."
+msgstr "Dole ka shiga cikin kursa don gama darshe."
+
+msgid "Lesson \"%(title)s\" marked as completed!"
+msgstr "Darshen \"%(title)s\" an alama shi da gama!"
+
+msgid "Lesson completed: %(title)s"
+msgstr "Darshen ya gama: %(title)s"
+
+msgid "You have completed the lesson \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "Ka gama darshen \"%(title)s\" a cikin kursar \"%(course_title)s\"."
+
+msgid "You must be enrolled in the course to modify lesson completion."
+msgstr "Dole ka shiga cikin kursa don canza gama na darshe."
+
+msgid "Lesson \"%(title)s\" marked as incomplete."
+msgstr "Darshen \"%(title)s\" an alama shi da karin gama."
+
+msgid "Lesson marked as incomplete: %(title)s"
+msgstr "Darshen an alama shi da karin gama: %(title)s"
+
+msgid "You have marked the lesson \"%(title)s\" as incomplete in course \"%(course_title)s\"."
+msgstr "Ka alama darshen \"%(title)s\" da karin gama a cikin kursar \"%(course_title)s\"."
+
+msgid "Quiz \"%(title)s\" created successfully!"
+msgstr "Gwajin \"%(title)s\" ya ƙirƙiri da nasara!"
+
+msgid "New quiz available: %(title)s"
+msgstr "Gwajin sabuwa yana samuwa: %(title)s"
+
+msgid "A new quiz \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Gwajin sabuwa \"%(title)s\" ya ƙara zuwa kursar \"%(course_title)s\"."
+
+msgid "Question updated successfully!"
+msgstr "Tambayar ta sabunta da nasara!"
+
+msgid "You must be enrolled in the course to take this quiz."
+msgstr "Dole ka shiga cikin kursa don yin wannan gwajin."
+
+msgid "You have reached the maximum number of attempts for this quiz."
+msgstr "Ka samu jimlar yawan gwaje domin wannan gwajin."
+
+msgid "Quiz completed! Score: %(score).1f%% (Passed!)"
+msgstr "Gwajin ya gama! Ƙididdiga: %(score).1f%% (Ya Tsalle!)"
+
+msgid "Quiz passed: %(title)s"
+msgstr "Gwajin ya tsalle: %(title)s"
+
+msgid "You have passed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "Ka tsalle gwajin \"%(title)s\" da ƙididdiga na %(score).1f%%."
+
+msgid "Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)"
+msgstr "Gwajin ya gama! Ƙididdiga: %(score).1f%% (Dole ne %(passing_score)d%% don tsalle)"
+
+msgid "Quiz failed: %(title)s"
+msgstr "Gwajin ya kasa: %(title)s"
+
+msgid "You have failed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "Ka kasa gwajin \"%(title)s\" da ƙididdiga na %(score).1f%%."
+
+msgid "Assignment \"%(title)s\" created successfully!"
+msgstr "Aikin \"%(title)s\" ya ƙirƙiri da nasara!"
+
+msgid "New assignment: %(title)s"
+msgstr "Aikin sabuwa: %(title)s"
+
+msgid "A new assignment \"%(title)s\" has been added to the course \"%(course_title)s\". Due date: %(due_date)s"
+msgstr "Aikin sabuwa \"%(title)s\" ya ƙara zuwa kursar \"%(course_title)s\". Lokacin da ake buƙata: %(due_date)s"
+
+msgid "Grade recorded for %(title)s"
+msgstr "Dagan ta rubuta domin %(title)s"
+
+msgid "Your grade for assignment \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Dagan ku domin aikin \"%(title)s\" ya rubuta: %(score)d/%(max_points)d"
+
+msgid "Your grade for quiz \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Dagan ku domin gwajin \"%(title)s\" ya rubuta: %(score)d/%(max_points)d"
+
+msgid "Grade recorded successfully!"
+msgstr "Dagan ta rubuta da nasara!"
+
+msgid "You must be enrolled in the course to access the forum."
+msgstr "Dole ka shiga cikin kursa don samun lambar."
+
+msgid "You must be enrolled in the course to create topics."
+msgstr "Dole ka shiga cikin kursa don ƙirƙira masuɗa."
+
+msgid "Topic \"%(title)s\" created successfully!"
+msgstr "Masuɗa \"%(title)s\" ya ƙirƙiri da nasara!"
+
+msgid "New topic created: %(title)s"
+msgstr "Masuɗa sabuwa ta ƙirƙiri: %(title)s"
+
+msgid "%(username)s has created a new topic \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s ya ƙirƙiri masuɗa sabuwa \"%(title)s\" a cikin kursar \"%(course_title)s\"."
+
+msgid "Please fill in both title and content."
+msgstr "Da fatan za a shigar da suna da abun ciki."
+
+msgid "You must be enrolled in the course to access this topic."
+msgstr "Dole ka shiga cikin kursa don samun wannan masuɗa."
+
+msgid "You must be enrolled in the course to create posts."
+msgstr "Dole ka shiga cikin kursa don ƙirƙira rubutu."
+
+msgid "Post created successfully!"
+msgstr "Rubutu ya ƙirƙiri da nasara!"
+
+msgid "New reply to your topic: %(title)s"
+msgstr "Amsa sabuwa zuwa masuɗarka: %(title)s"
+
+msgid "%(username)s replied to your topic \"%(title)s\""
+msgstr "%(username)s ya amsa masuɗarka \"%(title)s\""
+
+msgid "New post in %(title)s"
+msgstr "Rubutu sabuwa a cikin %(title)s"
+
+msgid "%(username)s made a new post in topic \"%(topic_title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s ya yi rubutu sabuwa a cikin masuɗa \"%(topic_title)s\" a cikin kursar \"%(course_title)s\"."
+
+msgid "Please enter content for your post."
+msgstr "Da fatan za a shigar da abun ciki domin rubutunka."
+
+msgid "You don't have permission to access this certificate."
+msgstr "Ba ku da izini don samun wannan shahadar ba."
+
+msgid "You must complete at least 80% of the course to earn a certificate."
+msgstr "Dole ka gama ƙanƙanta 80% na kursa don samun shahada."
+
+msgid "Certificate generated successfully!"
+msgstr "Shahadar ta ƙirƙiri da nasara!"
+
+msgid "Certificate earned: %(course_title)s"
+msgstr "Shahadar da aka samu: %(course_title)s"
+
+msgid "You have earned a certificate for completing the course \"%(course_title)s\"."
+msgstr "Ka samu shahada domin gama kursar \"%(course_title)s\"."
+
+msgid "for completing the course:"
+msgstr "domin gama kursa:"
+
+msgid "Certificate ID: %(id)s"
+msgstr "ID na Shahadar: %(id)s"
+
+msgid "Issued on: %(date)s"
+msgstr "Ya bayar a: %(date)s"
+
+msgid "Instructor: "
+msgstr "Malamin: "
+
+msgid "Certificate template updated successfully!"
+msgstr "Tsarin shahadar ya sabunta da nasara!"
+
+msgid "You must be enrolled in the course to check certificate eligibility."
+msgstr "Dole ka shiga cikin kursa don duba izinin shahadar."
+
+msgid "Notification preferences updated successfully!"
+msgstr "Saituna na sanarwa sun sabunta da nasara!"
+
+msgid "All notifications marked as read!"
+msgstr "Duk sanarwa sun alama da karanta!"
+
+msgid "Report \"%(title)s\" generated successfully!"
+msgstr "Lissafi \"%(title)s\" ya ƙirƙiri da nasara!"
+
+msgid "Accessibility settings updated successfully!"
+msgstr "Saituna na samun fahimtar sun sabunta da nasara!"
+
+msgid "Missing alt text on 3 images"
+msgstr "Rubutu na fahimtar ya ɓace a kan hotuna 3"
+
+msgid "Low contrast ratio on 2 elements"
+msgstr "Ƙananin fuskantar lanƙwa a kan abubuwa 2"
+
+msgid "Missing form labels on 1 input"
+msgstr "Rubutun tsarin ya ɓace a kan shigar 1"
+
+msgid "Keyboard trap detected on modal"
+msgstr "Ƙara ta gajiya ta gano a kan modal"
+
+msgid "Accessibility scan completed. Found %(count)d potential issues."
+msgstr "Binciken samun fahimtar ya gama. An samo %(count)d matsala masu iya samuwa."
+
+msgid "Web Content Accessibility Guidelines (WCAG)"
+msgstr "Gayan Fuskantar Fahimtar Abun Ciki na Yanar Gizo (WCAG)"
+
+msgid "Official guidelines for web accessibility"
+msgstr "Gayan fuskantar samun fahimtar na yanar gizo"
+
+msgid "Screen Reader Testing"
+msgstr "Gwaje na Karatu na Ƙasa"
+
+msgid "How to test with screen readers"
+msgstr "Yadda ake gwaje tare da karatu na ƙasa"
+
+msgid "Color Contrast Checker"
+msgstr "Mai Gwaje na Fuskantar Lanƙwa"
+
+msgid "Tool to check color contrast ratios"
+msgstr "Kayayyaki don gwaje fuskantar lanƙwa"
+
+msgid "Keyboard Navigation"
+msgstr "Tafiyar da Kaybarad"
+
+msgid "Best practices for keyboard accessibility"
+msgstr "Al'ada mafi kyau domin samun fahimtar da kaybarad"
+
+msgid "AUA LMS"
+msgstr "TSARIN NEMAN BINCiken AUA"
+
+msgid "Dashboard"
+msgstr "Ƙungiyar Shirya"
+
+msgid "Gradebook"
+msgstr "Littafin Daga"
+
+msgid "Certificates"
+msgstr "Shahadu"
+
+msgid "Analytics"
+msgstr "Lissafin Bayanai"
+
+msgid "Accessibility"
+msgstr "Samun Fahimta"
+
+msgid "Logout"
+msgstr "Fitar"
+
+msgid "Login"
+msgstr "Shiga"
+
+msgid "Register"
+msgstr "Ƙiɗa"
+
+msgid "All rights reserved."
+msgstr "Hukuncin duka ta hana."
+
+msgid "Accessibility Audit Log"
+msgstr "Littafin Bincike na Samun Fahimta"
+
+msgid "Run Accessibility Scan"
+msgstr "Ƙiƙir Accessibility Scan"
+
+msgid "Type"
+msgstr "Iri"
+
+msgid "Performed By"
+msgstr "Ya yi"
+
+msgid "Findings"
+msgstr "Abubuwan da aka samo"
+
+msgid "Severity"
+msgstr "Karfin Matsala"
+
+msgid "Date"
+msgstr "Kwan"
+
+msgid "Resolved"
+msgstr "Ya ƙara"
+
+msgid "Accessibility Resources"
+msgstr "Kayayyakin Samun Fahimta"
+
+msgid "Tools and resources to help improve accessibility."
+msgstr "Kayayyaki da kayan aiki don taimaka wajen inganta samun fahimta."
+
+msgid "Visit Resource"
+msgstr "Ziyar da Kayayyaki"
+
+msgid "Accessibility Testing Tools"
+msgstr "Kayayyakin Gwajen Samun Fahimta"
+
+msgid "Web accessibility evaluation tool"
+msgstr "Kayayyakin gwajen fahimtar yanar gizo"
+
+msgid "Accessibility testing engine"
+msgstr "Makamashin gwajen samun fahimta"
+
+msgid "Performance and accessibility auditing"
+msgstr "Bincike na ayyukan da samun fahimta"
+
+msgid "Color blindness simulator"
+msgstr "Mai ƙoƙarin kaurar lanƙwa"
+
+msgid "Accessibility Settings"
+msgstr "Saituna na Samun Fahimta"
+
+msgid "Adjust settings to make the LMS more accessible for your needs."
+msgstr "Canza saituna don ƙara samun fahimta na LMS domin buƙatarka."
+
+msgid "Visual Adjustments"
+msgstr "Canje-canjen Fuskantar"
+
+msgid "Motion and Animation"
+msgstr "Ƙwarar da Hali"
+
+msgid "Assistive Technology"
+msgstr "Fasaha ta Taimako"
+
+msgid "Audio Settings"
+msgstr "Saituna na Audio"
+
+msgid "Save Settings"
+msgstr "Ajiye Saituna"
+
+msgid "Cancel"
+msgstr "Soke"
+
+msgid "Accessibility Statement"
+msgstr "Bayanin Samun Fahimta"
+
+msgid "Learn about our commitment to accessibility and how we support all users."
+msgstr "Koyi game da izinin mu na samun fahimta kuma yadda muyi talla duka malamaka."
+
+msgid "Current Status"
+msgstr "Matsayin Yanzu"
+
+msgid "Our LMS currently meets:"
+msgstr "LMS mu yanzu ta dace da:"
+
+msgid "WCAG 2.1 Level AA standards"
+msgstr "Fuskantar WCAG 2.1 Matsayi AA"
+
+msgid "Section 508 compliance"
+msgstr "Dacewa da Tattalin 508"
+
+msgid "European accessibility requirements"
+msgstr "Bukatar samun fahimta na Yurupa"
+
+msgid "We regularly update our platform to improve accessibility. Last review: January 2026"
+msgstr "Muna sabunta tsarin mu da zarar don inganta samun fahimta. Duba ƙarshe: Janairu 2026"
+
+msgid "Admin Dashboard"
+msgstr "Ƙungiyar Shirya na Admin"
+
+msgid "Welcome, <strong>%(user.username)s</strong>!"
+msgstr "Barka, <strong>%(user.username)s</strong>!"
+
+msgid "Your role: <strong>%(user_role|title)s</strong>"
+msgstr "Ruwawarka: <strong>%(user_role|title)s</strong>"
+
+msgid "System Overview"
+msgstr "Dubawa na Tsari"
+
+msgid "Manage users, courses, and system settings."
+msgstr "Gudanar malamaka, kursa, da saituna na tsari."
+
+msgid "Access Admin Panel"
+msgstr "Samun Ƙungiyar Admin"
+
+msgid "Quick Stats"
+msgstr "Lissafi na Kwatanta"
+
+msgid "Users: 0 | Courses: 0 | Enrollments: 0"
+msgstr "Malamaka: 0 | Kursa: 0 | Shiga: 0"
+
+msgid "Analytics Dashboard"
+msgstr "Ƙungiyar Shirya na Lissafi"
+
+msgid "View insights and analytics for your courses and students."
+msgstr "Dubi fahimta da lissafi domin kursa ka da daliban."
+
+msgid "Total Enrollments"
+msgstr "Jimlar Shiga"
+
+msgid "Course Completions"
+msgstr "Gama na Kursa"
+
+msgid "Lessons Completed"
+msgstr "Darshe da aka Gama"
+
+msgid "Quiz Attempts"
+msgstr "Gwaje"
+
+msgid "Enrollment Trend (Last 7 Days)"
+msgstr "Trend na Shiga (Kwanan 7 da suka wuce)"
+
+msgid "Quick Actions"
+msgstr "Ayyuka na Kwatanta"
+
+msgid "Generate Report"
+msgstr "Ƙirƙiri Lissafi"
+
+msgid "View Courses"
+msgstr "Dubi Kursa"
+
+msgid "Recent Activity"
+msgstr "Ayyukan Kwanan"
+
+msgid "Recent analytics data will appear here."
+msgstr "Bayanai na lissafi na kwanan za su hanu a nan."
+
+msgid "New Enrollments"
+msgstr "Shiga Sababbi"
+
+msgid "Enrollment Trend"
+msgstr "Trend na Shiga"
+
+msgid "Certificate Eligibility"
+msgstr "Izini na Shahadar"
+
+msgid "Certificate Eligibility for %(course.title)s"
+msgstr "Izini na Shahadar domin %(course.title)s"
+
+msgid "Your Progress"
+msgstr "Ci gaban ka"
+
+msgid "Current Progress:"
+msgstr "Ci gaban Yanzu:"
+
+msgid "Required for Certificate:"
+msgstr "Ake buƙata domin Shahadar:"
+
+msgid "Congratulations! 🎉"
+msgstr "Barka! 🎉"
+
+msgid "You are eligible for a certificate. You can generate it now."
+msgstr "Kana da izini domin shahada. Za ka iya ƙirƙirata yanzu."
+
+msgid "Generate Certificate"
+msgstr "Ƙirƙiri Shahada"
+
+msgid "Keep Going! 📚"
+msgstr "Ci gaba! 📚"
+
+msgid "You need %(80|add:-progress)s%% more progress to earn a certificate."
+msgstr "Ka buƙata %(80|add:-progress)s%% karin ci gaba don samun shahada."
+
+msgid "Continue Learning"
+msgstr "Fara Koyo"
+
+msgid "Analytics for %(course.title)s"
+msgstr "Lissafi domin %(course.title)s"
+
+msgid "View detailed analytics for this course."
+msgstr "Dubi lissafi mai fuskantar domin wannan kursa."
+
+msgid "Completions"
+msgstr "Gama"
+
+msgid "Completion Rate"
+msgstr "Ƙididdiga na Gama"
+
+msgid "Module"
+msgstr "Modulan"
+
+msgid "Lesson"
+msgstr "Darshe"
+
+msgid "Home"
+msgstr "Gida"
+
+msgid "Courses"
+msgstr "Kursa"
+
+msgid "Instructor:"
+msgstr "Malamin:"
+
+msgid "Category:"
+msgstr "Ruwuwa:"
+
+msgid "Uncategorized"
+msgstr "Ba a ruwa ba"
+
+msgid "Created:"
+msgstr "Ya ƙirƙiri:"
+
+msgid "Unenroll"
+msgstr "Soke Shiga"
+
+msgid "You are enrolled in this course!"
+msgstr "Kana shiga a cikin wannan kursa!"
+
+msgid "Progress:"
+msgstr "Ci gaba:"
+
+msgid "Enroll in Course"
+msgstr "Shiga a Kursa"
+
+msgid "Add Module"
+msgstr "Ƙara Modulan"
+
+msgid "Edit Course"
+msgstr "Gyara Kursa"
+
+msgid "View Dashboard"
+msgstr "Dubi Ƙungiyar Shirya"
+
+msgid "Login to Enroll"
+msgstr "Shiga Don Shiga"
+
+msgid "Register to Enroll"
+msgstr "Ƙiɗa Don Shiga"
+
+msgid "Check Certificate Eligibility"
+msgstr "Duba Izinin Shahadar"
+
+msgid "Course Content"
+msgstr "Abun Ciki na Kursa"
+
+msgid "Create Quiz"
+msgstr "Ƙirƙiri Gwaji"
+
+msgid "Take Quiz"
+msgstr "Yi Gwaji"
+
+msgid "No lessons in this module yet."
+msgstr "Babu darshe a cikin wannan modulan yanzu."
+
+msgid "Add Lesson"
+msgstr "Ƙara Darshe"
+
+msgid "Forum"
+msgstr "Lamba"
+
+msgid "Create Topic"
+msgstr "Ƙirƙiri Masuɗa"
+
+msgid "Topic"
+msgstr "Masuɗa"
+
+msgid "Author"
+msgstr "Mai Rubuta"
+
+msgid "Replies"
+msgstr "Amsa"
+
+msgid "Last Post"
+msgstr "Rubutu Ƙarshe"
+
+msgid "Pinned"
+msgstr "Ya Ƙara"
+
+msgid "Closed"
+msgstr "Ya Rufe"
+
+msgid "by"
+msgstr "ta"
+
+msgid "No posts yet"
+msgstr "Babu rubutu yanzu"
+
+msgid "No topics have been created yet. Be the first to start a discussion!"
+msgstr "Babu masuɗa da aka ƙirƙiri yanzu. Ka zama farkon wanda zai fara kira!"
+
+msgid "Available Courses"
+msgstr "Kursa da Ake Samun"
+
+msgid "Browse our collection of courses."
+msgstr "Dubi tattalin kursa mu."
+
+msgid "Search courses..."
+msgstr "Bincika kursa..."
+
+msgid "All Categories"
+msgstr "Duk Ruwuwa"
+
+msgid "Search"
+msgstr "Bincika"
+
+msgid "No Thumbnail"
+msgstr "Babu Hoto Ƙanan"
+
+msgid "View Course"
+msgstr "Dubi Kursa"
+
+msgid "Course pagination"
+msgstr "Tsarin shafin kursa"
+
+msgid "Previous"
+msgstr "Da Ya Gabata"
+
+msgid "Next"
+msgstr "Na Gaba"
+
+msgid "No courses found. Try adjusting your search criteria."
+msgstr "Babu kursa da aka samo. Ka yi kokarin sake saita buƙatar bincika."
+
+msgid "Create Course"
+msgstr "Ƙirƙiri Kursa"
+
+msgid "Create New Course"
+msgstr "Ƙirƙiri Kursa Sabuwa"
+
+msgid "Create Lesson"
+msgstr "Ƙirƙiri Darshe"
+
+msgid "Create Lesson for: %(module.title)s"
+msgstr "Ƙirƙiri Darshe don: %(module.title)s"
+
+msgid "Create Module"
+msgstr "Ƙirƙiri Modulan"
+
+msgid "Create Module for: %(course.title)s"
+msgstr "Ƙirƙiri Modulan don: %(course.title)s"
+
+msgid "Create Quiz for: %(lesson.title)s"
+msgstr "Ƙirƙiri Gwaji don: %(lesson.title)s"
+
+msgid "Passing Score (%%)"
+msgstr "Ƙididdiga da Ake Binci (%%)"
+
+msgid "Create custom reports for your courses and students."
+msgstr "Ƙirƙiri wasu lissafin ƙauna domin kursa ka da daliban."
+
+msgid "Welcome to AUA Learning Management System"
+msgstr "Barka zuwa Tsarin Neman Binciken AUA"
+
+msgid "Enhance your learning experience with our comprehensive platform."
+msgstr "Inganta fahimtar koyoyinka tare da tsarin mu mai kama."
+
+msgid "Go to Dashboard"
+msgstr "Tafi zuwa Ƙungiyar Shirya"
+
+msgid "Featured Courses"
+msgstr "Kursa da Aka Bayar Sankafa"
+
+msgid "View All Courses"
+msgstr "Dubi Duk Kursa"
+
+msgid "Certificates for %(course.title)s"
+msgstr "Shahadu domin %(course.title)s"
+
+msgid "Manage certificates for students in this course."
+msgstr "Gudanar shahadu domin daliban a cikin wannan kursa."
+
+msgid "Manage Certificate Template"
+msgstr "Gudanar Tsarin Shahada"
+
+msgid "Certificate ID"
+msgstr "ID na Shahadar"
+
+msgid "Issued Date"
+msgstr "Lokacin Da aka Bayar"
+
+msgid "Actions"
+msgstr "Ayyuka"
+
+msgid "View/Download"
+msgstr "Dubi/Sauƙaƙa"
+
+msgid "No certificates have been issued for this course yet."
+msgstr "Babu shahada da aka bayar domin wannan kursa yanzu."
+
+msgid "Instructor Dashboard"
+msgstr "Ƙungiyar Shirya na Malamin"
+
+msgid "Your Courses"
+msgstr "Kursa ka"
+
+msgid "Modules:"
+msgstr "Modula:"
+
+msgid "View"
+msgstr "Dubi"
+
+msgid "You haven't created any courses yet."
+msgstr "Ba ka ƙirƙiri wata kursa ba yanzu."
+
+msgid "Create Your First Course"
+msgstr "Ƙirƙiri Kursar Farka ka"
+
+msgid "Statistics"
+msgstr "Lissafi"
+
+msgid "Total Courses:"
+msgstr "Jimlar Kursa:"
+
+msgid "Total Modules:"
+msgstr "Jimlar Modula:"
+
+msgid "Manage and view grades for your course."
+msgstr "Gudanar da dubi daga domin kursarka."
+
+msgid "Course Overview"
+msgstr "Dubawa na Kursa"
+
+msgid "Total Students:"
+msgstr "Jimlar Daliban:"
+
+msgid "Assignments:"
+msgstr "Ayyuka:"
+
+msgid "Quizzes:"
+msgstr "Gwaje:"
+
+msgid "Final"
+msgstr "Ƙarshe"
+
+msgid "Keyboard Shortcuts"
+msgstr "Ƙaɗaɗɗiyar Kaybarad"
+
+msgid "Use these keyboard shortcuts to navigate the LMS efficiently."
+msgstr "Amfani da wannan ƙaɗaɗɗiyar kaybarad don tafi tsarin LMS da kyau."
+
+msgid "Key Combination"
+msgstr "Ƙaɗaɗɗiyar Mafarki"
+
+msgid "Action"
+msgstr "Aiki"
+
+msgid "General Navigation"
+msgstr "Tafiyar Ta Amma"
+
+msgid "Navigate between interactive elements"
+msgstr "Tafi tsakanin abubuwan da ke yi tariya"
+
+msgid "Navigate backwards"
+msgstr "Tafi baya"
+
+msgid "Activate links and buttons"
+msgstr "Ƙarfafa haɗa da mabudda"
+
+msgid "Toggle checkboxes and radio buttons"
+msgstr "Sauya kwasa da mabudda na rediyo"
+
+msgid "Close modals and dropdowns"
+msgstr "Rufe modal da dropdowns"
+
+msgid "Module:"
+msgstr "Modulan:"
+
+msgid "Type:"
+msgstr "Iri:"
+
+msgid "No video content available."
+msgstr "Babu abun ciki na bidiyo da ake samun."
+
+msgid "Download PDF"
+msgstr "Sauƙaƙa PDF"
+
+msgid "No PDF file available."
+msgstr "Babu fayil na PDF da ake samun."
+
+msgid "This is a quiz lesson. Quiz functionality will be implemented in a future step."
+msgstr "Wannan shi ne darshen gwaji. Ayyukan gwaji za a shigar da su a wani matakin gaba."
+
+msgid "Completed"
+msgstr "Ya Gama"
+
+msgid "Mark as Incomplete"
+msgstr "Alama da Karin Gama"
+
+msgid "Mark as Complete"
+msgstr "Alama da Gama"
+
+msgid "Back to Course"
+msgstr "Koma Kursa"
+
+msgid "Manage Certificate Template for %(course.title)s"
+msgstr "Gudanar Tsarin Shahada domin %(course.title)s"
+
+msgid "Customize the certificate template for this course."
+msgstr "Saita tsarin shahada domin wannan kursa."
+
+msgid "Current image:"
+msgstr "Hoto Yanzu:"
+
+msgid "Current background"
+msgstr "Fice-Fice Yanzu"
+
+msgid "Save Template"
+msgstr "Ajiye Tsari"
+
+msgid "Notification Preferences"
+msgstr "Saituna na Sanarwa"
+
+msgid "Customize what notifications you receive."
+msgstr "Saita sanarwa da ka karɓi."
+
+msgid "Notification Types"
+msgstr "Irin Sanarwa"
+
+msgid "Notification Categories"
+msgstr "Ruwuwar Sanarwa"
+
+msgid "Save Preferences"
+msgstr "Ajiye Saituna"
+
+msgid "Notifications"
+msgstr "Sanarwa"
+
+msgid "Mark All as Read"
+msgstr "Alama Duka da Karanta"
+
+msgid "New"
+msgstr "Sabuwa"
+
+msgid "Mark as Read"
+msgstr "Alama da Karanta"
+
+msgid "You have no notifications yet."
+msgstr "Babu sanarwa da ka samu yanzu."
+
+msgid "Analytics for %(student.username)s"
+msgstr "Lissafi domin %(student.username)s"
+
+msgid "View detailed analytics for this student."
+msgstr "Dubi lissafi mai fuskantar domin wannan daliban."
+
+msgid "Total Courses"
+msgstr "Jimlar Kursa"
+
+msgid "Completed Courses"
+msgstr "Kursa da aka Gama"
+
+msgid "Average Progress"
+msgstr "Ci gaban Tsaka-tsaka"
+
+msgid "Course Progress"
+msgstr "Ci gaban Kursa"
+
+msgid "Total Lessons"
+msgstr "Jimlar Darshe"
+
+msgid "Grades"
+msgstr "Daga"
+
+msgid "Score"
+msgstr "Ƙididdiga"
+
+msgid "Max Points"
+msgstr "Jimlar Nauyi"
+
+msgid "Percentage"
+msgstr "Ƙididdiga"
+
+msgid "No grades available for this student."
+msgstr "Babu daga da ake samun domin wannan daliban."
+
+msgid "My Certificates"
+msgstr "Shahadu na"
+
+msgid "Download your course completion certificates."
+msgstr "Sauƙaƙa shahadu na gama na kursa."
+
+msgid "Student:"
+msgstr "Daliban:"
+
+msgid "Certificate ID:"
+msgstr "ID na Shahadar:"
+
+msgid "Issued:"
+msgstr "Ya Bayar:"
+
+msgid "Download Certificate"
+msgstr "Sauƙaƙa Shahada"
+
+msgid "You haven't earned any certificates yet."
+msgstr "Ba ka samu wata shahada ba yanzu."
+
+msgid "Browse Courses"
+msgstr "Dubi Kursa"
+
+msgid "Student Dashboard"
+msgstr "Ƙungiyar Shirya na Daliban"
+
+msgid "You are not enrolled in any courses yet."
+msgstr "Ba ka shiga a wata kursa ba yanzu."
+
+msgid "Courses Enrolled:"
+msgstr "Kursa da aka Shiga:"
+
+msgid "Average Progress:"
+msgstr "Ci gaban Tsaka-tsaka:"
+
+msgid "No progress data available yet."
+msgstr "Babu bayanai na ci gaba da ake samun yanzu."
+
+msgid "My Gradebook"
+msgstr "Littafin Daga na"
+
+msgid "View your grades across all enrolled courses."
+msgstr "Dubi daga ka a kan duka kursa da ka shiga."
+
+msgid "Final Grade:"
+msgstr "Dagan Ƙarshe:"
+
+msgid "Item"
+msgstr "Abu"
+
+msgid "N/A"
+msgstr "Ba a samu ba"
+
+msgid "No grades recorded for this course yet."
+msgstr "Babu daga da aka rubuta domin wannan kursa yanzu."
+
+msgid "You are not enrolled in any courses or have no grades yet."
+msgstr "Ba ka shiga a wata kursa ko ba ka samu daga ba yanzu."
+
+msgid "Started by <strong>%(topic.author.username)s</strong> on %(topic.created_at|date:\"M d, Y H:i\")s"
+msgstr "Ya fara da <strong>%(topic.author.username)s</strong> a kan %(topic.created_at|date:\"M d, Y H:i\")s"
+
+msgid "(edited)"
+msgstr "(an gyara)"
+
+msgid "No posts yet. Be the first to reply!"
+msgstr "Babu rubutu yanzu. Ka zama farkon wanda zai amsa!"
+
+msgid "Reply to Topic"
+msgstr "Amsa Masuɗa"
+
+msgid "Write your reply here..."
+msgstr "Rubuta amsarka a nan..."
+
+msgid "Post Reply"
+msgstr "Aika Amsa"
+
+msgid "This topic is closed. No new replies are allowed."
+msgstr "Wannan masuɗa ya rufe. Ba a yarda da amsa sababbi ba."

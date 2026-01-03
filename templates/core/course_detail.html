@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}{{ course.title }} - AUA LMS{% endblock %}
+{% block title %}{{ course.title }} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">{% trans "Courses" %}</a></li>
                 <li class="breadcrumb-item active">{{ course.title }}</li>
             </ol>
         </nav>
@@ -24,9 +25,9 @@
             <div class="card-body">
                 <h1 class="card-title">{{ course.title }}</h1>
                 <p class="text-muted">
-                    <strong>Instructor:</strong> {{ course.instructor.username }} |
-                    <strong>Category:</strong> {{ course.category.name|default:"Uncategorized" }} |
-                    <strong>Created:</strong> {{ course.created_at|date:"M d, Y" }}
+                    <strong>{% trans "Instructor:" %}</strong> {{ course.instructor.username }} |
+                    <strong>{% trans "Category:" %}</strong> {{ course.category.name|default:_("Uncategorized") }} |
+                    <strong>{% trans "Created:" %}</strong> {{ course.created_at|date:"M d, Y" }}
                 </p>
                 <p class="card-text">{{ course.description }}</p>
                 
@@ -34,26 +35,26 @@
                     {% if user.is_authenticated %}
                         {% if user.role == 'student' %}
                             {% if is_enrolled %}
-                                <a href="#" class="btn btn-success">Continue Learning</a>
-                                <a href="{% url 'unenroll_course' course.pk %}" class="btn btn-outline-danger">Unenroll</a>
+                                <a href="#" class="btn btn-success">{% trans "Continue Learning" %}</a>
+                                <a href="{% url 'unenroll_course' course.pk %}" class="btn btn-outline-danger">{% trans "Unenroll" %}</a>
                                 <p class="text-success mt-2">
-                                    You are enrolled in this course!
+                                    {% trans "You are enrolled in this course!" %}
                                     {% if enrollment %}
-                                        Progress: {{ enrollment.progress_percentage }}%
+                                        {% trans "Progress:" %} {{ enrollment.progress_percentage }}%
                                     {% endif %}
                                 </p>
                             {% else %}
-                                <a href="{% url 'enroll_course' course.pk %}" class="btn btn-success">Enroll in Course</a>
+                                <a href="{% url 'enroll_course' course.pk %}" class="btn btn-success">{% trans "Enroll in Course" %}</a>
                             {% endif %}
                         {% elif user.role == 'instructor' and course.instructor == user %}
-                            <a href="{% url 'create_module' course.pk %}" class="btn btn-primary">Add Module</a>
-                            <a href="#" class="btn btn-outline-primary">Edit Course</a>
+                            <a href="{% url 'create_module' course.pk %}" class="btn btn-primary">{% trans "Add Module" %}</a>
+                            <a href="#" class="btn btn-outline-primary">{% trans "Edit Course" %}</a>
                         {% else %}
-                            <a href="{% url 'student_dashboard' %}" class="btn btn-primary">View Dashboard</a>
+                            <a href="{% url 'student_dashboard' %}" class="btn btn-primary">{% trans "View Dashboard" %}</a>
                         {% endif %}
                     {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-primary">Login to Enroll</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-primary">Register to Enroll</a>
+                        <a href="{% url 'login' %}" class="btn btn-primary">{% trans "Login to Enroll" %}</a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-primary">{% trans "Register to Enroll" %}</a>
                     {% endif %}
                 </div>
                 
@@ -61,7 +62,7 @@
                 {% if is_enrolled or user.role == 'instructor' and course.instructor == user %}
                     <div class="mt-3">
                         <a href="{% url 'course_forum' course.pk %}" class="btn btn-outline-primary">
-                            <i class="bi bi-chat-square-text"></i> Course Forum
+                            <i class="bi bi-chat-square-text"></i> {% trans "Course Forum" %}
                         </a>
                     </div>
                 {% endif %}
@@ -70,7 +71,7 @@
                 {% if is_enrolled %}
                     <div class="mt-3">
                         <a href="{% url 'certificate_eligibility' course.pk %}" class="btn btn-outline-success">
-                            <i class="bi bi-award"></i> Check Certificate Eligibility
+                            <i class="bi bi-award"></i> {% trans "Check Certificate Eligibility" %}
                         </a>
                     </div>
                 {% endif %}
@@ -83,7 +84,7 @@
 {% if modules %}
 <div class="row mt-4">
     <div class="col-12">
-        <h3>Course Content</h3>
+        <h3>{% trans "Course Content" %}</h3>
         {% for module in modules %}
             <div class="card mb-3">
                 <div class="card-header">
@@ -121,20 +122,20 @@
                             
                             {% if lesson.content_type == 'quiz' %}
                                 {% if user.role == 'instructor' and course.instructor == user %}
-                                    <a href="{% url 'create_quiz' lesson.pk %}" class="btn btn-sm btn-outline-info mt-2 mt-md-0">Create Quiz</a>
+                                    <a href="{% url 'create_quiz' lesson.pk %}" class="btn btn-sm btn-outline-info mt-2 mt-md-0">{% trans "Create Quiz" %}</a>
                                 {% elif user.role == 'student' and is_enrolled %}
-                                    <a href="{% url 'take_quiz' lesson.quiz.pk %}" class="btn btn-sm btn-outline-info mt-2 mt-md-0">Take Quiz</a>
+                                    <a href="{% url 'take_quiz' lesson.quiz.pk %}" class="btn btn-sm btn-outline-info mt-2 mt-md-0">{% trans "Take Quiz" %}</a>
                                 {% endif %}
                             {% endif %}
                             
                             <span class="badge bg-secondary mt-2 mt-md-0">{{ lesson.content_type|title }}</span>
                         </div>
                     {% empty %}
-                        <p class="text-muted">No lessons in this module yet.</p>
+                        <p class="text-muted">{% trans "No lessons in this module yet." %}</p>
                     {% endfor %}
                     {% if user.role == 'instructor' and course.instructor == user %}
                         <div class="mt-2">
-                            <a href="{% url 'create_lesson' module.pk %}" class="btn btn-sm btn-outline-success">Add Lesson</a>
+                            <a href="{% url 'create_lesson' module.pk %}" class="btn btn-sm btn-outline-success">{% trans "Add Lesson" %}</a>
                         </div>
                     {% endif %}
                 </div>

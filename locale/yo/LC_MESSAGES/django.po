@@ -1,0 +1,1503 @@
+# Yoruba translations for AUA LMS.
+# Copyright (C) 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 17:31+0100\n"
+"PO-Revision-Date: 2026-01-02 17:31+0100\n"
+"Last-Translator: Anwar Sagir Mustapha <info@techaua.com>\n"
+"Language-Team: Yoruba\n"
+"Language: yo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "High Contrast Mode"
+msgstr "Ipo To Bi"
+
+msgid "Large Text Mode"
+msgstr "Ipo Iwe Nla"
+
+msgid "Reduced Motion Mode"
+msgstr "Ipo Isise Kekere"
+
+msgid "Screen Reader Optimized"
+msgstr "Olukọ Oju Ti A Mu"
+
+msgid "Keyboard Navigation Enabled"
+msgstr "Ibi Keyboard Ti A Mu"
+
+msgid "Focus Indicators Enabled"
+msgstr "Alaye Alaye Ti A Mu"
+
+msgid "Show Captions for Media"
+msgstr "Fi Han Awon Iwe Imuṣẹ"
+
+msgid "Audio Volume Level"
+msgstr "Iye Ojiji Audio"
+
+msgid "Preferred Font Size"
+msgstr "Gigun Harfi Ti O Fẹ"
+
+msgid "Default volume level for media content (0-100)"
+msgstr "Iye ojiji alai fun iwe imuṣẹ (0-100)"
+
+msgid "Role"
+msgstr "Ipa"
+
+msgid "Basic Information"
+msgstr "Alaye Na Kasa"
+
+msgid "Status"
+msgstr "Ipo"
+
+msgid "Timestamps"
+msgstr "Akụkọ Oge"
+
+msgid "Progress"
+msgstr "Ilera"
+
+msgid "Student"
+msgstr "Eniyan akosile"
+
+msgid "Course"
+msgstr "Iwe Kikọ"
+
+msgid "Global Template"
+msgstr "Akojọpọ Nla"
+
+msgid "Start Date"
+msgstr "Ọjọ Ibi"
+
+msgid "End Date"
+msgstr "Ọjọ Ipari"
+
+msgid "Report Title"
+msgstr "Orukọ Alaye"
+
+msgid "Report Type"
+msgstr "Iru Alaye"
+
+msgid "Widget Type"
+msgstr "Iru Widget"
+
+msgid "Position"
+msgstr "Ipo"
+
+msgid "Is Visible"
+msgstr "Ti Se"
+
+msgid "Configuration"
+msgstr "Ipo"
+
+msgid "Assignment Title"
+msgstr "Orukọ Ise"
+
+msgid "Description"
+msgstr "Alaye"
+
+msgid "Due Date"
+msgstr "Ọjọ Ise"
+
+msgid "Maximum Points"
+msgstr "Alaye To Bi"
+
+msgid "Enter a descriptive title for the assignment"
+msgstr "Fi orukọ alaye fun ise"
+
+msgid "Provide detailed instructions for the assignment"
+msgstr "Fi imuṣẹ alaye fun ise"
+
+msgid "Set the deadline for the assignment"
+msgstr "Ṣeto aago fun ise"
+
+msgid "Maximum points that can be earned"
+msgstr "Alaye to bi ti a le gba"
+
+msgid "Certificate Title"
+msgstr "Orukọ Iwe Aṣẹ"
+
+msgid "Background Image"
+msgstr "Aworan Ibi"
+
+msgid "Font Size"
+msgstr "Gigun Harfi"
+
+msgid "Text Color"
+msgstr "Laaye Iwe"
+
+msgid "Active"
+msgstr "Ise"
+
+msgid "The description that appears on the certificate"
+msgstr "Alaye ti o se ni iwe aṣẹ"
+
+msgid "Optional background image for the certificate"
+msgstr "Aworan ibi ti o le fi han fun iwe aṣẹ"
+
+msgid "Font size for the certificate text"
+msgstr "Gigun harfi fun iwe iwe aṣẹ"
+
+msgid "Color of the text on the certificate"
+msgstr "Laaye iwe ni iwe aṣẹ"
+
+msgid "Course Title"
+msgstr "Orukọ Iwe Kikọ"
+
+msgid "Category"
+msgstr "Iru"
+
+msgid "Thumbnail"
+msgstr "Aworan Kekere"
+
+msgid "Enter a descriptive title for your course"
+msgstr "Fi orukọ alaye fun iwe kikọ rẹ"
+
+msgid "Provide a detailed description of the course content"
+msgstr "Fi alaye alaye fun iwe iwe kikọ"
+
+msgid "Upload an image that represents your course"
+msgstr "Fi aworan han ti o ṣe iwe kikọ rẹ"
+
+msgid "Module Title"
+msgstr "Orukọ Imuduro"
+
+msgid "Enter a title for this module"
+msgstr "Fi orukọ fun imuduro yii"
+
+msgid "Provide a brief description of the module content"
+msgstr "Fi alaye alaye fun iwe imuduro"
+
+msgid "Position of this module in the course sequence"
+msgstr "Ipo imuduro yii ni iwe kikọ"
+
+msgid "Lesson Title"
+msgstr "Orukọ Akosile"
+
+msgid "Content Type"
+msgstr "Iru Iwe"
+
+msgid "Content"
+msgstr "Iwe"
+
+msgid "Video URL"
+msgstr "URL Fidio"
+
+msgid "File Upload"
+msgstr "Fi Fili Han"
+
+msgid "Enter a title for this lesson"
+msgstr "Fi orukọ fun akosile yii"
+
+msgid "Select the type of content for this lesson"
+msgstr "Yan iru iwe fun akosile yii"
+
+msgid "Enter the text content for this lesson"
+msgstr "Fi iwe iwe fun akosile yii"
+
+msgid "Enter a URL to a video (YouTube, Vimeo, etc.)"
+msgstr "Fi URL han si fidio (YouTube, Vimeo, ati bee.)"
+
+msgid "Upload a file (PDF, document, etc.)"
+msgstr "Fi fili han (PDF, iwe, ati bee.)"
+
+msgid "Position of this lesson in the module sequence"
+msgstr "Ipo akosile yii ni imuduro"
+
+msgid "Instructor"
+msgstr "Alagbàkọ"
+
+msgid "Username"
+msgstr "Orukọ olumulo"
+
+msgid "Email Address"
+msgstr "Adiresi Imeeli"
+
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Nilo. 150 awon ohun kan tabi kekere. Awon lẹta, awon nọmba ati @/./+/-/_ nikan."
+
+msgid "Password"
+msgstr "Ọrọ igbaniwọle"
+
+msgid "Password Confirmation"
+msgstr "Ifiji Ọrọ igbaniwọle"
+
+msgid "Admin"
+msgstr "Alakoso"
+
+msgid "Categories"
+msgstr "Iwọn"
+
+msgid "Text Content"
+msgstr "Iwe Iwe"
+
+msgid "Video"
+msgstr "Fidio"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Quiz"
+msgstr "Ise idanwo"
+
+msgid "Assignment"
+msgstr "Ise"
+
+msgid "Time limit in minutes"
+msgstr "Aago iwejade ni isejade"
+
+msgid "Maximum number of attempts allowed"
+msgstr "Iye tobi ti a le gbiyanju"
+
+msgid "Minimum score percentage to pass"
+msgstr "Iye kekere ti o yarrin lati gba"
+
+msgid "Multiple Choice"
+msgstr "Iyanju pupọ"
+
+msgid "True/False"
+msgstr "Oyin/Ofo"
+
+msgid "Short Answer"
+msgstr "Ireti Akin"
+
+msgid "Time taken in seconds"
+msgstr "Aago ti a gba ni isekere"
+
+msgid "Exam"
+msgstr "Ise idanwo"
+
+msgid "Course Forum"
+msgstr "Ibi Iwe Kikọ"
+
+msgid "Certificate of Completion"
+msgstr "Iwe Aṣẹ Iyọnu"
+
+msgid "This is to certify that the student has successfully completed the course."
+msgstr "Eyi ni lati fọwọsi pe eniyan akosile yara gbega iwe kikọ."
+
+msgid "Course Update"
+msgstr "Imudojuiwọn Iwe Kikọ"
+
+msgid "Grade Update"
+msgstr "Imudojuiwọn Iye"
+
+msgid "Forum Post"
+msgstr "Awon Iwe Ibi"
+
+msgid "Assignment Due"
+msgstr "Ise Ti O Tẹsiwaju"
+
+msgid "Certificate Earned"
+msgstr "Iwe Aṣẹ Ti A Gba"
+
+msgid "Enrollment"
+msgstr "Ifarada"
+
+msgid "General"
+msgstr "Gbogbogbo"
+
+msgid "Course Enrollment"
+msgstr "Ifarada Iwe Kikọ"
+
+msgid "Course Completion"
+msgstr "Ipari Iwe Kikọ"
+
+msgid "Lesson Completion"
+msgstr "Ipari Akosile"
+
+msgid "Quiz Attempt"
+msgstr "Gbiyanju Ise Idanwo"
+
+msgid "Assignment Submission"
+msgstr "Ifiji Ise"
+
+msgid "Forum Activity"
+msgstr "Ise Ibi"
+
+msgid "User Engagement"
+msgstr "Iṣẹlọpọ Olumulo"
+
+msgid "Course Performance"
+msgstr "Ise Iwe Kikọ"
+
+msgid "Student Progress"
+msgstr "Ilera Eniyan Akosile"
+
+msgid "System Usage"
+msgstr "Ilo Iṣaaju"
+
+msgid "Grade Distribution"
+msgstr "Iṣẹlọpọ Iye"
+
+msgid "Certificate Issuance"
+msgstr "Ifiji Iwe Aṣẹ"
+
+msgid "Enrollment Chart"
+msgstr "Akojọ Ifarada"
+
+msgid "Progress Chart"
+msgstr "Akojọ Ilera"
+
+msgid "Recent Activities"
+msgstr "Ise Tuntun"
+
+msgid "User Statistics"
+msgstr "Iye Olumulo"
+
+msgid "Course Statistics"
+msgstr "Iye Iwe Kikọ"
+
+msgid "Default volume level (0-100)"
+msgstr "Iye ojiji alai (0-100)"
+
+msgid "Small"
+msgstr "Kekere"
+
+msgid "Medium"
+msgstr "Aarin"
+
+msgid "Large"
+msgstr "Nla"
+
+msgid "Extra Large"
+msgstr "Nla Ju"
+
+msgid "Automated Scan"
+msgstr "Ṣayẹwo Alai"
+
+msgid "Manual Review"
+msgstr "Ṣayẹwo Alabojuto"
+
+msgid "User Feedback"
+msgstr "Alaye Olumulo"
+
+msgid "Compliance Check"
+msgstr "Ṣayẹwo Idayojuto"
+
+msgid "Low"
+msgstr "Kekere"
+
+msgid "High"
+msgstr "To"
+
+msgid "Critical"
+msgstr "Gangan"
+
+msgid "Pending"
+msgstr "Nduro"
+
+msgid "Name of the page section"
+msgstr "Orukọ ipin oju iwe"
+
+msgid "Navigation"
+msgstr "Ibi"
+
+msgid "Form"
+msgstr "Akọsẹ"
+
+msgid "Media"
+msgstr "Imuṣẹ"
+
+msgid "Data Table"
+msgstr "Tebulu Data"
+
+msgid "Chart"
+msgstr "Akojọ"
+
+msgid "Other"
+msgstr "Omi"
+
+msgid "Descriptive text for screen readers"
+msgstr "Iwe alaye fun awon olukọ oju"
+
+msgid "Navigate to Home"
+msgstr "Lọ si ile"
+
+msgid "Open Menu"
+msgstr "Ṣi Menu"
+
+msgid "Focus Search"
+msgstr "Ṣayẹwo"
+
+msgid "Skip to Content"
+msgstr "Lọ si Iwe"
+
+msgid "Toggle Sidebar"
+msgstr "Mu Sidebar"
+
+msgid "Previous Item"
+msgstr "Nkan Tẹlẹ"
+
+msgid "Next Item"
+msgstr "Nkan Tikun"
+
+msgid "Select Item"
+msgstr "Yan Nkan"
+
+msgid "Close Modal"
+msgstr "Pade Modal"
+
+msgid "Save Changes"
+msgstr "Fi Imudojuiwọn"
+
+msgid "Cancel Action"
+msgstr "Fagilee Ise"
+
+msgid "e.g., Ctrl+S, Alt+F, Tab"
+msgstr "fun apere, Ctrl+S, Alt+F, Tab"
+
+msgid "Available on all pages"
+msgstr "Wa ni gbogbo awon oju iwe"
+
+msgid "Email Notifications"
+msgstr "Alaye Imeeli"
+
+msgid "In-App Notifications"
+msgstr "Alaye Ninu Ohun Elo"
+
+msgid "Course Updates"
+msgstr "Imudojuiwọn Iwe Kikọ"
+
+msgid "Grade Updates"
+msgstr "Imudojuiwọn Iye"
+
+msgid "Forum Posts"
+msgstr "Awon Iwe Ibi"
+
+msgid "Assignment Due Dates"
+msgstr "Awon Ọjọ Ise"
+
+msgid "Quiz Title"
+msgstr "Orukọ Ise Idanwo"
+
+msgid "Time Limit (minutes)"
+msgstr "Aago Iwejade (isejade)"
+
+msgid "Maximum Attempts"
+msgstr "Iye Gbiyanju To Bi"
+
+msgid "Passing Score (%)"
+msgstr "Iye Gba (%)"
+
+msgid "Enter a descriptive title for the quiz"
+msgstr "Fi orukọ alaye fun ise idanwo"
+
+msgid "Provide a brief description of the quiz"
+msgstr "Fi alaye alaye fun ise idanwo"
+
+msgid "Time limit in minutes (leave blank for no limit)"
+msgstr "Aago iwejade ni isejade (fi fun fun aago)"
+
+msgid "Maximum number of attempts allowed for this quiz"
+msgstr "Iye tobi ti a le gbiyanju fun ise idanwo yii"
+
+msgid "Minimum score percentage required to pass"
+msgstr "Iye kekere ti o yarrin lati gba"
+
+msgid "Question Text"
+msgstr "Iwe Ibeere"
+
+msgid "Question Type"
+msgstr "Iru Ibeere"
+
+msgid "Points"
+msgstr "Alaye"
+
+msgid "Enter the question text"
+msgstr "Fi iwe ibeere"
+
+msgid "Select the type of question"
+msgstr "Yan iru ibeere"
+
+msgid "Points awarded for correct answer"
+msgstr "Alaye ti a ba fun amsa to dara"
+
+msgid "Position of this question in the quiz"
+msgstr "Ipo ibeere yii ni ise idanwo"
+
+msgid "Answer Text"
+msgstr "Iwe Ireti"
+
+msgid "Is Correct"
+msgstr "Dara ni"
+
+msgid "Enter the answer option text"
+msgstr "Fi iwe iyanju amsa"
+
+msgid "Check this box if this is the correct answer"
+msgstr "Ṣayẹwo akọsẹ yii ti o ba jẹ amsa to dara"
+
+msgid "Position of this answer option"
+msgstr "Ipo iyanju amsa yii"
+
+msgid "Account created successfully! Welcome, %(username)s!"
+msgstr "Oorun ti a ṣe! Kaabo, %(username)s!"
+
+msgid "New course created: %(title)s"
+msgstr "Iwe kikọ tuntun ti a ṣe: %(title)s"
+
+msgid "You have successfully created the course \"%(title)s\"."
+msgstr "O ti ṣe iwe kikọ \"%(title)s\"."
+
+msgid "New module added: %(title)s"
+msgstr "Imuduro tuntun ti a fi kun: %(title)s"
+
+msgid "A new module \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Imuduro tuntun \"%(title)s\" ti a fi kun iwe kikọ \"%(course_title)s\"."
+
+msgid "New lesson added: %(title)s"
+msgstr "Akosile tuntun ti a fi kun: %(title)s"
+
+msgid "A new lesson \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Akosile tuntun \"%(title)s\" ti a fi kun iwe kikọ \"%(course_title)s\"."
+
+msgid "You have successfully enrolled in %(course_title)s!"
+msgstr "O ti farada si %(course_title)s!"
+
+msgid "Enrolled in %(course_title)s"
+msgstr "Farada si %(course_title)s"
+
+msgid "You have successfully enrolled in the course \"%(course_title)s\"."
+msgstr "O ti farada si iwe kikọ \"%(course_title)s\"."
+
+msgid "New student enrolled: %(username)s"
+msgstr "Eniyan akosile tuntun ti farada: %(username)s"
+
+msgid "%(username)s has enrolled in your course \"%(course_title)s\"."
+msgstr "%(username)s ti farada si iwe kikọ rẹ \"%(course_title)s\"."
+
+msgid "You are already enrolled in %(course_title)s."
+msgstr "O ti farada tẹlẹ si %(course_title)s."
+
+msgid "You have successfully unenrolled from %(course_title)s."
+msgstr "O ti jade si %(course_title)s."
+
+msgid "Unenrolled from %(course_title)s"
+msgstr "Jade si %(course_title)s"
+
+msgid "You have successfully unenrolled from the course \"%(course_title)s\"."
+msgstr "O ti jade si iwe kikọ \"%(course_title)s\"."
+
+msgid "You were not enrolled in %(course_title)s."
+msgstr "O ko ti farada si %(course_title)s."
+
+msgid "You must be enrolled in the course to access this lesson."
+msgstr "O gbọdọ farada si iwe kikọ lati wọle si akosile yii."
+
+msgid "You must be enrolled in the course to complete lessons."
+msgstr "O gbọdọ farada si iwe kikọ lati parun awon akosile."
+
+msgid "Lesson \"%(title)s\" marked as completed!"
+msgstr "Akosile \"%(title)s\" ti a ṣe alaye pe o ti parun!"
+
+msgid "Lesson completed: %(title)s"
+msgstr "Akosile ti parun: %(title)s"
+
+msgid "You have completed the lesson \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "O ti parun akosile \"%(title)s\" ni iwe kikọ \"%(course_title)s\"."
+
+msgid "You must be enrolled in the course to modify lesson completion."
+msgstr "O gbọdọ farada si iwe kikọ lati ṣe imudojuiwọn ipari akosile."
+
+msgid "Lesson \"%(title)s\" marked as incomplete."
+msgstr "Akosile \"%(title)s\" ti a ṣe alaye pe o ko ti parun."
+
+msgid "Lesson marked as incomplete: %(title)s"
+msgstr "Akosile ti a ṣe alaye pe o ko ti parun: %(title)s"
+
+msgid "You have marked the lesson \"%(title)s\" as incomplete in course \"%(course_title)s\"."
+msgstr "O ti ṣe alaye pe akosile \"%(title)s\" ko ti parun ni iwe kikọ \"%(course_title)s\"."
+
+msgid "Quiz \"%(title)s\" created successfully!"
+msgstr "Ise idanwo \"%(title)s\" ti a ṣe!"
+
+msgid "New quiz available: %(title)s"
+msgstr "Ise idanwo tuntun wa: %(title)s"
+
+msgid "A new quiz \"%(title)s\" has been added to the course \"%(course_title)s\"."
+msgstr "Ise idanwo tuntun \"%(title)s\" ti a fi kun iwe kikọ \"%(course_title)s\"."
+
+msgid "Question updated successfully!"
+msgstr "Ibeere ti a ṣe imudojuiwọn!"
+
+msgid "You must be enrolled in the course to take this quiz."
+msgstr "O gbọdọ farada si iwe kikọ lati gbiyanju ise idanwo yii."
+
+msgid "You have reached the maximum number of attempts for this quiz."
+msgstr "O ti de iye tobi ti o le gbiyanju fun ise idanwo yii."
+
+msgid "Quiz completed! Score: %(score).1f%% (Passed!)"
+msgstr "Ise idanwo ti parun! Iye: %(score).1f%% (Gba!)"
+
+msgid "Quiz passed: %(title)s"
+msgstr "Ise idanwo ti gba: %(title)s"
+
+msgid "You have passed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "O ti gba ise idanwo \"%(title)s\" pẹlu iye %(score).1f%%."
+
+msgid "Quiz completed! Score: %(score).1f%% (Need %(passing_score)d%% to pass)"
+msgstr "Ise idanwo ti parun! Iye: %(score).1f%% (Nilo %(passing_score)d%% lati gba)"
+
+msgid "Quiz failed: %(title)s"
+msgstr "Ise idanwo ko gba: %(title)s"
+
+msgid "You have failed the quiz \"%(title)s\" with a score of %(score).1f%%."
+msgstr "O ko gba ise idanwo \"%(title)s\" pẹlu iye %(score).1f%%."
+
+msgid "Assignment \"%(title)s\" created successfully!"
+msgstr "Ise \"%(title)s\" ti a ṣe!"
+
+msgid "New assignment: %(title)s"
+msgstr "Ise tuntun: %(title)s"
+
+msgid "A new assignment \"%(title)s\" has been added to the course \"%(course_title)s\". Due date: %(due_date)s"
+msgstr "Ise tuntun \"%(title)s\" ti a fi kun iwe kikọ \"%(course_title)s\". Aago: %(due_date)s"
+
+msgid "Grade recorded for %(title)s"
+msgstr "Iye ti a ṣe fun %(title)s"
+
+msgid "Your grade for assignment \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Iye rẹ fun ise \"%(title)s\" ti a ṣe: %(score)d/%(max_points)d"
+
+msgid "Your grade for quiz \"%(title)s\" has been recorded: %(score)d/%(max_points)d"
+msgstr "Iye rẹ fun ise idanwo \"%(title)s\" ti a ṣe: %(score)d/%(max_points)d"
+
+msgid "Grade recorded successfully!"
+msgstr "Iye ti a ṣe!"
+
+msgid "You must be enrolled in the course to access the forum."
+msgstr "O gbọdọ farada si iwe kikọ lati wọle si ibi."
+
+msgid "You must be enrolled in the course to create topics."
+msgstr "O gbọdọ farada si iwe kikọ lati ṣe awon iru."
+
+msgid "Topic \"%(title)s\" created successfully!"
+msgstr "Iru \"%(title)s\" ti a ṣe!"
+
+msgid "New topic created: %(title)s"
+msgstr "Iru tuntun ti a ṣe: %(title)s"
+
+msgid "%(username)s has created a new topic \"%(title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s ti ṣe iru tuntun \"%(title)s\" ni iwe kikọ \"%(course_title)s\"."
+
+msgid "Please fill in both title and content."
+msgstr "Jọwọ fi orukọ ati iwe."
+
+msgid "You must be enrolled in the course to access this topic."
+msgstr "O gbọdọ farada si iwe kikọ lati wọle si iru yii."
+
+msgid "You must be enrolled in the course to create posts."
+msgstr "O gbọdọ farada si iwe kikọ lati ṣe awon ifiji."
+
+msgid "Post created successfully!"
+msgstr "Iwe ti a ṣe!"
+
+msgid "New reply to your topic: %(title)s"
+msgstr "Ireti tuntun si iru rẹ: %(title)s"
+
+msgid "%(username)s replied to your topic \"%(title)s\""
+msgstr "%(username)s ti reti si iru rẹ \"%(title)s\""
+
+msgid "New post in %(title)s"
+msgstr "Iwe tuntun ni %(title)s"
+
+msgid "%(username)s made a new post in topic \"%(topic_title)s\" in course \"%(course_title)s\"."
+msgstr "%(username)s ti ṣe iwe tuntun ni iru \"%(topic_title)s\" ni iwe kikọ \"%(course_title)s\"."
+
+msgid "Please enter content for your post."
+msgstr "Jọwọ fi iwe fun iwe rẹ."
+
+msgid "You don't have permission to access this certificate."
+msgstr "O ko ni igbanila lati wọle si iwe aṣẹ yii."
+
+msgid "You must complete at least 80% of the course to earn a certificate."
+msgstr "O gbọdọ parun o kere ju 80% iwe kikọ lati gba iwe aṣẹ."
+
+msgid "Certificate generated successfully!"
+msgstr "Iwe aṣẹ ti a ṣe!"
+
+msgid "Certificate earned: %(course_title)s"
+msgstr "Iwe aṣẹ ti a gba: %(course_title)s"
+
+msgid "You have earned a certificate for completing the course \"%(course_title)s\"."
+msgstr "O ti gba iwe aṣẹ fun ipari iwe kikọ \"%(course_title)s\"."
+
+msgid "for completing the course:"
+msgstr "fun ipari iwe kikọ:"
+
+msgid "Certificate ID: %(id)s"
+msgstr "ID Iwe Aṣẹ: %(id)s"
+
+msgid "Issued on: %(date)s"
+msgstr "Ti fi han ni: %(date)s"
+
+msgid "Instructor: "
+msgstr "Alagbàkọ: "
+
+msgid "Certificate template updated successfully!"
+msgstr "Akojọ iwe aṣẹ ti a ṣe imudojuiwọn!"
+
+msgid "You must be enrolled in the course to check certificate eligibility."
+msgstr "O gbọdọ farada si iwe kikọ lati ṣayẹwo boya o ni ẹgba lati gba iwe aṣẹ."
+
+msgid "Notification preferences updated successfully!"
+msgstr "Alaye alaye ti a ṣe imudojuiwọn!"
+
+msgid "All notifications marked as read!"
+msgstr "Gbogbo awon alaye ti a ṣe pe o ti ka!"
+
+msgid "Report \"%(title)s\" generated successfully!"
+msgstr "Alaye \"%(title)s\" ti a ṣe!"
+
+msgid "Accessibility settings updated successfully!"
+msgstr "Ipo ise ti a ṣe imudojuiwọn!"
+
+msgid "Missing alt text on 3 images"
+msgstr "Iwe alt ti wu ni awon aworan 3"
+
+msgid "Low contrast ratio on 2 elements"
+msgstr "Ipo laaye kekere ni awon ohun 2"
+
+msgid "Missing form labels on 1 input"
+msgstr "Awon akọsẹ ti wu ni 1 ifiji"
+
+msgid "Keyboard trap detected on modal"
+msgstr "Keyboard trap ti wa ni modal"
+
+msgid "Accessibility scan completed. Found %(count)d potential issues."
+msgstr "Ṣayẹwo ise ti parun. Wa %(count)d awon ohun ti o le ṣe."
+
+msgid "Web Content Accessibility Guidelines (WCAG)"
+msgstr "Imuṣẹ Iwe Ibi (WCAG)"
+
+msgid "Official guidelines for web accessibility"
+msgstr "Imuṣẹ ofiwe fun ise oju opo"
+
+msgid "Screen Reader Testing"
+msgstr "Idanwo Olukọ Oju"
+
+msgid "How to test with screen readers"
+msgstr "Bawo ni a ṣe idanwo pẹlu awon olukọ oju"
+
+msgid "Color Contrast Checker"
+msgstr "Alaye Alaye Laaye"
+
+msgid "Tool to check color contrast ratios"
+msgstr "Ohun elo lati ṣayẹwo ipo laaye"
+
+msgid "Keyboard Navigation"
+msgstr "Ibi Keyboard"
+
+msgid "Best practices for keyboard accessibility"
+msgstr "Ise to dara fun ise keyboard"
+
+msgid "AUA LMS"
+msgstr "TSARI IWE KIKỌ AUA"
+
+msgid "Dashboard"
+msgstr "Ipo Iṣẹlẹ"
+
+msgid "Gradebook"
+msgstr "Iwe Iye"
+
+msgid "Certificates"
+msgstr "Awon Iwe Aṣẹ"
+
+msgid "Analytics"
+msgstr "Iṣiro"
+
+msgid "Accessibility"
+msgstr "Ise"
+
+msgid "Logout"
+msgstr "Jade"
+
+msgid "Login"
+msgstr "Wọle"
+
+msgid "Register"
+msgstr "Fi Han"
+
+msgid "All rights reserved."
+msgstr "Gbogbo awon ẹgba ti a fi han."
+
+msgid "Accessibility Audit Log"
+msgstr "Iwe Iṣiro Ise"
+
+msgid "Run Accessibility Scan"
+msgstr "Bẹrẹ Ṣayẹwo Ise"
+
+msgid "Type"
+msgstr "Iru"
+
+msgid "Performed By"
+msgstr "Ṣe E By"
+
+msgid "Findings"
+msgstr "Awon Ohun Ti A Rii"
+
+msgid "Severity"
+msgstr "Igbohun"
+
+msgid "Date"
+msgstr "Ọjọ"
+
+msgid "Resolved"
+msgstr "Ti Ṣe"
+
+msgid "Accessibility Resources"
+msgstr "Awon Ohun Inu Ise"
+
+msgid "Tools and resources to help improve accessibility."
+msgstr "Awon ohun elo ati awon ohun inu lati ranti lati mu ise."
+
+msgid "Visit Resource"
+msgstr "Lọ Si Ohun Inu"
+
+msgid "Accessibility Testing Tools"
+msgstr "Awon Ohun Elo Ṣayẹwo Ise"
+
+msgid "Web accessibility evaluation tool"
+msgstr "Ohun elo iṣiro ise oju opo"
+
+msgid "Accessibility testing engine"
+msgstr "Ohun elo idanwo ise"
+
+msgid "Performance and accessibility auditing"
+msgstr "Ṣayẹwo iṣẹlọpọ ati ise"
+
+msgid "Color blindness simulator"
+msgstr "Ohun elo idanwo laaye"
+
+msgid "Accessibility Settings"
+msgstr "Ipo Ise"
+
+msgid "Adjust settings to make the LMS more accessible for your needs."
+msgstr "Ṣe ifiweranṣẹ iṣeto lati ṣe LMS to dara fun awon ibeere rẹ."
+
+msgid "Visual Adjustments"
+msgstr "Ifiweranṣẹ Iyanju"
+
+msgid "Motion and Animation"
+msgstr "Isise ati Ọnaṣe"
+
+msgid "Assistive Technology"
+msgstr "Tẹknọlọji Ranti"
+
+msgid "Audio Settings"
+msgstr "Iṣeto Aodio"
+
+msgid "Save Settings"
+msgstr "Fi Iṣeto Han"
+
+msgid "Cancel"
+msgstr "Fagilee"
+
+msgid "Accessibility Statement"
+msgstr "Iwe Ise"
+
+msgid "Learn about our commitment to accessibility and how we support all users."
+msgstr "Mọ nipa ipinnu wa si ise ati bii a ṣe ranti gbogbo awon olumulo."
+
+msgid "Current Status"
+msgstr "Ipo Lọwọlọwọ"
+
+msgid "Our LMS currently meets:"
+msgstr "LMS wa lọwọlọwọ gba:"
+
+msgid "WCAG 2.1 Level AA standards"
+msgstr "Awon iṣeto WCAG 2.1 Ipo AA"
+
+msgid "Section 508 compliance"
+msgstr "Igbaniyanju 508"
+
+msgid "European accessibility requirements"
+msgstr "Ibeere ise Eoropa"
+
+msgid "We regularly update our platform to improve accessibility. Last review: January 2026"
+msgstr "A ṣe imudojuiwọn ọna wa ni kikun lati mu ise. Iṣiro to kọja: Oṣu Kinni 2026"
+
+msgid "Admin Dashboard"
+msgstr "Ipo Iṣẹlẹ Alakoso"
+
+msgid "Welcome, <strong>%(user.username)s</strong>!"
+msgstr "Kaabo, <strong>%(user.username)s</strong>!"
+
+msgid "Your role: <strong>%(user_role|title)s</strong>"
+msgstr "Ipa rẹ: <strong>%(user_role|title)s</strong>"
+
+msgid "System Overview"
+msgstr "Atunwo Tsari"
+
+msgid "Manage users, courses, and system settings."
+msgstr "Ṣiṣe awon olumulo, awon iwe kikọ, ati awon iṣeto tsari."
+
+msgid "Access Admin Panel"
+msgstr "Wọle Si Paaneli Alakoso"
+
+msgid "Quick Stats"
+msgstr "Iṣiro Kankan"
+
+msgid "Users: 0 | Courses: 0 | Enrollments: 0"
+msgstr "Awon olumulo: 0 | Awon iwe kikọ: 0 | Awon ifarada: 0"
+
+msgid "Analytics Dashboard"
+msgstr "Ipo Iṣẹlẹ Iṣiro"
+
+msgid "View insights and analytics for your courses and students."
+msgstr "Wo awon ifihan ati awon iṣiro fun awon iwe kikọ rẹ ati awon eniyan akosile."
+
+msgid "Total Enrollments"
+msgstr "Gbogbo Awon Ifarada"
+
+msgid "Course Completions"
+msgstr "Ipari Awon Iwe Kikọ"
+
+msgid "Lessons Completed"
+msgstr "Awon Akosile Ti A Parun"
+
+msgid "Quiz Attempts"
+msgstr "Awon Gbiyanju Ise Idanwo"
+
+msgid "Enrollment Trend (Last 7 Days)"
+msgstr "Ilera Ifarada (Awon Ọjọ 7 To Kọja)"
+
+msgid "Quick Actions"
+msgstr "Awon Iṣe Kankan"
+
+msgid "Generate Report"
+msgstr "Ṣe Alaye"
+
+msgid "View Courses"
+msgstr "Wo Awon Iwe Kikọ"
+
+msgid "Recent Activity"
+msgstr "Iṣe Tuntun"
+
+msgid "Recent analytics data will appear here."
+msgstr "Awon data iṣiro tuntun yoo han nibi."
+
+msgid "New Enrollments"
+msgstr "Awon Ifarada Tuntun"
+
+msgid "Enrollment Trend"
+msgstr "Ilera Ifarada"
+
+msgid "Certificate Eligibility"
+msgstr "Ẹgba Iwe Aṣẹ"
+
+msgid "Certificate Eligibility for %(course.title)s"
+msgstr "Ẹgba Iwe Aṣẹ fun %(course.title)s"
+
+msgid "Your Progress"
+msgstr "Ilera Rẹ"
+
+msgid "Current Progress:"
+msgstr "Ilera Lọwọlọwọ:"
+
+msgid "Required for Certificate:"
+msgstr "Nilo fun Iwe Aṣẹ:"
+
+msgid "Congratulations! 🎉"
+msgstr "Olorun Dide! 🎉"
+
+msgid "You are eligible for a certificate. You can generate it now."
+msgstr "O ni ẹgba fun iwe aṣẹ. O le ṣe o lọwọlọwọ."
+
+msgid "Generate Certificate"
+msgstr "Ṣe Iwe Aṣẹ"
+
+msgid "Keep Going! 📚"
+msgstr "Tesiwaju! 📚"
+
+msgid "You need %(80|add:-progress)s%% more progress to earn a certificate."
+msgstr "O nilo %(80|add:-progress)s%% siwaju ti o le gba iwe aṣẹ."
+
+msgid "Continue Learning"
+msgstr "Tesiwaju Kikọ"
+
+msgid "Analytics for %(course.title)s"
+msgstr "Iṣiro fun %(course.title)s"
+
+msgid "View detailed analytics for this course."
+msgstr "Wo awon iṣiro alaye fun iwe kikọ yii."
+
+msgid "Completions"
+msgstr "Awon Ipari"
+
+msgid "Completion Rate"
+msgstr "Ipo Ipari"
+
+msgid "Lesson Completion Rates"
+msgstr "Awon Ipo Ipari Akosile"
+
+msgid "Module"
+msgstr "Imuduro"
+
+msgid "Lesson"
+msgstr "Akosile"
+
+msgid "Home"
+msgstr "Ile"
+
+msgid "Courses"
+msgstr "Awon Iwe Kikọ"
+
+msgid "Instructor:"
+msgstr "Alagbàkọ:"
+
+msgid "Category:"
+msgstr "Iru:"
+
+msgid "Uncategorized"
+msgstr "Aiko"
+
+msgid "Created:"
+msgstr "Ti Ṣe:"
+
+msgid "Unenroll"
+msgstr "Jade Si"
+
+msgid "You are enrolled in this course!"
+msgstr "O ti farada si iwe kikọ yii!"
+
+msgid "Progress:"
+msgstr "Ilera:"
+
+msgid "Enroll in Course"
+msgstr "Farada Si Iwe Kikọ"
+
+msgid "Add Module"
+msgstr "Fi Imuduro Kun"
+
+msgid "Edit Course"
+msgstr "Ṣe Iṣe Iwe Kikọ"
+
+msgid "View Dashboard"
+msgstr "Wo Ipo Iṣẹlẹ"
+
+msgid "Login to Enroll"
+msgstr "Wọle Latii Farada"
+
+msgid "Register to Enroll"
+msgstr "Fi Han Latii Farada"
+
+msgid "Check Certificate Eligibility"
+msgstr "Ṣayẹwo Ẹgba Iwe Aṣẹ"
+
+msgid "Course Content"
+msgstr "Iwe Iwe Kikọ"
+
+msgid "Create Quiz"
+msgstr "Ṣe Ise Idanwo"
+
+msgid "Take Quiz"
+msgstr "Gbiyanju Ise Idanwo"
+
+msgid "No lessons in this module yet."
+msgstr "Ko si awon akosile ni imuduro yii tẹlẹ."
+
+msgid "Add Lesson"
+msgstr "Fi Akosile Kun"
+
+msgid "Forum"
+msgstr "Ibi"
+
+msgid "Create Topic"
+msgstr "Ṣe Iru"
+
+msgid "Topic"
+msgstr "Iru"
+
+msgid "Author"
+msgstr "Olusọrọ"
+
+msgid "Replies"
+msgstr "Awon Ireti"
+
+msgid "Last Post"
+msgstr "Iwe To Ikọja"
+
+msgid "Pinned"
+msgstr "Fi Kun"
+
+msgid "Closed"
+msgstr "Ti Pa"
+
+msgid "by"
+msgstr "nipa"
+
+msgid "No posts yet"
+msgstr "Ko si awon ifiji tẹlẹ"
+
+msgid "No topics have been created yet. Be the first to start a discussion!"
+msgstr "Ko si awon iru ti a ti ṣe tẹlẹ. Jẹ akọkọ lati bẹrẹ ọrọ ijiroro!"
+
+msgid "Available Courses"
+msgstr "Awon Iwe Kikọ Ti O Le"
+
+msgid "Browse our collection of courses."
+msgstr "Wọ awon apamọ iwe kikọ wa."
+
+msgid "Search courses..."
+msgstr "Ṣayẹwo awon iwe kikọ..."
+
+msgid "All Categories"
+msgstr "Gbogbo Awon Iwọn"
+
+msgid "Search"
+msgstr "Ṣayẹwo"
+
+msgid "No Thumbnail"
+msgstr "Ko Si Aworan Kekere"
+
+msgid "View Course"
+msgstr "Wo Iwe Kikọ"
+
+msgid "Course pagination"
+msgstr "Apamọ Iwe Kikọ"
+
+msgid "Previous"
+msgstr "Tẹlẹ"
+
+msgid "Next"
+msgstr "Tikun"
+
+msgid "No courses found. Try adjusting your search criteria."
+msgstr "Ko si iwe kikọ ti a rii. Gbiyanju lati yiyipada awon ibeere rẹ."
+
+msgid "Create Course"
+msgstr "Ṣe Iwe Kikọ"
+
+msgid "Create New Course"
+msgstr "Ṣe Iwe Kikọ Tuntun"
+
+msgid "Create Lesson"
+msgstr "Ṣe Akosile"
+
+msgid "Create Lesson for: %(module.title)s"
+msgstr "Ṣe Akosile fun: %(module.title)s"
+
+msgid "Create Module"
+msgstr "Ṣe Imuduro"
+
+msgid "Create Module for: %(course.title)s"
+msgstr "Ṣe Imuduro fun: %(course.title)s"
+
+msgid "Create Quiz for: %(lesson.title)s"
+msgstr "Ṣe Ise Idanwo fun: %(lesson.title)s"
+
+msgid "Passing Score (%%)"
+msgstr "Iye Gba (%%)"
+
+msgid "Create custom reports for your courses and students."
+msgstr "Ṣe awon alaye pato fun awon iwe kikọ rẹ ati awon eniyan akosile."
+
+msgid "Welcome to AUA Learning Management System"
+msgstr "Kaabo si Tsari Iwe Kikọ AUA"
+
+msgid "Enhance your learning experience with our comprehensive platform."
+msgstr "Mu ijinle rẹ si iyaworan kikọ pẹlu ọna wa ti o kun."
+
+msgid "Go to Dashboard"
+msgstr "Lọ si Ipo Iṣẹlẹ"
+
+msgid "Featured Courses"
+msgstr "Awon Iwe Kikọ To Ku"
+
+msgid "View All Courses"
+msgstr "Wo Gbogbo Awon Iwe Kikọ"
+
+msgid "Certificates for %(course.title)s"
+msgstr "Awon Iwe Aṣẹ fun %(course.title)s"
+
+msgid "Manage certificates for students in this course."
+msgstr "Ṣiṣe awon iwe aṣẹ fun awon eniyan akosile ni iwe kikọ yii."
+
+msgid "Manage Certificate Template"
+msgstr "Ṣiṣe Akojọpọ Iwe Aṣẹ"
+
+msgid "Certificate ID"
+msgstr "ID Iwe Aṣẹ"
+
+msgid "Issued Date"
+msgstr "Ọjọ Ti A Fi Han"
+
+msgid "Actions"
+msgstr "Awon Iṣe"
+
+msgid "View/Download"
+msgstr "Wo/Gbẹga"
+
+msgid "No certificates have been issued for this course yet."
+msgstr "Ko si awon iwe aṣẹ ti a ti fi han fun iwe kikọ yii tẹlẹ."
+
+msgid "Instructor Dashboard"
+msgstr "Ipo Iṣẹlẹ Alagbàkọ"
+
+msgid "Your Courses"
+msgstr "Awon Iwe Kikọ Rẹ"
+
+msgid "Modules:"
+msgstr "Awon Imuduro:"
+
+msgid "View"
+msgstr "Wo"
+
+msgid "You haven't created any courses yet."
+msgstr "O ko ti ṣe awon iwe kikọ tẹlẹ."
+
+msgid "Create Your First Course"
+msgstr "Ṣe Iwe Kikọ Akọkọ Rẹ"
+
+msgid "Statistics"
+msgstr "Iṣiro"
+
+msgid "Total Courses:"
+msgstr "Gbogbo Awon Iwe Kikọ:"
+
+msgid "Total Modules:"
+msgstr "Gbogbo Awon Imuduro:"
+
+msgid "Manage and view grades for your course."
+msgstr "Ṣiṣe ati wo awon iye fun iwe kikọ rẹ."
+
+msgid "Course Overview"
+msgstr "Atunwo Iwe Kikọ"
+
+msgid "Total Students:"
+msgstr "Gbogbo Awon Eniyan Akosile:"
+
+msgid "Assignments:"
+msgstr "Awon Ise:"
+
+msgid "Quizzes:"
+msgstr "Awon Ise Idanwo:"
+
+msgid "Final"
+msgstr "Ikọja"
+
+msgid "Keyboard Shortcuts"
+msgstr "Awon Ọna Kankan"
+
+msgid "Use these keyboard shortcuts to navigate the LMS efficiently."
+msgstr "Lo awon ọna kankan wọnyi lati lo LMS ni ọna to dara."
+
+msgid "Key Combination"
+msgstr "Ibamu Mafo"
+
+msgid "Action"
+msgstr "Iṣe"
+
+msgid "General Navigation"
+msgstr "Ibi Na Kasa"
+
+msgid "Navigate between interactive elements"
+msgstr "Lọ laarin awon ohun ti o n ṣe iṣe"
+
+msgid "Navigate backwards"
+msgstr "Lọ pada"
+
+msgid "Activate links and buttons"
+msgstr "Mu awon ifasẹsẹ ati awon bọtini ṣiṣe"
+
+msgid "Toggle checkboxes and radio buttons"
+msgstr "Ṣe awon bọtini ṣiṣe ati awon bọtini radio"
+
+msgid "Close modals and dropdowns"
+msgstr "Pa modal ati awon ifasilẹ"
+
+msgid "Module:"
+msgstr "Imuduro:"
+
+msgid "Type:"
+msgstr "Iru:"
+
+msgid "No video content available."
+msgstr "Ko si iwe fidio ti o wa."
+
+msgid "Download PDF"
+msgstr "Gbẹga PDF"
+
+msgid "No PDF file available."
+msgstr "Ko si faili PDF ti o wa."
+
+msgid "This is a quiz lesson. Quiz functionality will be implemented in a future step."
+msgstr "Eyi jẹ akosile idanwo. Iṣe ise idanwo yoo wa ni ọna ti o kọja."
+
+msgid "Completed"
+msgstr "Ti Parun"
+
+msgid "Mark as Incomplete"
+msgstr "Ṣe Alaye Bi O Ko Ti Parun"
+
+msgid "Mark as Complete"
+msgstr "Ṣe Alaye Bi O Ti Parun"
+
+msgid "Back to Course"
+msgstr "Padà Si Iwe Kikọ"
+
+msgid "Manage Certificate Template for %(course.title)s"
+msgstr "Ṣiṣe Akojọpọ Iwe Aṣẹ fun %(course.title)s"
+
+msgid "Customize the certificate template for this course."
+msgstr "Ṣe atunṣe akọjọpọ iwe aṣẹ fun iwe kikọ yii."
+
+msgid "Current image:"
+msgstr "Aworan lọwọlọwọ:"
+
+msgid "Current background"
+msgstr "Abarabarin lọwọlọwọ"
+
+msgid "Save Template"
+msgstr "Fi Akojọpọ Han"
+
+msgid "Notification Preferences"
+msgstr "Awon Ibeere Alaye"
+
+msgid "Customize what notifications you receive."
+msgstr "Ṣe atunṣe awon alaye ti o gba."
+
+msgid "Notification Types"
+msgstr "Awon Iru Alaye"
+
+msgid "Notification Categories"
+msgstr "Awon Iwọn Alaye"
+
+msgid "Save Preferences"
+msgstr "Fi Ibeere Han"
+
+msgid "Notifications"
+msgstr "Awon Alaye"
+
+msgid "Mark All as Read"
+msgstr "Ṣe Gbogbo Bi O Ti Ka"
+
+msgid "New"
+msgstr "Tuntun"
+
+msgid "Mark as Read"
+msgstr "Ṣe Bi O Ti Ka"
+
+msgid "You have no notifications yet."
+msgstr "O ko ni awon alaye tẹlẹ."
+
+msgid "Analytics for %(student.username)s"
+msgstr "Iṣiro fun %(student.username)s"
+
+msgid "View detailed analytics for this student."
+msgstr "Wo awon iṣiro alaye fun eniyan akosile yii."
+
+msgid "Total Courses"
+msgstr "Gbogbo Awon Iwe Kikọ"
+
+msgid "Completed Courses"
+msgstr "Awon Iwe Kikọ Ti A Parun"
+
+msgid "Average Progress"
+msgstr "Ilera Gbogbogbo"
+
+msgid "Course Progress"
+msgstr "Ilera Iwe Kikọ"
+
+msgid "Total Lessons"
+msgstr "Gbogbo Awon Akosile"
+
+msgid "Grades"
+msgstr "Awon Iye"
+
+msgid "Score"
+msgstr "Iye"
+
+msgid "Max Points"
+msgstr "Alaye To Bi"
+
+msgid "Percentage"
+msgstr "Opopona"
+
+msgid "No grades available for this student."
+msgstr "Ko si awon iye ti o wa fun eniyan akosile yii."
+
+msgid "My Certificates"
+msgstr "Awon Iwe Aṣẹ Mi"
+
+msgid "Download your course completion certificates."
+msgstr "Gbẹga awon iwe aṣẹ ipari iwe kikọ rẹ."
+
+msgid "Student:"
+msgstr "Eniyan akosile:"
+
+msgid "Certificate ID:"
+msgstr "ID Iwe Aṣẹ:"
+
+msgid "Issued:"
+msgstr "Ti fi han:"
+
+msgid "Download Certificate"
+msgstr "Gbẹga Iwe Aṣẹ"
+
+msgid "You haven't earned any certificates yet."
+msgstr "O ko ti gba awon iwe aṣẹ tẹlẹ."
+
+msgid "Browse Courses"
+msgstr "Wọ Awon Iwe Kikọ"
+
+msgid "Student Dashboard"
+msgstr "Ipo Iṣẹlẹ Eniyan Akosile"
+
+msgid "You are not enrolled in any courses yet."
+msgstr "O ko farada si awon iwe kikọ tẹlẹ."
+
+msgid "Courses Enrolled:"
+msgstr "Awon Iwe Kikọ Ti O Farada:"
+
+msgid "Average Progress:"
+msgstr "Ilera Gbogbogbo:"
+
+msgid "No progress data available yet."
+msgstr "Ko si data ilera ti o wa tẹlẹ."
+
+msgid "My Gradebook"
+msgstr "Iwe Iye Mi"
+
+msgid "View your grades across all enrolled courses."
+msgstr "Wo awon iye rẹ ni gbogbo awon iwe kikọ ti o farada."
+
+msgid "Final Grade:"
+msgstr "Iye Ikọja:"
+
+msgid "Item"
+msgstr "Nkan"
+
+msgid "N/A"
+msgstr "Aiko"
+
+msgid "No grades recorded for this course yet."
+msgstr "Ko si awon iye ti a ti rika fun iwe kikọ yii tẹlẹ."
+
+msgid "You are not enrolled in any courses or have no grades yet."
+msgstr "O ko farada si awon iwe kikọ tabi ko si awon iye tẹlẹ."
+
+msgid "Started by <strong>%(topic.author.username)s</strong> on %(topic.created_at|date:\"M d, Y H:i\")s"
+msgstr "Ti bẹrẹ nipasẹ <strong>%(topic.author.username)s</strong> ni %(topic.created_at|date:\"M d, Y H:i\")s"
+
+msgid "(edited)"
+msgstr "(ti ṣe iṣe)"
+
+msgid "No posts yet. Be the first to reply!"
+msgstr "Ko si awon ifiji tẹlẹ. Jẹ akọkọ lati reti!"
+
+msgid "Reply to Topic"
+msgstr "Reti Si Iru"
+
+msgid "Write your reply here..."
+msgstr "Kọ iwe reti rẹ nibi..."
+
+msgid "Post Reply"
+msgstr "Fi Ireti Han"
+
+msgid "This topic is closed. No new replies are allowed."
+msgstr "Iru yii ti pa. Ko si awon iyanju tuntun ti o gba."

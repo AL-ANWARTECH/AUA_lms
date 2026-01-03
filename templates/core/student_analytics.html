@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Analytics - {{ student.username }} - AUA LMS{% endblock %}
+{% block title %}{% trans "Analytics" %} - {{ student.username }} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Analytics for {{ student.username }}</h2>
-        <p>View detailed analytics for this student.</p>
+        <h2>{% blocktrans %}Analytics for {{ student.username }}{% endblocktrans %}</h2>
+        <p>{% trans "View detailed analytics for this student." %}</p>
         
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="card bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Total Courses</h5>
+                        <h5 class="card-title">{% trans "Total Courses" %}</h5>
                         <h2 class="card-text">{{ total_courses }}</h2>
                     </div>
                 </div>
@@ -20,7 +21,7 @@
             <div class="col-md-3">
                 <div class="card bg-success text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Completed Courses</h5>
+                        <h5 class="card-title">{% trans "Completed Courses" %}</h5>
                         <h2 class="card-text">{{ completed_courses }}</h2>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
             <div class="col-md-3">
                 <div class="card bg-info text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Average Progress</h5>
+                        <h5 class="card-title">{% trans "Average Progress" %}</h5>
                         <h2 class="card-text">{{ average_progress|floatformat:1 }}%</h2>
                     </div>
                 </div>
@@ -37,17 +38,17 @@
         
         <div class="card mb-4">
             <div class="card-header">
-                <h5>Course Progress</h5>
+                <h5>{% trans "Course Progress" %}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Course</th>
-                                <th>Progress</th>
-                                <th>Completed Lessons</th>
-                                <th>Total Lessons</th>
+                                <th>{% trans "Course" %}</th>
+                                <th>{% trans "Progress" %}</th>
+                                <th>{% trans "Completed Lessons" %}</th>
+                                <th>{% trans "Total Lessons" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,7 +68,7 @@
         
         <div class="card">
             <div class="card-header">
-                <h5>Grades</h5>
+                <h5>{% trans "Grades" %}</h5>
             </div>
             <div class="card-body">
                 {% if grades %}
@@ -75,11 +76,11 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Course</th>
-                                    <th>Type</th>
-                                    <th>Score</th>
-                                    <th>Max Points</th>
-                                    <th>Percentage</th>
+                                    <th>{% trans "Course" %}</th>
+                                    <th>{% trans "Type" %}</th>
+                                    <th>{% trans "Score" %}</th>
+                                    <th>{% trans "Max Points" %}</th>
+                                    <th>{% trans "Percentage" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -96,7 +97,7 @@
                         </table>
                     </div>
                 {% else %}
-                    <p class="text-muted">No grades available for this student.</p>
+                    <p class="text-muted">{% trans "No grades available for this student." %}</p>
                 {% endif %}
             </div>
         </div>

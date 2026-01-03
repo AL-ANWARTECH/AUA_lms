@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Student Dashboard - AUA LMS{% endblock %}
+{% block title %}{% trans "Student Dashboard" %} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Student Dashboard</h2>
-        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
-        <p>Your role: <strong>{{ user_role|title }}</strong></p>
+        <h2>{% trans "Student Dashboard" %}</h2>
+        <p>{% blocktrans %}Welcome, <strong>{{ user.username }}</strong>!{% endblocktrans %}</p>
+        <p>{% blocktrans %}Your role: <strong>{{ user_role|title }}</strong>{% endblocktrans %}</p>
     </div>
 </div>
 
@@ -15,7 +16,7 @@
     <div class="col-12">
         <div class="card mb-3">
             <div class="card-header">
-                <h5>Your Courses</h5>
+                <h5>{% trans "Your Courses" %}</h5>
             </div>
             <div class="card-body">
                 {% if enrollments %}
@@ -27,18 +28,18 @@
                                         <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ enrollment.course.title }}" style="height: 150px; object-fit: cover;">
                                     {% else %}
                                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                                            <span class="text-muted">No Thumbnail</span>
+                                            <span class="text-muted">{% trans "No Thumbnail" %}</span>
                                         </div>
                                     {% endif %}
                                     <div class="card-body d-flex flex-column">
                                         <h6 class="card-title">{{ enrollment.course.title }}</h6>
                                         <p class="card-text small text-muted">{{ enrollment.course.description|truncatewords:10 }}</p>
                                         <p class="text-muted small">
-                                            <strong>Instructor:</strong> {{ enrollment.course.instructor.username }}<br>
-                                            <strong>Progress:</strong> {{ enrollment.progress_percentage }}%
+                                            <strong>{% trans "Instructor:" %}</strong> {{ enrollment.course.instructor.username }}<br>
+                                            <strong>{% trans "Progress:" %}</strong> {{ enrollment.progress_percentage }}%
                                         </p>
                                         <div class="mt-auto">
-                                            <a href="{% url 'course_detail' enrollment.course.pk %}" class="btn btn-sm btn-primary">Continue Learning</a>
+                                            <a href="{% url 'course_detail' enrollment.course.pk %}" class="btn btn-sm btn-primary">{% trans "Continue Learning" %}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -46,8 +47,8 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <p class="text-muted">You are not enrolled in any courses yet.</p>
-                    <p><a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a></p>
+                    <p class="text-muted">{% trans "You are not enrolled in any courses yet." %}</p>
+                    <p><a href="{% url 'course_list' %}" class="btn btn-primary">{% trans "Browse Courses" %}</a></p>
                 {% endif %}
             </div>
         </div>
@@ -58,13 +59,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5>Your Progress</h5>
+                <h5>{% trans "Your Progress" %}</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">
                     {% if enrollments %}
-                        <strong>Courses Enrolled:</strong> {{ enrollments|length }}<br>
-                        <strong>Average Progress:</strong> 
+                        <strong>{% trans "Courses Enrolled:" %}</strong> {{ enrollments|length }}<br>
+                        <strong>{% trans "Average Progress:" %}</strong> 
                         {% if enrollments %}
                             {% with total_progress=0 count=0 %}
                                 {% for enrollment in enrollments %}
@@ -81,7 +82,7 @@
                             0%
                         {% endif %}
                     {% else %}
-                        No progress data available yet.
+                        {% trans "No progress data available yet." %}
                     {% endif %}
                 </p>
             </div>

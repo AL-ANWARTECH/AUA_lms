@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Analytics - {{ course.title }} - AUA LMS{% endblock %}
+{% block title %}{% trans "Analytics" %} - {{ course.title }} - {% trans "AUA LMS" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h2>Analytics for {{ course.title }}</h2>
-        <p>View detailed analytics for this course.</p>
+        <h2>{% blocktrans %}Analytics for {{ course.title }}{% endblocktrans %}</h2>
+        <p>{% trans "View detailed analytics for this course." %}</p>
         
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="card bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Total Enrollments</h5>
+                        <h5 class="card-title">{% trans "Total Enrollments" %}</h5>
                         <h2 class="card-text">{{ total_enrollments }}</h2>
                     </div>
                 </div>
@@ -20,7 +21,7 @@
             <div class="col-md-3">
                 <div class="card bg-success text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Completions</h5>
+                        <h5 class="card-title">{% trans "Completions" %}</h5>
                         <h2 class="card-text">{{ total_completions }}</h2>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
             <div class="col-md-3">
                 <div class="card bg-info text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Completion Rate</h5>
+                        <h5 class="card-title">{% trans "Completion Rate" %}</h5>
                         <h2 class="card-text">{{ completion_rate|floatformat:1 }}%</h2>
                     </div>
                 </div>
@@ -37,16 +38,16 @@
         
         <div class="card mb-4">
             <div class="card-header">
-                <h5>Student Progress</h5>
+                <h5>{% trans "Student Progress" %}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Student</th>
-                                <th>Progress</th>
-                                <th>Completed Lessons</th>
+                                <th>{% trans "Student" %}</th>
+                                <th>{% trans "Progress" %}</th>
+                                <th>{% trans "Completed Lessons" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,16 +66,16 @@
         
         <div class="card">
             <div class="card-header">
-                <h5>Lesson Completion Rates</h5>
+                <h5>{% trans "Lesson Completion Rates" %}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Module</th>
-                                <th>Lesson</th>
-                                <th>Completion Rate</th>
+                                <th>{% trans "Module" %}</th>
+                                <th>{% trans "Lesson" %}</th>
+                                <th>{% trans "Completion Rate" %}</th>
                             </tr>
                         </thead>
                         <tbody>
