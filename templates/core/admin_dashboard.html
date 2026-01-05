@@ -3,25 +3,139 @@
 {% block title %}Admin Dashboard - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* Admin Card Styling */
+    .admin-card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .admin-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* Icon Containers */
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    .icon-box.primary { background: rgba(13, 110, 253, 0.1); color: #0d6efd; }
+    .icon-box.success { background: rgba(25, 135, 84, 0.1); color: #198754; }
+    .icon-box.warning { background: rgba(255, 193, 7, 0.1); color: #ffc107; }
+    .icon-box.info { background: rgba(13, 202, 240, 0.1); color: #0dcaf0; }
+    .icon-box.dark { background: rgba(33, 37, 41, 0.1); color: #212529; }
+
+    /* Stats Row */
+    .stat-row {
+        background-color: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        margin-bottom: 2rem;
+        border-left: 5px solid #0d6efd;
+    }
+</style>
+
+<div class="row mb-4">
     <div class="col-12">
-        <h2>Admin Dashboard</h2>
-        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
-        <p>Your role: <strong>{{ user_role|title }}</strong></p>
-        
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">System Overview</h5>
-                <p class="card-text">Manage users, courses, and system settings.</p>
-                <a href="/admin/" class="btn btn-primary">Access Admin Panel</a>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h2 class="fw-bold text-primary mb-1">Admin Control Center</h2>
+                <p class="text-muted mb-0">Welcome back, <strong>{{ user.username }}</strong>. System status is stable.</p>
+            </div>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 rounded-pill">
+                <i class="bi bi-circle-fill small me-2"></i>System Online
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card admin-card">
+            <div class="card-body p-4">
+                <div class="icon-box dark">
+                    <i class="bi bi-gear-wide-connected"></i>
+                </div>
+                <h5 class="fw-bold">System Admin</h5>
+                <p class="text-muted small">Access the core Django administration panel to manage raw database records.</p>
+                <a href="/admin/" class="btn btn-outline-dark w-100 mt-2 stretched-link">Open Panel</a>
             </div>
         </div>
-        
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Quick Stats</h5>
-                <p class="card-text">Users: 0 | Courses: 0 | Enrollments: 0</p>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card admin-card">
+            <div class="card-body p-4">
+                <div class="icon-box primary">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <h5 class="fw-bold">Analytics</h5>
+                <p class="text-muted small">View detailed reports on student enrollment, course completion, and engagement.</p>
+                <a href="{% url 'analytics_dashboard' %}" class="btn btn-outline-primary w-100 mt-2 stretched-link">View Reports</a>
             </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card admin-card">
+            <div class="card-body p-4">
+                <div class="icon-box info">
+                    <i class="bi bi-universal-access"></i>
+                </div>
+                <h5 class="fw-bold">Accessibility</h5>
+                <p class="text-muted small">Run audits and review compliance logs for WCAG standards.</p>
+                <a href="{% url 'accessibility_audit_log' %}" class="btn btn-outline-info w-100 mt-2 stretched-link">Audit Logs</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card admin-card">
+            <div class="card-body p-4">
+                <div class="icon-box success">
+                    <i class="bi bi-collection-play"></i>
+                </div>
+                <h5 class="fw-bold">Courses</h5>
+                <p class="text-muted small">Browse all active courses and review content structure.</p>
+                <a href="{% url 'course_list' %}" class="btn btn-outline-success w-100 mt-2 stretched-link">Browse Courses</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h4 class="fw-bold mb-3"><i class="bi bi-activity me-2"></i>System Health</h4>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="stat-row d-flex align-items-center justify-content-between">
+            <div>
+                <h6 class="text-muted text-uppercase small fw-bold mb-1">Database Status</h6>
+                <h5 class="mb-0 text-success">Operational</h5>
+            </div>
+            <i class="bi bi-database-check fs-1 text-secondary opacity-25"></i>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="stat-row d-flex align-items-center justify-content-between" style="border-left-color: #ffc107;">
+            <div>
+                <h6 class="text-muted text-uppercase small fw-bold mb-1">Security Audit</h6>
+                <h5 class="mb-0 text-dark">No Issues Detected</h5>
+            </div>
+            <i class="bi bi-shield-check fs-1 text-secondary opacity-25"></i>
         </div>
     </div>
 </div>

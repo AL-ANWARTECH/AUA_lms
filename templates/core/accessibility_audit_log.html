@@ -3,55 +3,184 @@
 {% block title %}Accessibility Audit Log - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Accessibility Audit Log</h2>
-            <a href="{% url 'run_accessibility_scan' %}" class="btn btn-primary">
-                Run Accessibility Scan
-            </a>
+<style>
+    /* Status Badge Styling */
+    .badge-critical { background-color: #dc3545; color: white; }
+    .badge-high { background-color: #fd7e14; color: white; }
+    .badge-medium { background-color: #ffc107; color: #000; }
+    .badge-low { background-color: #6c757d; color: white; }
+
+    /* Table Row Hover */
+    .audit-row { transition: background-color 0.2s; }
+    .audit-row:hover { background-color: #f8f9fa; }
+
+    /* Filter Tabs */
+    .nav-pills .nav-link.active {
+        background-color: #0d6efd;
+        box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+    }
+    .nav-pills .nav-link {
+        color: #495057;
+        font-weight: 500;
+        margin-right: 10px;
+        border-radius: 20px;
+        padding: 8px 20px;
+    }
+</style>
+
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">
+                <i class="bi bi-shield-check me-2"></i>Accessibility Audit Log
+            </h2>
+            <p class="text-muted mb-0">Track and resolve accessibility compliance issues.</p>
         </div>
-        
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Type</th>
-                                <th>Performed By</th>
-                                <th>Findings</th>
-                                <th>Severity</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for audit in audits %}
-                                <tr>
-                                    <td>{{ audit.audit_type|title }}</td>
-                                    <td>{{ audit.performed_by.username if audit.performed_by else 'System' }}</td>
-                                    <td>{{ audit.findings }}</td>
-                                    <td>
-                                        <span class="badge bg-{% if audit.severity == 'critical' %}danger{% elif audit.severity == 'high' %}warning{% elif audit.severity == 'medium' %}info{% else %}secondary{% endif %}">
-                                            {{ audit.severity|title }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {% if audit.resolved %}
-                                            <span class="badge bg-success">Resolved</span>
-                                        {% else %}
-                                            <span class="badge bg-warning">Pending</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ audit.created_at|date:"M d, Y" }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <a href="{% url 'run_accessibility_scan' %}" class="btn btn-primary btn-lg shadow-sm">
+            <i class="bi bi-radar me-2"></i>Run New Scan
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-7">
+        <ul class="nav nav-pills" id="auditFilters">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="filterTable('all')">All Logs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="filterTable('pending')">
+                    Pending <span class="badge bg-danger ms-1 rounded-pill small" id="pendingCount">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="filterTable('resolved')">Resolved</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-5">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="auditSearch" class="form-control border-start-0" placeholder="Search findings...">
         </div>
     </div>
 </div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="auditTable">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 py-3">Severity</th>
+                        <th class="py-3">Findings</th>
+                        <th class="py-3">Type</th>
+                        <th class="py-3">Performed By</th>
+                        <th class="py-3">Status</th>
+                        <th class="py-3 text-end pe-4">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for audit in audits %}
+                        <tr class="audit-row" data-status="{% if audit.resolved %}resolved{% else %}pending{% endif %}">
+                            <td class="ps-4">
+                                {% if audit.severity == 'critical' %}
+                                    <span class="badge badge-critical rounded-pill"><i class="bi bi-exclamation-octagon-fill me-1"></i>Critical</span>
+                                {% elif audit.severity == 'high' %}
+                                    <span class="badge badge-high rounded-pill"><i class="bi bi-exclamation-triangle-fill me-1"></i>High</span>
+                                {% elif audit.severity == 'medium' %}
+                                    <span class="badge badge-medium rounded-pill"><i class="bi bi-info-circle-fill me-1"></i>Medium</span>
+                                {% else %}
+                                    <span class="badge badge-low rounded-pill">Low</span>
+                                {% endif %}
+                            </td>
+                            <td class="fw-bold text-dark">{{ audit.findings }}</td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    {{ audit.audit_type|default:"Manual"|title }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-sm bg-primary bg-opacity-10 text-primary rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                    {{ audit.performed_by.username|default:'System' }}
+                                </div>
+                            </td>
+                            <td>
+                                {% if audit.resolved %}
+                                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">
+                                        <i class="bi bi-check-circle-fill me-1"></i> Resolved
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill">
+                                        <i class="bi bi-clock-fill me-1"></i> Pending
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end pe-4 text-muted small">
+                                {{ audit.created_at|date:"M d, Y" }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="text-muted">
+                                    <i class="bi bi-clipboard-check display-4 d-block mb-3 text-success opacity-50"></i>
+                                    <h5>No Audit Logs Found</h5>
+                                    <p class="small">Great job! Run a scan to check for new issues.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Calculate Pending Count on Load
+    document.addEventListener("DOMContentLoaded", () => {
+        const pendingRows = document.querySelectorAll('tr[data-status="pending"]');
+        document.getElementById('pendingCount').innerText = pendingRows.length;
+    });
+
+    // 2. Filter Tabs Logic
+    function filterTable(status) {
+        // Update Active Tab UI
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        event.target.closest('.nav-link').classList.add('active');
+
+        // Filter Rows
+        const rows = document.querySelectorAll('.audit-row');
+        rows.forEach(row => {
+            if (status === 'all') {
+                row.style.display = '';
+            } else {
+                if (row.getAttribute('data-status') === status) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    // 3. Search Logic
+    document.getElementById('auditSearch').addEventListener('keyup', function() {
+        const searchText = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.audit-row');
+        
+        rows.forEach(row => {
+            const findingText = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+            if (findingText.includes(searchText)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

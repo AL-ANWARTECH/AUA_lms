@@ -1,86 +1,176 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ topic.title }} - Forum - AUA LMS{% endblock %}
+{% block title %}{{ topic.title }} - {{ course.title }}{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* Avatar Styling */
+    .forum-avatar {
+        width: 45px;
+        height: 45px;
+        background-color: #e9ecef;
+        color: #495057;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+    .forum-avatar.instructor {
+        background-color: #e7f1ff;
+        color: #0d6efd;
+        border: 2px solid #b6d4fe;
+    }
+
+    /* Topic Head Styling */
+    .topic-head-card {
+        border-left: 5px solid #0d6efd;
+    }
+
+    /* Post Styling */
+    .post-card {
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        transition: box-shadow 0.2s;
+    }
+    .post-card:hover {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    
+    /* Metadata */
+    .post-meta {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+</style>
+
+<div class="row mb-4">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'course_forum' course.pk %}">Forum</a></li>
-                <li class="breadcrumb-item active">{{ topic.title }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ topic.title|truncatechars:30 }}</li>
             </ol>
         </nav>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-                <h3>{{ topic.title }}</h3>
-                <p class="text-muted">
-                    Started by <strong>{{ topic.author.username }}</strong> on {{ topic.created_at|date:"M d, Y H:i" }}
-                    {% if topic.is_pinned %}
-                        <span class="badge bg-primary ms-1">Pinned</span>
-                    {% endif %}
-                    {% if topic.is_closed %}
-                        <span class="badge bg-secondary ms-1">Closed</span>
-                    {% endif %}
-                </p>
-            </div>
-            <div class="card-body">
-                <p>{{ topic.content|linebreaks }}</p>
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        
+        <div class="card shadow-sm mb-5 topic-head-card">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h2 class="fw-bold mb-0 text-primary">{{ topic.title }}</h2>
+                    <div class="d-flex gap-2">
+                        {% if topic.is_pinned %}
+                            <span class="badge bg-warning text-dark"><i class="bi bi-pin-angle-fill me-1"></i>Pinned</span>
+                        {% endif %}
+                        {% if topic.is_closed %}
+                            <span class="badge bg-secondary"><i class="bi bi-lock-fill me-1"></i>Closed</span>
+                        {% else %}
+                            <span class="badge bg-success bg-opacity-10 text-success">Open</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                    <div class="forum-avatar me-3 {% if topic.author.role == 'instructor' %}instructor{% endif %}">
+                        {{ topic.author.username|make_list|first|upper }}
+                    </div>
+                    <div>
+                        <div class="fw-bold text-dark">
+                            {{ topic.author.get_full_name|default:topic.author.username }}
+                            {% if topic.author.role == 'instructor' %}
+                                <span class="badge bg-primary ms-1" style="font-size: 0.65rem;">INSTRUCTOR</span>
+                            {% endif %}
+                        </div>
+                        <div class="post-meta">
+                            Started on {{ topic.created_at|date:"M d, Y" }} at {{ topic.created_at|date:"H:i" }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fs-5 text-dark" style="line-height: 1.7;">
+                    {{ topic.content|linebreaks }}
+                </div>
             </div>
         </div>
 
-        <!-- Posts -->
+        <h5 class="fw-bold text-secondary mb-4 ps-1">
+            <i class="bi bi-chat-text-fill me-2"></i>{{ posts.count }} Replies
+        </h5>
+
         {% for post in posts %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <p class="mb-0">
-                        <strong>{{ post.author.username }}</strong> - {{ post.created_at|date:"M d, Y H:i" }}
-                        {% if post.is_edited %}
-                            <span class="text-muted">(edited)</span>
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="card-body">
-                    <p>{{ post.content|linebreaks }}</p>
+            <div class="card post-card bg-white">
+                <div class="card-body p-4">
+                    <div class="d-flex mb-3">
+                        <div class="forum-avatar me-3 {% if post.author.role == 'instructor' %}instructor{% endif %}" style="width: 35px; height: 35px; font-size: 0.9rem;">
+                            {{ post.author.username|make_list|first|upper }}
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="text-dark">{{ post.author.get_full_name|default:post.author.username }}</strong>
+                                    {% if post.author.role == 'instructor' %}
+                                        <i class="bi bi-patch-check-fill text-primary ms-1" title="Instructor"></i>
+                                    {% endif %}
+                                </div>
+                                <small class="text-muted">{{ post.created_at|timesince }} ago</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-dark">
+                        {{ post.content|linebreaks }}
+                    </div>
+
+                    {% if post.is_edited %}
+                        <div class="text-end mt-2">
+                            <small class="text-muted fst-italic" style="font-size: 0.75rem;">(Edited)</small>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% empty %}
-            <div class="alert alert-info">
-                <p>No posts yet. Be the first to reply!</p>
+            <div class="text-center py-5 border rounded-3 bg-light mb-4">
+                <i class="bi bi-chat-square-dots display-4 text-muted opacity-25"></i>
+                <p class="text-muted mt-3 mb-0">No replies yet. Be the first to join the discussion!</p>
             </div>
         {% endfor %}
 
-        <!-- Reply Form -->
         {% if not topic.is_closed %}
-            <div class="card">
-                <div class="card-header">
-                    <h5>Reply to Topic</h5>
-                </div>
-                <div class="card-body">
+            <div class="card border-0 shadow-sm mt-5 bg-light">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-reply-fill me-2"></i>Leave a Reply</h5>
                     <form method="post" action="{% url 'create_post' topic.pk %}">
                         {% csrf_token %}
-                        
                         <div class="mb-3">
-                            <textarea class="form-control" name="content" rows="4" placeholder="Write your reply here..." required></textarea>
+                            <textarea class="form-control" name="content" rows="5" placeholder="Type your response here..." required style="resize: none;"></textarea>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Post Reply</button>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Remember to be respectful and constructive.</small>
+                            <button type="submit" class="btn btn-primary px-4 fw-bold">
+                                <i class="bi bi-send-fill me-2"></i>Post Reply
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         {% else %}
-            <div class="alert alert-secondary">
-                <p>This topic is closed. No new replies are allowed.</p>
+            <div class="alert alert-secondary mt-5 d-flex align-items-center">
+                <i class="bi bi-lock-fill fs-4 me-3"></i>
+                <div>
+                    <strong>Topic Closed</strong>
+                    <p class="mb-0 small">This discussion has been closed by a moderator. No further replies are allowed.</p>
+                </div>
             </div>
         {% endif %}
+
     </div>
 </div>
 {% endblock %}

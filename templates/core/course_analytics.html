@@ -3,93 +3,196 @@
 {% block title %}Analytics - {{ course.title }} - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Analytics for {{ course.title }}</h2>
-        <p>View detailed analytics for this course.</p>
-        
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="card bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Enrollments</h5>
-                        <h2 class="card-text">{{ total_enrollments }}</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card bg-success text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Completions</h5>
-                        <h2 class="card-text">{{ total_completions }}</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card bg-info text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Completion Rate</h5>
-                        <h2 class="card-text">{{ completion_rate|floatformat:1 }}%</h2>
-                    </div>
-                </div>
-            </div>
+<style>
+    /* Metric Cards */
+    .metric-card {
+        border: none;
+        border-radius: 12px;
+        color: white;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        height: 100%;
+        transition: transform 0.2s;
+    }
+    .metric-card:hover { transform: translateY(-3px); }
+    
+    .bg-gradient-primary { background: linear-gradient(135deg, #0d6efd, #0a58ca); }
+    .bg-gradient-success { background: linear-gradient(135deg, #198754, #146c43); }
+    .bg-gradient-info { background: linear-gradient(135deg, #0dcaf0, #0aa2c0); }
+
+    .metric-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 2.5rem;
+        opacity: 0.2;
+    }
+
+    /* Progress Bar Tweaks */
+    .progress {
+        height: 10px;
+        border-radius: 5px;
+        background-color: #e9ecef;
+    }
+</style>
+
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">
+                <i class="bi bi-bar-chart-fill me-2"></i>Course Analytics
+            </h2>
+            <p class="text-muted mb-0">Detailed performance metrics for <strong>{{ course.title }}</strong></p>
         </div>
-        
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5>Student Progress</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Student</th>
-                                <th>Progress</th>
-                                <th>Completed Lessons</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for progress in student_progress %}
-                                <tr>
-                                    <td>{{ progress.student }}</td>
-                                    <td>{{ progress.progress|floatformat:1 }}%</td>
-                                    <td>{{ progress.completed_lessons }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-header">
-                <h5>Lesson Completion Rates</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Module</th>
-                                <th>Lesson</th>
-                                <th>Completion Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for data in lesson_completion_data %}
-                                <tr>
-                                    <td>{{ data.module }}</td>
-                                    <td>{{ data.lesson }}</td>
-                                    <td>{{ data.completion_percentage|floatformat:1 }}%</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div>
+            <a href="{% url 'instructor_dashboard' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+            </a>
+            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary ms-2">
+                <i class="bi bi-eye me-1"></i> View Course
+            </a>
         </div>
     </div>
 </div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="metric-card bg-gradient-primary">
+            <h5 class="fw-bold text-uppercase small opacity-75">Total Enrollments</h5>
+            <h2 class="display-5 fw-bold mb-0">{{ total_enrollments }}</h2>
+            <i class="bi bi-people-fill metric-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="metric-card bg-gradient-success">
+            <h5 class="fw-bold text-uppercase small opacity-75">Completed</h5>
+            <h2 class="display-5 fw-bold mb-0">{{ total_completions }}</h2>
+            <i class="bi bi-check-circle-fill metric-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="metric-card bg-gradient-info">
+            <h5 class="fw-bold text-uppercase small opacity-75">Completion Rate</h5>
+            <h2 class="display-5 fw-bold mb-0">{{ completion_rate|floatformat:0 }}<span class="fs-4">%</span></h2>
+            <i class="bi bi-graph-up-arrow metric-icon"></i>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-5">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-person-lines-fill me-2"></i>Student Progress</h5>
+        <div class="input-group" style="max-width: 250px;">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" id="studentSearch" class="form-control border-start-0 bg-light" placeholder="Search student...">
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="studentTable">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 py-3">Student Name</th>
+                        <th class="py-3" style="width: 40%;">Progress</th>
+                        <th class="py-3 text-center">Lessons Done</th>
+                        <th class="py-3 text-end pe-4">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for progress in student_progress %}
+                        <tr class="student-row">
+                            <td class="ps-4 fw-bold text-secondary">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-sm bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px;">
+                                        {{ progress.student|make_list|first|upper }}
+                                    </div>
+                                    {{ progress.student }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="progress flex-grow-1 me-3">
+                                        <div class="progress-bar {% if progress.progress >= 80 %}bg-success{% elif progress.progress >= 40 %}bg-info{% else %}bg-warning{% endif %}" 
+                                             role="progressbar" 
+                                             style="width: {{ progress.progress|stringformat:'f' }}%">
+                                        </div>
+                                    </div>
+                                    <span class="fw-bold small">{{ progress.progress|floatformat:0 }}%</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-light text-dark border">{{ progress.completed_lessons }}</span>
+                            </td>
+                            <td class="text-end pe-4">
+                                {% if progress.progress >= 100 %}
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Completed</span>
+                                {% elif progress.progress > 0 %}
+                                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3">In Progress</span>
+                                {% else %}
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3">Not Started</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">No students enrolled yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-list-check me-2"></i>Lesson Breakdown</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4 py-3">Module</th>
+                        <th class="py-3">Lesson Title</th>
+                        <th class="py-3 text-end pe-4">Completion Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in lesson_completion_data %}
+                        <tr>
+                            <td class="ps-4 text-muted small fw-bold text-uppercase">{{ data.module }}</td>
+                            <td class="fw-bold">{{ data.lesson }}</td>
+                            <td class="text-end pe-4">
+                                <span class="badge {% if data.completion_percentage >= 75 %}bg-success{% elif data.completion_percentage >= 40 %}bg-warning{% else %}bg-danger{% endif %} rounded-pill">
+                                    {{ data.completion_percentage|floatformat:0 }}%
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Simple Search Filter
+    document.getElementById('studentSearch').addEventListener('keyup', function() {
+        const searchText = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.student-row');
+        
+        rows.forEach(row => {
+            const name = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+            if (name.includes(searchText)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 {% endblock %}

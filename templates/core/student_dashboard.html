@@ -1,89 +1,161 @@
 {% extends 'base.html' %}
 
-{% block title %}Student Dashboard - AUA LMS{% endblock %}
+{% block title %}My Learning - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Student Dashboard</h2>
-        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
-        <p>Your role: <strong>{{ user_role|title }}</strong></p>
-    </div>
-</div>
+<style>
+    /* Course Card Hover Effect */
+    .course-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+</style>
 
-<div class="row">
+<div class="row mb-4">
     <div class="col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-                <h5>Your Courses</h5>
+        <div class="p-4 rounded-3 bg-primary text-white shadow-sm d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold mb-1">Welcome back, {{ user.username }}!</h2>
+                <p class="mb-0 opacity-75">You are currently enrolled in <strong>{{ enrollments.count }}</strong> active courses.</p>
             </div>
-            <div class="card-body">
-                {% if enrollments %}
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                        {% for enrollment in enrollments %}
-                            <div class="col">
-                                <div class="card h-100">
-                                    {% if enrollment.course.thumbnail %}
-                                        <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ enrollment.course.title }}" style="height: 150px; object-fit: cover;">
-                                    {% else %}
-                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                                            <span class="text-muted">No Thumbnail</span>
-                                        </div>
-                                    {% endif %}
-                                    <div class="card-body d-flex flex-column">
-                                        <h6 class="card-title">{{ enrollment.course.title }}</h6>
-                                        <p class="card-text small text-muted">{{ enrollment.course.description|truncatewords:10 }}</p>
-                                        <p class="text-muted small">
-                                            <strong>Instructor:</strong> {{ enrollment.course.instructor.username }}<br>
-                                            <strong>Progress:</strong> {{ enrollment.progress_percentage }}%
-                                        </p>
-                                        <div class="mt-auto">
-                                            <a href="{% url 'course_detail' enrollment.course.pk %}" class="btn btn-sm btn-primary">Continue Learning</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p class="text-muted">You are not enrolled in any courses yet.</p>
-                    <p><a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a></p>
-                {% endif %}
+            <div class="d-none d-md-block pe-4">
+                <i class="bi bi-mortarboard-fill display-3 opacity-25"></i>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>Your Progress</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    {% if enrollments %}
-                        <strong>Courses Enrolled:</strong> {{ enrollments|length }}<br>
-                        <strong>Average Progress:</strong> 
-                        {% if enrollments %}
-                            {% with total_progress=0 count=0 %}
-                                {% for enrollment in enrollments %}
-                                    {% with total_progress=total_progress|add:enrollment.progress_percentage count=count|add:1 %}
-                                    {% endwith %}
-                                {% endfor %}
-                                {% if count > 0 %}
-                                    {{ total_progress|div:count|floatformat:1 }}%
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0 text-secondary">My Courses</h4>
+            <a href="{% url 'course_list' %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-search me-1"></i>Browse New Courses
+            </a>
+        </div>
+
+        {% if enrollments %}
+            <div class="row g-4">
+                {% for enrollment in enrollments %}
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm course-card">
+                            <div class="position-relative">
+                                {% if enrollment.course.thumbnail %}
+                                    <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top" alt="{{ enrollment.course.title }}" style="height: 160px; object-fit: cover;">
                                 {% else %}
-                                    0%
+                                    <div class="bg-light d-flex align-items-center justify-content-center text-muted" style="height: 160px;">
+                                        <i class="bi bi-card-image fs-1 opacity-50"></i>
+                                    </div>
                                 {% endif %}
-                            {% endwith %}
-                        {% else %}
-                            0%
-                        {% endif %}
-                    {% else %}
-                        No progress data available yet.
-                    {% endif %}
-                </p>
+                                <span class="badge bg-white text-dark position-absolute top-0 end-0 m-2 shadow-sm">
+                                    {{ enrollment.course.category.name|default:"Course" }}
+                                </span>
+                            </div>
+
+                            <div class="card-body d-flex flex-column p-4">
+                                <h5 class="card-title fw-bold text-truncate mb-1" title="{{ enrollment.course.title }}">
+                                    {{ enrollment.course.title }}
+                                </h5>
+                                <p class="small text-muted mb-3">
+                                    <i class="bi bi-person-circle me-1"></i> {{ enrollment.course.instructor.username }}
+                                </p>
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between small mb-1 fw-bold">
+                                        <span class="text-secondary">Progress</span>
+                                        <span class="text-primary">{{ enrollment.progress_percentage }}%</span>
+                                    </div>
+                                    <div class="progress mb-3" style="height: 6px;">
+                                        <div class="progress-bar {% if enrollment.progress_percentage >= 100 %}bg-success{% else %}bg-primary{% endif %}" 
+                                             role="progressbar" 
+                                             style="width: {{ enrollment.progress_percentage }}%">
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="{% url 'course_detail' enrollment.course.pk %}" class="btn btn-primary w-100 fw-bold shadow-sm">
+                                        {% if enrollment.progress_percentage >= 100 %}
+                                            Review Course
+                                        {% elif enrollment.progress_percentage > 0 %}
+                                            Continue Learning
+                                        {% else %}
+                                            Start Course
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5 bg-light rounded-3 border border-dashed">
+                <i class="bi bi-journal-plus display-1 text-muted opacity-25"></i>
+                <h4 class="mt-3 text-secondary">No Enrollments Yet</h4>
+                <p class="text-muted mb-4">You haven't joined any courses. Explore our catalog to get started.</p>
+                <a href="{% url 'course_list' %}" class="btn btn-primary px-4 fw-bold">Browse Catalog</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                        {{ user.username|make_list|first|upper }}
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark">{{ user.get_full_name|default:user.username }}</h6>
+                        <span class="badge bg-success bg-opacity-10 text-success">Student Account</span>
+                    </div>
+                </div>
+                
+                <div class="row text-center g-2">
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded-3">
+                            <h4 class="fw-bold text-primary mb-0">{{ enrollments.count }}</h4>
+                            <small class="text-muted small text-uppercase fw-bold">Active</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded-3">
+                            <h4 class="fw-bold text-warning mb-0"><i class="bi bi-award"></i></h4>
+                            <small class="text-muted small text-uppercase fw-bold">Awards</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h6 class="fw-bold mb-0 text-secondary">Quick Links</h6>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'student_certificates' %}" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                    <div><i class="bi bi-trophy text-warning me-2"></i> My Certificates</div>
+                    <i class="bi bi-chevron-right small text-muted"></i>
+                </a>
+                <a href="{% url 'notification_preferences' %}" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                    <div><i class="bi bi-bell text-info me-2"></i> Notifications</div>
+                    <i class="bi bi-chevron-right small text-muted"></i>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                    <div><i class="bi bi-person-gear text-secondary me-2"></i> Edit Profile</div>
+                    <i class="bi bi-chevron-right small text-muted"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="card mt-4 bg-dark text-white border-0 shadow">
+            <div class="card-body p-4 text-center">
+                <i class="bi bi-lightning-charge-fill text-warning fs-1 mb-2"></i>
+                <h5>Boost Your Skills</h5>
+                <p class="small opacity-75 mb-3">Join our specialized Forex trading bootcamp.</p>
+                <a href="{% url 'course_list' %}?category=forex" class="btn btn-sm btn-light fw-bold text-dark w-100">View Program</a>
             </div>
         </div>
     </div>

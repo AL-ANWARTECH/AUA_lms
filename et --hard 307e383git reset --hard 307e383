@@ -1,0 +1,21 @@
+[33m307e383[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m feat(i18n): implement full internationalization support for 5 languages
+[33m0239ac9[m feat(accessibility): implement accessibility features system
+[33m6bb8f5b[m feat(responsive): implement mobile-responsive design system
+[33md32eb6f[m feat(analytics): implement reporting and analytics system
+[33m3da42f7[m feat(notification): implement notification system with preferences
+[33mb6f3301[m feat(certificate): implement certificate system with PDF generation
+[33m7a4d8c7[m feat(forum): implement discussion forum system for courses
+[33m663f5d3[m feat(gradebook): implement gradebook system for students and instructors
+[33m7c18ecc[m feat(quiz): implement quiz system with questions and answers
+[33mea8b962[m feat(progress): track lesson completion and show progress
+[33mdc725c0[m feat(enrollment): add course enrollment functionality
+[33mf3eef3c[m feat(ui): add instructor dashboard with course management
+[33ma0710f3[m feat(instructor): allow course creation and content management
+[33mf187442[m feat(course): add course detail page with modules and lessons
+[33m14caebb[m feat(course): add public course listing page
+[33m47371a9[m feat(course): add Course model and admin config
+[33m88b10cf[m feat(auth): add login and logout with role-based redirects
+[33m104093e[m feat(auth): add user registration with role selection
+[33m8bd1af3[m feat(ui): add base template with Bootstrap
+[33m0722b98[m feat(auth): implement custom user model with role
+[33m28f5f73[m chore: initial Django project setup

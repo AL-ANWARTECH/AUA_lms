@@ -3,40 +3,110 @@
 {% block title %}Create Module - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Create Module for: {{ course.title }}</h2>
-        
-        <form method="post">
-            {% csrf_token %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary mb-1">Add New Module</h2>
+            <p class="text-muted">
+                Adding content to course: <strong class="text-dark">{{ course.title }}</strong>
+            </p>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 border-bottom-0">
+                <div class="d-flex align-items-center">
+                    <div class="bg-info bg-opacity-10 text-info rounded-circle p-2 me-3">
+                        <i class="bi bi-folder-plus fs-4"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Module Details</h5>
+                        <small class="text-muted">Organize your lessons into logical sections.</small>
+                    </div>
+                </div>
+            </div>
             
-            <div class="mb-3">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Module Title</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                    <div class="text-danger">{{ form.title.errors }}</div>
-                {% endif %}
-            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                            Module Title <span class="text-danger">*</span>
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
 
-            <div class="mb-3">
-                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                    <div class="text-danger">{{ form.description.errors }}</div>
-                {% endif %}
-            </div>
+                    <div class="mb-4">
+                        <label for="{{ form.description.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                            Description / Objectives
+                        </label>
+                        {{ form.description }}
+                        <div class="form-text">Briefly explain what students will learn in this section.</div>
+                        {% if form.description.errors %}
+                            <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
 
-            <div class="mb-3">
-                <label for="{{ form.order.id_for_label }}" class="form-label">Order</label>
-                {{ form.order }}
-                {% if form.order.errors %}
-                    <div class="text-danger">{{ form.order.errors }}</div>
-                {% endif %}
-            </div>
+                    <div class="mb-4">
+                        <label for="{{ form.order.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                            <i class="bi bi-sort-numeric-down"></i> Sequence Order
+                        </label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form.order }}
+                            </div>
+                        </div>
+                        <div class="form-text">Lower numbers appear first (e.g., 1, 2, 3).</div>
+                        {% if form.order.errors %}
+                            <div class="text-danger small mt-1">{{ form.order.errors }}</div>
+                        {% endif %}
+                    </div>
 
-            <button type="submit" class="btn btn-primary">Create Module</button>
-            <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Cancel</a>
-        </form>
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'course_detail' course.pk %}" class="btn btn-link text-decoration-none text-muted">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4 py-2 fw-bold shadow-sm">
+                            <i class="bi bi-save me-2"></i>Create Module
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="card bg-light border-0">
+            <div class="card-body">
+                <h6 class="fw-bold mb-3"><i class="bi bi-layout-text-window-reverse text-primary me-2"></i>Curriculum Tips</h6>
+                <ul class="list-unstyled small text-muted mb-0">
+                    <li class="mb-3">
+                        <strong>📦 Group Related Topics:</strong> Keep lessons about similar concepts together in one module.
+                    </li>
+                    <li class="mb-3">
+                        <strong>✨ Clear Naming:</strong> Use names like "Introduction", "Core Concepts", or "Advanced Techniques".
+                    </li>
+                    <li>
+                        <strong>🔢 Keep it Manageable:</strong> Try to limit modules to 5-7 lessons each to avoid overwhelming students.
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add Bootstrap styling to Django form inputs
+        const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+        inputs.forEach(input => {
+            input.classList.add('form-control');
+        });
+    });
+</script>
 {% endblock %}

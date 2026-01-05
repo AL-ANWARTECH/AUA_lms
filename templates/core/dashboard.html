@@ -3,22 +3,222 @@
 {% block title %}Dashboard - AUA LMS{% endblock %}
 
 {% block content %}
+<style>
+    /* Welcome Banner */
+    .dashboard-header {
+        background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+        color: white;
+        border-radius: 12px;
+        padding: 2.5rem 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(13, 110, 253, 0.2);
+    }
+
+    /* Action Cards */
+    .action-card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        height: 100%;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        overflow: hidden;
+    }
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        color: #0d6efd;
+    }
+    .action-card .card-body {
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    /* Icons */
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem auto;
+        font-size: 2rem;
+        transition: transform 0.3s;
+    }
+    .action-card:hover .icon-circle {
+        transform: scale(1.1);
+    }
+    
+    /* Colors */
+    .bg-soft-primary { background-color: rgba(13, 110, 253, 0.1); color: #0d6efd; }
+    .bg-soft-success { background-color: rgba(25, 135, 84, 0.1); color: #198754; }
+    .bg-soft-warning { background-color: rgba(255, 193, 7, 0.1); color: #ffc107; }
+    .bg-soft-info { background-color: rgba(13, 202, 240, 0.1); color: #0dcaf0; }
+    .bg-soft-danger { background-color: rgba(220, 53, 69, 0.1); color: #dc3545; }
+</style>
+
 <div class="row">
     <div class="col-12">
-        <h2>Dashboard</h2>
-        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
-        <p>Your role: <strong>{{ user_role|title }}</strong></p>
-        
-        {% if user.role == 'student' %}
-            <h3>Student Dashboard</h3>
-            <p>You can view enrolled courses and track your progress.</p>
-        {% elif user.role == 'instructor' %}
-            <h3>Instructor Dashboard</h3>
-            <p>You can create and manage your courses.</p>
-        {% elif user.role == 'admin' %}
-            <h3>Admin Dashboard</h3>
-            <p>You have full system access.</p>
-        {% endif %}
+        <div class="dashboard-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <h1 class="fw-bold mb-2">Welcome, {{ user.username }}!</h1>
+                <p class="mb-0 opacity-75">
+                    Logged in as 
+                    <span class="badge bg-white text-primary ms-1 px-3 py-2 rounded-pill text-uppercase">
+                        {{ user_role|default:user.role }}
+                    </span>
+                </p>
+            </div>
+            <div class="d-none d-md-block">
+                <i class="bi bi-person-circle display-4 opacity-50"></i>
+            </div>
+        </div>
     </div>
 </div>
+
+{% if user.role == 'student' %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4 class="fw-bold text-secondary mb-3">Student Hub</h4>
+    </div>
+    
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="{% url 'student_dashboard' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-primary">
+                    <i class="bi bi-journal-bookmark-fill"></i>
+                </div>
+                <h5 class="fw-bold">My Learning</h5>
+                <p class="text-muted small">Access your enrolled courses and continue where you left off.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="{% url 'course_list' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-success">
+                    <i class="bi bi-search"></i>
+                </div>
+                <h5 class="fw-bold">Browse Catalog</h5>
+                <p class="text-muted small">Explore new courses in Web Dev, Forex, and more.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="{% url 'student_certificates' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-warning">
+                    <i class="bi bi-trophy-fill"></i>
+                </div>
+                <h5 class="fw-bold">Achievements</h5>
+                <p class="text-muted small">View earned certificates and completed milestones.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% elif user.role == 'instructor' %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4 class="fw-bold text-secondary mb-3">Instructor Console</h4>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <a href="{% url 'instructor_dashboard' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-primary">
+                    <i class="bi bi-speedometer2"></i>
+                </div>
+                <h5 class="fw-bold">Dashboard</h5>
+                <p class="text-muted small">Overview of your courses and students.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <a href="{% url 'create_course' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-success">
+                    <i class="bi bi-plus-lg"></i>
+                </div>
+                <h5 class="fw-bold">Create Course</h5>
+                <p class="text-muted small">Launch a new curriculum for students.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <a href="{% url 'analytics_dashboard' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-info">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                </div>
+                <h5 class="fw-bold">Analytics</h5>
+                <p class="text-muted small">Track performance and engagement stats.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <a href="{% url 'instructor_certificates' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-warning">
+                    <i class="bi bi-award"></i>
+                </div>
+                <h5 class="fw-bold">Certificates</h5>
+                <p class="text-muted small">Manage student completion certificates.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% elif user.role == 'admin' %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4 class="fw-bold text-secondary mb-3">System Administration</h4>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="{% url 'admin_dashboard' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-danger">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <h5 class="fw-bold">Control Panel</h5>
+                <p class="text-muted small">Access the main admin dashboard.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="/admin/" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-primary">
+                    <i class="bi bi-gear-wide-connected"></i>
+                </div>
+                <h5 class="fw-bold">Backend Admin</h5>
+                <p class="text-muted small">Manage database records directly.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-4">
+        <a href="{% url 'accessibility_audit_log' %}" class="card action-card">
+            <div class="card-body">
+                <div class="icon-circle bg-soft-info">
+                    <i class="bi bi-universal-access"></i>
+                </div>
+                <h5 class="fw-bold">Accessibility</h5>
+                <p class="text-muted small">View compliance logs and audit reports.</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

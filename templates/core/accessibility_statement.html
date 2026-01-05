@@ -3,30 +3,126 @@
 {% block title %}Accessibility Statement - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Accessibility Statement</h2>
-        <p>Learn about our commitment to accessibility and how we support all users.</p>
-        
-        <div class="card">
-            <div class="card-body">
+<style>
+    /* Styling for the content injected via {{ statement }} */
+    .policy-content h2 {
+        color: #0d6efd;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    .policy-content h3 {
+        color: #343a40;
+        font-weight: 600;
+        margin-top: 1.2rem;
+        font-size: 1.25rem;
+    }
+    .policy-content p {
+        color: #4b5563;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+    .policy-content ul {
+        margin-bottom: 1.5rem;
+        padding-left: 1.2rem;
+    }
+    .policy-content li {
+        margin-bottom: 0.5rem;
+        color: #4b5563;
+    }
+
+    /* Compliance Badges */
+    .compliance-card {
+        border-left: 4px solid #198754;
+        transition: transform 0.2s;
+    }
+    .compliance-card:hover {
+        transform: translateY(-3px);
+    }
+</style>
+
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h2 class="fw-bold text-primary mb-2">
+            <i class="bi bi-universal-access-circle me-2"></i>Accessibility Commitment
+        </h2>
+        <p class="text-muted lead">Building an inclusive learning environment for everyone.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4 p-lg-5 policy-content">
                 {{ statement|safe }}
+                
+                <div class="mt-5 pt-4 border-top">
+                    <p class="text-muted fst-italic small mb-0">
+                        <i class="bi bi-clock-history me-1"></i> Last updated: January 2026
+                    </p>
+                </div>
             </div>
         </div>
-        
-        <div class="card mt-3">
-            <div class="card-header">
-                <h5>Current Status</h5>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white py-3">
+                <h5 class="card-title fw-bold mb-0 text-success">
+                    <i class="bi bi-check-circle-fill me-2"></i>Compliance Status
+                </h5>
             </div>
             <div class="card-body">
-                <p>Our LMS currently meets:</p>
-                <ul>
-                    <li>WCAG 2.1 Level AA standards</li>
-                    <li>Section 508 compliance</li>
-                    <li>European accessibility requirements</li>
-                </ul>
+                <p class="text-muted small mb-3">Our platform is rigorously tested to meet the following standards:</p>
                 
-                <p>We regularly update our platform to improve accessibility. Last review: January 2026</p>
+                <div class="card mb-2 compliance-card bg-light border-0">
+                    <div class="card-body py-2 px-3 d-flex align-items-center">
+                        <i class="bi bi-patch-check-fill text-success fs-4 me-3"></i>
+                        <div>
+                            <strong class="d-block text-dark">WCAG 2.1 Level AA</strong>
+                            <span class="small text-muted">Global Web Standard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-2 compliance-card bg-light border-0">
+                    <div class="card-body py-2 px-3 d-flex align-items-center">
+                        <i class="bi bi-shield-check text-success fs-4 me-3"></i>
+                        <div>
+                            <strong class="d-block text-dark">Section 508</strong>
+                            <span class="small text-muted">US Federal Compliance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card compliance-card bg-light border-0">
+                    <div class="card-body py-2 px-3 d-flex align-items-center">
+                        <i class="bi bi-globe-europe-africa text-success fs-4 me-3"></i>
+                        <div>
+                            <strong class="d-block text-dark">EN 301 549</strong>
+                            <span class="small text-muted">European Standard</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm bg-primary text-white">
+            <div class="card-body p-4 text-center">
+                <div class="mb-3">
+                    <i class="bi bi-chat-heart-fill fs-1"></i>
+                </div>
+                <h5 class="fw-bold">Encountered a Barrier?</h5>
+                <p class="small opacity-75 mb-4">
+                    If you find any part of our site difficult to use, please let us know. We are committed to fixing issues promptly.
+                </p>
+                <a href="mailto:accessibility@aualms.com" class="btn btn-light text-primary fw-bold w-100 mb-2">
+                    <i class="bi bi-envelope-fill me-2"></i>Email Accessibility Team
+                </a>
+                <a href="{% url 'accessibility_settings' %}" class="btn btn-outline-light w-100">
+                    <i class="bi bi-sliders me-2"></i>Adjust My Settings
+                </a>
             </div>
         </div>
     </div>

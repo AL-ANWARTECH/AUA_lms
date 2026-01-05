@@ -1,70 +1,273 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ lesson.title }} - {{ course.title }} - AUA LMS{% endblock %}
+{% block title %}{{ lesson.title }} - {{ course.title }}{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* Focus Mode Layout */
+    .lesson-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    
+    /* Main Content Area */
+    .lesson-player {
+        flex: 1;
+        min-width: 0; /* Prevents flex overflow */
+    }
+    
+    /* Sidebar Curriculum */
+    .course-sidebar {
+        width: 350px;
+        flex-shrink: 0;
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        height: fit-content;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: sticky;
+        top: 90px;
+    }
+
+    /* Video Container (16:9 Aspect Ratio) */
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .video-wrapper iframe, .video-wrapper video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    /* Navigation Buttons */
+    .nav-btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+    }
+
+    /* Sidebar Items */
+    .sidebar-module-title {
+        background: #f8f9fa;
+        padding: 12px 15px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border-bottom: 1px solid #dee2e6;
+        color: #495057;
+    }
+    .sidebar-lesson {
+        padding: 12px 15px;
+        border-bottom: 1px solid #f1f3f5;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #6c757d;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+    }
+    .sidebar-lesson:hover {
+        background-color: #f8f9fa;
+        color: #0d6efd;
+    }
+    .sidebar-lesson.active {
+        background-color: rgba(13, 110, 253, 0.05);
+        color: #0d6efd;
+        font-weight: 600;
+        border-left: 3px solid #0d6efd;
+    }
+    .sidebar-lesson .check-icon {
+        width: 20px;
+        font-size: 1.1rem;
+        margin-right: 10px;
+    }
+
+    /* Content Styling */
+    .lesson-content {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #333;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 991px) {
+        .lesson-container { flex-direction: column; }
+        .course-sidebar { width: 100%; position: static; max-height: 400px; }
+    }
+</style>
+
+<div class="row mb-4">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
+                <li class="breadcrumb-item active">{{ lesson.module.title }}</li>
                 <li class="breadcrumb-item active">{{ lesson.title }}</li>
             </ol>
         </nav>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3>{{ lesson.title }}</h3>
-                <p class="text-muted">
-                    <strong>Module:</strong> {{ lesson.module.title }} |
-                    <strong>Type:</strong> {{ lesson.content_type|title }} |
-                    <strong>Progress:</strong> {{ enrollment.progress_percentage }}%
-                </p>
+<div class="lesson-container">
+    
+    <div class="lesson-player">
+        
+        {% if lesson.content_type == 'video' %}
+            {% if lesson.video_url %}
+                <div class="video-wrapper">
+                    {% if "youtube.com" in lesson.video_url or "youtu.be" in lesson.video_url %}
+                        <iframe src="{{ lesson.video_url }}" allowfullscreen></iframe>
+                    {% else %}
+                        <video controls>
+                            <source src="{{ lesson.video_url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary">
+                    <i class="bi bi-camera-video-off me-2"></i> No video source provided for this lesson.
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h2 class="fw-bold mb-2">{{ lesson.title }}</h2>
+                <span class="badge bg-light text-dark border">{{ lesson.content_type|title }}</span>
             </div>
-            <div class="card-body">
-                {% if lesson.content_type == 'text' %}
-                    <div class="lesson-content">
+            
+            {% if user.role == 'student' %}
+                <div>
+                    {% if is_completed %}
+                        <a href="{% url 'uncomplete_lesson' lesson.pk %}" class="btn btn-success fw-bold">
+                            <i class="bi bi-check-circle-fill me-2"></i>Completed
+                        </a>
+                    {% else %}
+                        <a href="{% url 'complete_lesson' lesson.pk %}" class="btn btn-outline-primary fw-bold">
+                            <i class="bi bi-circle me-2"></i>Mark Complete
+                        </a>
+                    {% endif %}
+                </div>
+            {% elif user.role == 'instructor' %}
+                <a href="{% url 'edit_lesson' lesson.pk %}" class="btn btn-outline-dark btn-sm">
+                    <i class="bi bi-pencil me-1"></i> Edit Lesson
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                
+                {% if lesson.content %}
+                    <div class="lesson-content mb-4">
                         {{ lesson.content|linebreaks }}
                     </div>
-                {% elif lesson.content_type == 'video' %}
-                    {% if lesson.video_url %}
-                        <div class="ratio ratio-16x9">
-                            <iframe src="{{ lesson.video_url }}" title="{{ lesson.title }}" allowfullscreen></iframe>
+                {% endif %}
+
+                {% if lesson.content_type == 'pdf' and lesson.file %}
+                    <div class="card bg-light border-0">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bi bi-file-earmark-pdf fs-1 text-danger me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Lesson PDF</h6>
+                                <p class="small text-muted mb-2">View or download the material for this lesson.</p>
+                                <a href="{{ lesson.file.url }}" class="btn btn-sm btn-primary" target="_blank">
+                                    <i class="bi bi-download me-1"></i> Download File
+                                </a>
+                            </div>
                         </div>
-                    {% else %}
-                        <p class="text-muted">No video content available.</p>
-                    {% endif %}
-                {% elif lesson.content_type == 'pdf' %}
-                    {% if lesson.file %}
-                        <div class="alert alert-info">
-                            <a href="{{ lesson.file.url }}" target="_blank" class="btn btn-primary">Download PDF</a>
-                        </div>
-                    {% else %}
-                        <p class="text-muted">No PDF file available.</p>
-                    {% endif %}
-                {% elif lesson.content_type == 'quiz' %}
-                    <div class="alert alert-warning">
-                        <p>This is a quiz lesson. Quiz functionality will be implemented in a future step.</p>
                     </div>
                 {% endif %}
                 
-                <div class="mt-4">
-                    {% if is_completed %}
-                        <button class="btn btn-success" disabled>Completed</button>
-                        <a href="{% url 'uncomplete_lesson' lesson.pk %}" class="btn btn-outline-warning">Mark as Incomplete</a>
-                    {% else %}
-                        <a href="{% url 'complete_lesson' lesson.pk %}" class="btn btn-primary">Mark as Complete</a>
-                    {% endif %}
-                    <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Back to Course</a>
-                </div>
+                {% if lesson.content_type == 'quiz' %}
+                    <div class="text-center py-5 bg-light rounded-3">
+                        <i class="bi bi-patch-question-fill display-4 text-warning mb-3"></i>
+                        <h4>Quiz Available</h4>
+                        <p class="text-muted">Test your knowledge on this topic.</p>
+                        {% if lesson.quiz %}
+                            <a href="{% url 'take_quiz' lesson.quiz.pk %}" class="btn btn-primary btn-lg px-5">
+                                Start Quiz
+                            </a>
+                        {% else %}
+                            <p class="text-danger small">Quiz not yet configured by instructor.</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="nav-btn-group">
+            <div>
+                {% if previous_lesson %}
+                    <a href="{% url 'lesson_detail' previous_lesson.pk %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Previous
+                    </a>
+                {% else %}
+                    <button class="btn btn-outline-secondary disabled" disabled>Previous</button>
+                {% endif %}
+            </div>
+            
+            <div>
+                {% if next_lesson %}
+                    <a href="{% url 'lesson_detail' next_lesson.pk %}" class="btn btn-primary">
+                        Next Lesson<i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                {% else %}
+                    <a href="{% url 'course_detail' course.pk %}" class="btn btn-success">
+                        Finish Course<i class="bi bi-check-lg ms-2"></i>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>
+
+    <div class="course-sidebar shadow-sm">
+        <div class="p-3 border-bottom bg-white sticky-top">
+            <h6 class="fw-bold mb-0">Course Content</h6>
+            <div class="progress mt-2" style="height: 5px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ enrollment.progress_percentage }}%"></div>
+            </div>
+            <small class="text-muted">{{ enrollment.progress_percentage }}% Complete</small>
+        </div>
+
+        {% for module in course.modules.all %}
+            <div class="sidebar-module">
+                <div class="sidebar-module-title">
+                    {{ module.title }}
+                </div>
+                {% for item in module.lessons.all %}
+                    <a href="{% url 'lesson_detail' item.pk %}" class="sidebar-lesson {% if item.pk == lesson.pk %}active{% endif %}">
+                        <div class="check-icon">
+                            {% if item.pk in completed_lesson_ids %}
+                                <i class="bi bi-check-square-fill text-success"></i>
+                            {% elif item.content_type == 'quiz' %}
+                                <i class="bi bi-puzzle"></i>
+                            {% else %}
+                                <i class="bi bi-play-circle"></i>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1 text-truncate">
+                            {{ item.title }}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
 </div>
 {% endblock %}

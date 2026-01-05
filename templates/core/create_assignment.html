@@ -3,48 +3,112 @@
 {% block title %}Create Assignment - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Create Assignment for: {{ lesson.title }}</h2>
-        
-        <form method="post">
-            {% csrf_token %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary mb-1">Create New Assignment</h2>
+            <p class="text-muted">Set up a task or project for your students.</p>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 border-bottom-0">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3">
+                        <i class="bi bi-journal-text fs-4"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Assignment Details</h6>
+                        <small class="text-muted">For Lesson: <strong>{{ lesson.title }}</strong></small>
+                    </div>
+                </div>
+            </div>
             
-            <div class="mb-3">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Assignment Title</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                    <div class="text-danger">{{ form.title.errors }}</div>
-                {% endif %}
-            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                            Assignment Title <span class="text-danger">*</span>
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
 
-            <div class="mb-3">
-                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                    <div class="text-danger">{{ form.description.errors }}</div>
-                {% endif %}
-            </div>
+                    <div class="mb-4">
+                        <label for="{{ form.description.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                            Instructions / Description
+                        </label>
+                        {{ form.description }}
+                        <div class="form-text">Provide clear instructions on what the student needs to do.</div>
+                        {% if form.description.errors %}
+                            <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
 
-            <div class="mb-3">
-                <label for="{{ form.due_date.id_for_label }}" class="form-label">Due Date</label>
-                {{ form.due_date }}
-                {% if form.due_date.errors %}
-                    <div class="text-danger">{{ form.due_date.errors }}</div>
-                {% endif %}
-            </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.due_date.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                                <i class="bi bi-calendar-event me-1"></i> Due Date
+                            </label>
+                            {{ form.due_date }}
+                            {% if form.due_date.errors %}
+                                <div class="text-danger small mt-1">{{ form.due_date.errors }}</div>
+                            {% endif %}
+                        </div>
 
-            <div class="mb-3">
-                <label for="{{ form.max_points.id_for_label }}" class="form-label">Max Points</label>
-                {{ form.max_points }}
-                {% if form.max_points.errors %}
-                    <div class="text-danger">{{ form.max_points.errors }}</div>
-                {% endif %}
-            </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.max_points.id_for_label }}" class="form-label fw-bold small text-uppercase text-secondary">
+                                <i class="bi bi-trophy me-1"></i> Max Score
+                            </label>
+                            <div class="input-group">
+                                {{ form.max_points }}
+                                <span class="input-group-text bg-light text-muted">points</span>
+                            </div>
+                            {% if form.max_points.errors %}
+                                <div class="text-danger small mt-1">{{ form.max_points.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
 
-            <button type="submit" class="btn btn-primary">Create Assignment</button>
-            <a href="{% url 'lesson_detail' lesson.pk %}" class="btn btn-secondary">Cancel</a>
-        </form>
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'lesson_detail' lesson.pk %}" class="btn btn-link text-decoration-none text-muted">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4 py-2 fw-bold shadow-sm">
+                            <i class="bi bi-plus-circle me-2"></i>Create Assignment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="card bg-light border-0">
+            <div class="card-body">
+                <h6 class="fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Tips for Instructors</h6>
+                <ul class="small text-muted ps-3 mb-0">
+                    <li class="mb-2"><strong>Clear Titles:</strong> Use descriptive names like "Week 1 Project: HTML Basics".</li>
+                    <li class="mb-2"><strong>Due Dates:</strong> Give students enough time to complete the work.</li>
+                    <li><strong>Grading:</strong> You can grade submissions manually from the Gradebook later.</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add Bootstrap classes to Django form inputs automatically
+        const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"], textarea, select');
+        inputs.forEach(input => {
+            input.classList.add('form-control');
+        });
+    });
+</script>
 {% endblock %}

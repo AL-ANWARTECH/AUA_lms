@@ -3,77 +3,246 @@
 {% block title %}Gradebook - {{ course.title }} - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* Spreadsheet-like Table Styling */
+    .gradebook-container {
+        position: relative;
+        overflow-x: auto;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        background: white;
+    }
+
+    .table-gradebook {
+        margin-bottom: 0;
+        border-collapse: separate; /* Required for sticky headers */
+        border-spacing: 0;
+    }
+
+    .table-gradebook th {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+        vertical-align: middle;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: #6c757d;
+        height: 60px;
+    }
+
+    /* Sticky First Column (Student Name) */
+    .sticky-col {
+        position: sticky;
+        left: 0;
+        background-color: #fff;
+        z-index: 10;
+        border-right: 2px solid #e9ecef;
+        min-width: 200px;
+        max-width: 250px;
+    }
+    .table-gradebook th.sticky-col {
+        background-color: #f8f9fa; /* Match header bg */
+        z-index: 20; /* Higher than regular cells */
+    }
+
+    /* Grade Cells */
+    .grade-cell {
+        text-align: center;
+        vertical-align: middle;
+        font-weight: 500;
+        min-width: 100px;
+        border-right: 1px solid #f1f3f5;
+    }
+    
+    /* Hover Effects */
+    .table-gradebook tbody tr:hover td {
+        background-color: #f8f9fa;
+    }
+    .table-gradebook tbody tr:hover .sticky-col {
+        background-color: #f8f9fa; /* Ensure sticky col also highlights */
+    }
+
+    /* Score Coloring */
+    .score-high { color: #198754; } /* Green */
+    .score-med { color: #fd7e14; } /* Orange */
+    .score-low { color: #dc3545; } /* Red */
+    .score-final { 
+        font-weight: 800; 
+        background-color: #f8f9fa; 
+        border-left: 2px solid #dee2e6;
+    }
+</style>
+
+<div class="row mb-4">
     <div class="col-12">
-        <h2>{{ course.title }} - Gradebook</h2>
-        <p>Manage and view grades for your course.</p>
-        
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5>Course Overview</h5>
-                <p class="text-muted">
-                    Total Students: {{ gradebook_data|length }} |
-                    Assignments: {{ assignments.count }} |
-                    Quizzes: {{ quizzes.count }}
-                </p>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'instructor_dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
+                <li class="breadcrumb-item active">Gradebook</li>
+            </ol>
+        </nav>
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h2 class="fw-bold text-primary mb-1">
+                    <i class="bi bi-grid-3x3 me-2"></i>Class Gradebook
+                </h2>
+                <p class="text-muted mb-0">Manage grades for {{ course.title }}</p>
             </div>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        {% for assignment in assignments %}
-                            <th class="text-center" style="min-width: 120px;">
-                                <div>{{ assignment.title|truncatewords:3 }}</div>
-                                <small class="text-muted">/{{ assignment.max_points }}</small>
-                            </th>
-                        {% endfor %}
-                        {% for quiz in quizzes %}
-                            <th class="text-center" style="min-width: 120px;">
-                                <div>{{ quiz.title|truncatewords:3 }}</div>
-                                <small class="text-muted">/100</small>
-                            </th>
-                        {% endfor %}
-                        <th class="text-center">Final</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student_data in gradebook_data %}
-                        <tr>
-                            <td>{{ student_data.student.username }}</td>
-                            {% for assignment_data in student_data.assignments %}
-                                <td class="text-center">
-                                    {% if assignment_data.grade %}
-                                        {{ assignment_data.grade }}
-                                    {% else %}
-                                        <span class="text-muted">-</span>
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
-                            {% for quiz_data in student_data.quizzes %}
-                                <td class="text-center">
-                                    {% if quiz_data.grade %}
-                                        {{ quiz_data.grade.score|floatformat:1 }}%
-                                    {% else %}
-                                        <span class="text-muted">-</span>
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
-                            <td class="text-center">
-                                {% if student_data.course_grade %}
-                                    {{ student_data.course_grade.final_grade|floatformat:1 }}%<br>
-                                    <strong>{{ student_data.course_grade.letter_grade }}</strong>
-                                {% else %}
-                                    <span class="text-muted">-</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary" onclick="window.print()">
+                    <i class="bi bi-printer me-1"></i> Print
+                </button>
+                <button class="btn btn-success">
+                    <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export CSV
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-4 border-primary">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Total Students</h6>
+                <h3 class="fw-bold mb-0">{{ gradebook_data|length }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-4 border-info">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Assessments</h6>
+                <h3 class="fw-bold mb-0">{{ assignments.count|add:quizzes.count }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-4 border-warning">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Needs Grading</h6>
+                <h3 class="fw-bold mb-0">--</h3> </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input type="text" id="studentSearch" class="form-control" placeholder="Search student name...">
+        </div>
+    </div>
+</div>
+
+<div class="gradebook-container">
+    <table class="table table-gradebook" id="gradeTable">
+        <thead>
+            <tr>
+                <th class="sticky-col ps-4">Student Name</th>
+                
+                {% for assignment in assignments %}
+                    <th class="text-center" title="{{ assignment.title }}">
+                        <div class="text-truncate" style="max-width: 120px;">
+                            <i class="bi bi-file-text me-1"></i>{{ assignment.title }}
+                        </div>
+                        <span class="badge bg-light text-secondary border mt-1">{{ assignment.max_points }} pts</span>
+                    </th>
+                {% endfor %}
+                
+                {% for quiz in quizzes %}
+                    <th class="text-center" title="{{ quiz.title }}">
+                        <div class="text-truncate" style="max-width: 120px;">
+                            <i class="bi bi-lightning me-1"></i>{{ quiz.title }}
+                        </div>
+                        <span class="badge bg-light text-secondary border mt-1">100 %</span>
+                    </th>
+                {% endfor %}
+
+                <th class="text-center score-final" style="min-width: 100px;">
+                    FINAL<br>GRADE
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student_data in gradebook_data %}
+                <tr class="student-row">
+                    <td class="sticky-col ps-4 fw-bold text-dark">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm bg-light text-primary rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 0.8rem;">
+                                {{ student_data.student.username|make_list|first|upper }}
+                            </div>
+                            {{ student_data.student.username }}
+                        </div>
+                    </td>
+
+                    {% for assignment_data in student_data.assignments %}
+                        <td class="grade-cell">
+                            {% if assignment_data.grade %}
+                                <span class="d-block">{{ assignment_data.grade }}</span>
+                            {% else %}
+                                <span class="text-muted opacity-25">-</span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+
+                    {% for quiz_data in student_data.quizzes %}
+                        <td class="grade-cell">
+                            {% if quiz_data.grade %}
+                                {% if quiz_data.grade.score >= 80 %}
+                                    <span class="fw-bold text-success">{{ quiz_data.grade.score|floatformat:0 }}%</span>
+                                {% elif quiz_data.grade.score >= 50 %}
+                                    <span class="text-dark">{{ quiz_data.grade.score|floatformat:0 }}%</span>
+                                {% else %}
+                                    <span class="text-danger">{{ quiz_data.grade.score|floatformat:0 }}%</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-muted opacity-25">-</span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+
+                    <td class="grade-cell score-final">
+                        {% if student_data.course_grade %}
+                            <div class="d-flex flex-column">
+                                <span class="fs-5 {% if student_data.course_grade.final_grade >= 70 %}text-success{% else %}text-dark{% endif %}">
+                                    {{ student_data.course_grade.final_grade|floatformat:0 }}%
+                                </span>
+                                <small class="badge bg-dark text-white rounded-pill mx-auto" style="width: 35px;">
+                                    {{ student_data.course_grade.letter_grade }}
+                                </small>
+                            </div>
+                        {% else %}
+                            <span class="text-muted small">N/A</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="100%" class="text-center py-5 text-muted">
+                        No students enrolled in this course yet.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Search Functionality
+    document.getElementById('studentSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll('.student-row');
+
+        rows.forEach(function(row) {
+            let name = row.querySelector('.sticky-col').innerText.toLowerCase();
+            if (name.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

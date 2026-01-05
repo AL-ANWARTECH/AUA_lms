@@ -1,75 +1,171 @@
 {% extends 'base.html' %}
 
-{% block title %}Notification Preferences - AUA LMS{% endblock %}
+{% block title %}Notification Settings - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Notification Preferences</h2>
-        <p>Customize what notifications you receive.</p>
+<style>
+    /* Custom Toggle Switch Styling */
+    .form-switch .form-check-input {
+        width: 3em;
+        height: 1.5em;
+        cursor: pointer;
+    }
+    .form-switch .form-check-input:checked {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+    
+    /* Hover effect for rows */
+    .setting-row {
+        transition: background-color 0.2s;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .setting-row:last-child {
+        border-bottom: none;
+    }
+    .setting-row:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
         
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary mb-1">Notification Preferences</h2>
+            <p class="text-muted">Control how and when we communicate with you.</p>
+        </div>
+
         <form method="post">
             {% csrf_token %}
-            
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5>Notification Types</h5>
-                </div>
-                <div class="card-body">
-                    <div class="form-check mb-2">
-                        {{ form.email_notifications }}
-                        <label class="form-check-label" for="{{ form.email_notifications.id_for_label }}">
-                            Email Notifications
-                        </label>
-                    </div>
-                    
-                    <div class="form-check mb-2">
-                        {{ form.in_app_notifications }}
-                        <label class="form-check-label" for="{{ form.in_app_notifications.id_for_label }}">
-                            In-App Notifications
-                        </label>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3 border-bottom-0">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3">
+                            <i class="bi bi-broadcast fs-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Delivery Channels</h5>
+                            <small class="text-muted">Where should we send your alerts?</small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5>Notification Categories</h5>
-                </div>
-                <div class="card-body">
-                    <div class="form-check mb-2">
-                        {{ form.course_updates }}
-                        <label class="form-check-label" for="{{ form.course_updates.id_for_label }}">
-                            Course Updates
-                        </label>
-                    </div>
+                <div class="card-body p-0">
                     
-                    <div class="form-check mb-2">
-                        {{ form.grade_updates }}
-                        <label class="form-check-label" for="{{ form.grade_updates.id_for_label }}">
-                            Grade Updates
-                        </label>
+                    <div class="setting-row p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="fw-bold d-block mb-1" for="{{ form.email_notifications.id_for_label }}">
+                                Email Notifications
+                            </label>
+                            <span class="text-muted small">Receive digests and important alerts via email.</span>
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form.email_notifications }}
+                        </div>
                     </div>
-                    
-                    <div class="form-check mb-2">
-                        {{ form.forum_posts }}
-                        <label class="form-check-label" for="{{ form.forum_posts.id_for_label }}">
-                            Forum Posts
-                        </label>
+
+                    <div class="setting-row p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="fw-bold d-block mb-1" for="{{ form.in_app_notifications.id_for_label }}">
+                                In-App Notifications
+                            </label>
+                            <span class="text-muted small">Show a bell badge when you are logged in.</span>
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form.in_app_notifications }}
+                        </div>
                     </div>
-                    
-                    <div class="form-check mb-2">
-                        {{ form.assignment_due }}
-                        <label class="form-check-label" for="{{ form.assignment_due.id_for_label }}">
-                            Assignment Due Dates
-                        </label>
-                    </div>
+
                 </div>
             </div>
-            
-            <button type="submit" class="btn btn-primary">Save Preferences</button>
-            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3 border-bottom-0">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success bg-opacity-10 text-success rounded-circle p-2 me-3">
+                            <i class="bi bi-sliders fs-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">What to Notify Me About</h5>
+                            <small class="text-muted">Select the topics you care about.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+
+                    <div class="setting-row p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="fw-bold d-block mb-1" for="{{ form.course_updates.id_for_label }}">
+                                Course Content Updates
+                            </label>
+                            <span class="text-muted small">New lessons, modules, or instructor announcements.</span>
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form.course_updates }}
+                        </div>
+                    </div>
+
+                    <div class="setting-row p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="fw-bold d-block mb-1" for="{{ form.grade_updates.id_for_label }}">
+                                Grading & Feedback
+                            </label>
+                            <span class="text-muted small">When an instructor grades your assignment or quiz.</span>
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form.grade_updates }}
+                        </div>
+                    </div>
+
+                    <div class="setting-row p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="fw-bold d-block mb-1" for="{{ form.forum_posts.id_for_label }}">
+                                Forum Activity
+                            </label>
+                            <span class="text-muted small">Replies to your topics or posts you follow.</span>
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form.forum_posts }}
+                        </div>
+                    </div>
+
+                    <div class="setting-row p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="fw-bold d-block mb-1" for="{{ form.assignment_due.id_for_label }}">
+                                Due Date Reminders
+                            </label>
+                            <span class="text-muted small">Alerts 24 hours before an assignment is due.</span>
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form.assignment_due }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'dashboard' %}" class="btn btn-link text-decoration-none text-muted">
+                    Cancel and Return
+                </a>
+                <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">
+                    <i class="bi bi-check-lg me-2"></i>Save Changes
+                </button>
+            </div>
+
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Automatically add the 'form-check-input' class to all checkboxes
+        // This ensures the Bootstrap switch styling works even if Django renders basic inputs
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(box => {
+            box.classList.add('form-check-input');
+        });
+    });
+</script>
 {% endblock %}

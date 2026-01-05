@@ -1,16 +1,25 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Course, Category, Module, Lesson, Enrollment, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, AccessibilityAudit, ScreenReaderContent, KeyboardShortcut
+from .models import (
+    CustomUser, Course, Category, Module, Lesson, Enrollment, 
+    Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, 
+    Assignment, Submission, Grade, CourseGrade, Forum, Topic, 
+    Post, TopicTag, TopicTagging, Certificate, CertificateTemplate, 
+    Notification, NotificationPreference, Analytics, Report, 
+    DashboardWidget, AccessibilitySettings, AccessibilityAudit, 
+    ScreenReaderContent, KeyboardShortcut
+)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'role', 'is_staff', 'is_active')
     list_filter = ('role', 'is_staff', 'is_active')
+    # Updated to include bio and profile_picture
     fieldsets = UserAdmin.fieldsets + (
-        ('Role', {'fields': ('role',)}),
+        ('Profile Info', {'fields': ('role', 'bio', 'profile_picture')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Role', {'fields': ('role',)}),
+        ('Profile Info', {'fields': ('role', 'bio', 'profile_picture')}),
     )
 
 @admin.register(Category)
@@ -47,7 +56,8 @@ class ModuleAdmin(admin.ModelAdmin):
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ('title', 'module', 'content_type', 'order', 'created_at')
+    # Added duration to list display
+    list_display = ('title', 'module', 'content_type', 'duration', 'order', 'created_at')
     list_filter = ('content_type', 'module__course')
     search_fields = ('title', 'module__title', 'module__course__title')
     ordering = ('module', 'order')
@@ -179,7 +189,8 @@ class CertificateTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ('title', 'recipient', 'notification_type', 'is_read', 'created_at')
+    # Added 'link' to list display
+    list_display = ('title', 'recipient', 'notification_type', 'is_read', 'link', 'created_at')
     list_filter = ('notification_type', 'is_read', 'created_at', 'recipient__username')
     search_fields = ('title', 'message', 'recipient__username')
     readonly_fields = ('created_at',)

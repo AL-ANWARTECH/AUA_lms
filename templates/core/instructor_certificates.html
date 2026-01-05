@@ -3,37 +3,149 @@
 {% block title %}Certificates - {{ course.title }} - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* Configuration Card */
+    .config-card {
+        background: #f8f9fa;
+        border: 1px dashed #ced4da;
+        transition: all 0.3s ease;
+    }
+    .config-card:hover {
+        border-color: #0d6efd;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Table Styling */
+    .cert-id {
+        font-family: 'Courier New', monospace;
+        letter-spacing: 1px;
+        background: #e9ecef;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+    .copy-btn {
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.2s;
+    }
+    .copy-btn:hover { color: #0d6efd; }
+
+    /* Avatar */
+    .student-avatar {
+        width: 35px;
+        height: 35px;
+        background-color: #e9ecef;
+        color: #495057;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="row mb-4">
     <div class="col-12">
-        <h2>Certificates for {{ course.title }}</h2>
-        <p>Manage certificates for students in this course.</p>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'instructor_dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'instructor_certificates' %}">Certificates</a></li>
+                <li class="breadcrumb-item active">{{ course.title }}</li>
+            </ol>
+        </nav>
         
-        <a href="{% url 'manage_certificate_template' course.pk %}" class="btn btn-primary mb-3">
-            Manage Certificate Template
-        </a>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h2 class="fw-bold text-primary mb-1">Issued Certificates</h2>
+                <p class="text-muted mb-0">Manage credentials for <strong>{{ course.title }}</strong></p>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary" onclick="alert('Export feature coming soon!')">
+                    <i class="bi bi-download me-1"></i> Export CSV
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card config-card">
+            <div class="card-body d-flex flex-column flex-md-row align-items-md-center justify-content-between p-4">
+                <div class="mb-3 mb-md-0">
+                    <div class="d-flex align-items-center mb-1">
+                        <i class="bi bi-palette-fill text-primary fs-4 me-3"></i>
+                        <h5 class="fw-bold mb-0">Certificate Design Template</h5>
+                    </div>
+                    <p class="text-muted small mb-0 ms-0 ms-md-5">
+                        Customize the layout, signature, and logos appearing on student certificates.
+                    </p>
+                </div>
+                <a href="{% url 'manage_certificate_template' course.pk %}" class="btn btn-primary px-4 shadow-sm">
+                    <i class="bi bi-gear-fill me-2"></i>Configure Template
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <h5 class="fw-bold mb-0"><i class="bi bi-people-fill me-2"></i>Recipients ({{ certificates.count }})</h5>
         
+        <div class="input-group" style="max-width: 300px;">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" id="certSearch" class="form-control border-start-0 bg-light" placeholder="Search name or ID...">
+        </div>
+    </div>
+    
+    <div class="card-body p-0">
         {% if certificates %}
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
+                <table class="table table-hover align-middle mb-0" id="certTable">
+                    <thead class="bg-light">
                         <tr>
-                            <th>Student</th>
-                            <th>Certificate ID</th>
-                            <th>Issued Date</th>
-                            <th>Progress</th>
-                            <th>Actions</th>
+                            <th class="ps-4 py-3">Student</th>
+                            <th class="py-3">Certificate ID</th>
+                            <th class="py-3">Issued Date</th>
+                            <th class="py-3">Score/Progress</th>
+                            <th class="py-3 text-end pe-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for cert in certificates %}
-                            <tr>
-                                <td>{{ cert.enrollment.student.username }}</td>
-                                <td>{{ cert.certificate_id }}</td>
-                                <td>{{ cert.issued_at|date:"M d, Y" }}</td>
-                                <td>{{ cert.enrollment.progress_percentage }}%</td>
+                            <tr class="cert-row">
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="student-avatar">
+                                            {{ cert.enrollment.student.username|make_list|first|upper }}
+                                        </div>
+                                        <div>
+                                            <span class="fw-bold d-block text-dark">{{ cert.enrollment.student.get_full_name|default:cert.enrollment.student.username }}</span>
+                                            <small class="text-muted">{{ cert.enrollment.student.email }}</small>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>
-                                    <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-sm btn-outline-primary" target="_blank">
-                                        View/Download
+                                    <span class="cert-id">{{ cert.certificate_id }}</span>
+                                    <i class="bi bi-clipboard copy-btn ms-2" onclick="copyId('{{ cert.certificate_id }}')" title="Copy ID"></i>
+                                </td>
+                                <td class="text-muted small">
+                                    <i class="bi bi-calendar3 me-1"></i> {{ cert.issued_at|date:"M d, Y" }}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="fw-bold text-success me-2">{{ cert.enrollment.progress_percentage }}%</span>
+                                        <i class="bi bi-check-circle-fill text-success"></i>
+                                    </div>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a href="{% url 'generate_certificate' cert.enrollment.pk %}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                        <i class="bi bi-eye-fill me-1"></i> View
                                     </a>
                                 </td>
                             </tr>
@@ -42,8 +154,53 @@
                 </table>
             </div>
         {% else %}
-            <p class="text-muted">No certificates have been issued for this course yet.</p>
+            <div class="text-center py-5">
+                <div class="mb-3 text-muted opacity-25">
+                    <i class="bi bi-award display-1"></i>
+                </div>
+                <h5>No Certificates Issued Yet</h5>
+                <p class="text-muted small">Students will appear here once they complete the course requirements.</p>
+            </div>
         {% endif %}
     </div>
 </div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-lg me-2"></i> ID copied to clipboard!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Search Functionality
+    document.getElementById('certSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll('.cert-row');
+
+        rows.forEach(function(row) {
+            let name = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+            let id = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+            
+            if (name.includes(filter) || id.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // 2. Copy ID Functionality
+    function copyId(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            let toastEl = document.getElementById('copyToast');
+            let toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    }
+</script>
 {% endblock %}

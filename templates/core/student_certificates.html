@@ -3,36 +3,166 @@
 {% block title %}My Certificates - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>My Certificates</h2>
-        <p>Download your course completion certificates.</p>
-        
-        {% if certificates %}
-            <div class="row">
-                {% for cert in certificates %}
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ cert.enrollment.course.title }}</h5>
-                                <p class="card-text">
-                                    <strong>Student:</strong> {{ cert.enrollment.student.username }}<br>
-                                    <strong>Certificate ID:</strong> {{ cert.certificate_id }}<br>
-                                    <strong>Issued:</strong> {{ cert.issued_at|date:"M d, Y" }}<br>
-                                    <strong>Progress:</strong> {{ cert.enrollment.progress_percentage }}%
-                                </p>
-                                <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-primary">
-                                    Download Certificate
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-muted">You haven't earned any certificates yet.</p>
-            <a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a>
-        {% endif %}
+<style>
+    /* Certificate Card Styling */
+    .cert-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #fff;
+        position: relative;
+    }
+    .cert-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* Decorative Top Border (Gold) */
+    .cert-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #ffd700, #ffaa00);
+    }
+
+    /* Icon Seal */
+    .cert-seal {
+        width: 60px;
+        height: 60px;
+        background: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1.5rem auto 1rem;
+        color: #ffc107;
+        border: 2px solid #ffc107;
+    }
+
+    /* Copy Button */
+    .copy-link {
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: #6c757d;
+        transition: color 0.2s;
+    }
+    .copy-link:hover { color: #0d6efd; }
+</style>
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h2 class="fw-bold text-primary mb-1">
+            <i class="bi bi-award-fill me-2"></i>My Achievements
+        </h2>
+        <p class="text-muted mb-0">View and download your earned credentials.</p>
+    </div>
+    <div class="col-md-4 mt-3 mt-md-0">
+        <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input type="text" id="certSearch" class="form-control border-start-0" placeholder="Filter certificates...">
+        </div>
     </div>
 </div>
+
+{% if certificates %}
+    <div class="row g-4" id="certGrid">
+        {% for cert in certificates %}
+            <div class="col-md-6 col-lg-4 cert-item">
+                <div class="cert-card h-100 text-center p-4">
+                    
+                    <div class="cert-seal">
+                        <i class="bi bi-patch-check-fill fs-2"></i>
+                    </div>
+
+                    <h5 class="fw-bold mb-2 cert-title">{{ cert.enrollment.course.title }}</h5>
+                    <p class="text-muted small mb-3">
+                        Issued on {{ cert.issued_at|date:"F d, Y" }}
+                    </p>
+
+                    <div class="bg-light rounded py-2 px-3 d-inline-block mb-4">
+                        <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Credential ID</small>
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <span class="fw-bold text-dark cert-id">{{ cert.certificate_id }}</span>
+                            <i class="bi bi-clipboard copy-link" onclick="copyText('{{ cert.certificate_id }}')" title="Copy ID"></i>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'generate_certificate' cert.enrollment.pk %}" class="btn btn-outline-primary fw-bold">
+                            <i class="bi bi-download me-2"></i>Download PDF
+                        </a>
+                        <button class="btn btn-light btn-sm text-muted" onclick="shareCert('{{ cert.enrollment.course.title }}')">
+                            <i class="bi bi-share-fill me-1"></i> Share Achievement
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 text-center">
+            <div class="mb-4 text-muted opacity-25">
+                <i class="bi bi-trophy display-1"></i>
+            </div>
+            <h4 class="fw-bold text-secondary">No Certificates Yet</h4>
+            <p class="text-muted mb-4">Complete a course to earn your first credential!</p>
+            <a href="{% url 'course_list' %}" class="btn btn-primary px-4 py-2 rounded-pill">
+                Browse Courses
+            </a>
+        </div>
+    </div>
+{% endif %}
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="actionToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+                Action successful!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Search Filter
+    document.getElementById('certSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let items = document.querySelectorAll('.cert-item');
+
+        items.forEach(function(item) {
+            let title = item.querySelector('.cert-title').innerText.toLowerCase();
+            let id = item.querySelector('.cert-id').innerText.toLowerCase();
+            
+            if (title.includes(filter) || id.includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    // 2. Copy Function
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("Credential ID copied!");
+        });
+    }
+
+    // 3. Mock Share Function
+    function shareCert(courseTitle) {
+        // In a real app, this would open a LinkedIn share URL
+        showToast("Ready to share on LinkedIn!");
+    }
+
+    function showToast(msg) {
+        const toastEl = document.getElementById('actionToast');
+        document.getElementById('toastMessage').innerText = msg;
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+</script>
 {% endblock %}

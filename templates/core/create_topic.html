@@ -3,45 +3,123 @@
 {% block title %}Create Topic - {{ course.title }} - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row mb-4">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_forum' course.pk %}">Forum</a></li>
-                <li class="breadcrumb-item active">Create Topic</li>
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_list' %}" class="text-decoration-none">Courses</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}" class="text-decoration-none">{{ course.title }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'course_forum' course.pk %}" class="text-decoration-none">Forum</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New Topic</li>
             </ol>
         </nav>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3>Create New Topic in {{ forum.course.title }}</h3>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 border-bottom-0">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3">
+                        <i class="bi bi-chat-quote-fill fs-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0">Start a New Discussion</h4>
+                        <p class="text-muted small mb-0">Post to: <strong>{{ forum.course.title }} Forum</strong></p>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
+            
+            <div class="card-body p-4">
                 <form method="post">
                     {% csrf_token %}
                     
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Topic Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
+                    <div class="mb-4">
+                        <label for="id_title" class="form-label fw-bold small text-uppercase text-secondary">
+                            Topic Subject <span class="text-danger">*</span>
+                        </label>
+                        {% if form %}
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                            {% endif %}
+                        {% else %}
+                            <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="e.g., Question about Module 3 Quiz..." required>
+                        {% endif %}
                     </div>
 
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Content</label>
-                        <textarea class="form-control" id="content" name="content" rows="6" required></textarea>
+                    <div class="mb-4">
+                        <label for="id_content" class="form-label fw-bold small text-uppercase text-secondary">
+                            Message Content <span class="text-danger">*</span>
+                        </label>
+                        {% if form %}
+                            {{ form.content }}
+                            {% if form.content.errors %}
+                                <div class="text-danger small mt-1">{{ form.content.errors }}</div>
+                            {% endif %}
+                        {% else %}
+                            <textarea class="form-control" id="content" name="content" rows="8" placeholder="Type your question or discussion point here..." required></textarea>
+                        {% endif %}
+                        <div class="form-text text-end">
+                            <small>Be specific and clear to get the best answers.</small>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Create Topic</button>
-                    <a href="{% url 'course_forum' course.pk %}" class="btn btn-secondary">Cancel</a>
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'course_forum' course.pk %}" class="btn btn-link text-muted text-decoration-none">
+                            <i class="bi bi-arrow-left me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">
+                            <i class="bi bi-send-fill me-2"></i> Post Topic
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="card bg-light border-0">
+            <div class="card-body">
+                <h6 class="fw-bold mb-3"><i class="bi bi-info-circle-fill text-info me-2"></i>Posting Guidelines</h6>
+                <ul class="list-unstyled small text-muted mb-0">
+                    <li class="mb-3">
+                        <strong>🔍 Search First:</strong> Check if your question has already been asked to avoid duplicates.
+                    </li>
+                    <li class="mb-3">
+                        <strong>📝 Be Descriptive:</strong> Use a clear title. "Help!" is not a good title. "Error in Lesson 2 Python Script" is better.
+                    </li>
+                    <li class="mb-3">
+                        <strong>🤝 Be Respectful:</strong> Remember that students of all levels are here to learn.
+                    </li>
+                    <li>
+                        <strong>🚫 No Spoilers:</strong> Don't post direct answers to quiz questions.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Automatically style Django form widgets if they are rendered raw
+        const inputs = document.querySelectorAll('input[type="text"], textarea');
+        inputs.forEach(input => {
+            if (!input.classList.contains('form-control')) {
+                input.classList.add('form-control');
+            }
+        });
+        
+        // Make textareas larger if they are too small by default
+        const textareas = document.querySelectorAll('textarea');
+        textareas.forEach(txt => {
+            if (txt.rows < 5) txt.rows = 8;
+        });
+    });
+</script>
 {% endblock %}

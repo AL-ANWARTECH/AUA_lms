@@ -3,35 +3,165 @@
 {% block title %}Certificate Eligibility - {{ course.title }} - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Certificate Eligibility for {{ course.title }}</h2>
-        
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Your Progress</h5>
-                <p class="card-text">
-                    <strong>Current Progress:</strong> {{ progress }}%<br>
-                    <strong>Required for Certificate:</strong> 80%
-                </p>
-                
-                {% if is_eligible %}
-                    <div class="alert alert-success">
-                        <h6>Congratulations! 🎉</h6>
-                        <p>You are eligible for a certificate. You can generate it now.</p>
-                        <a href="{% url 'generate_certificate' enrollment.pk %}" class="btn btn-success">
-                            Generate Certificate
-                        </a>
+<style>
+    /* Circular Progress Chart */
+    .progress-circle {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: conic-gradient(
+            {% if is_eligible %}#198754{% else %}#0d6efd{% endif %} {{ progress }}%, 
+            #e9ecef 0
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        position: relative;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    .progress-circle::before {
+        content: "";
+        width: 130px;
+        height: 130px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+    }
+    .progress-value {
+        position: relative;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #343a40;
+        z-index: 1;
+    }
+    .progress-label {
+        position: absolute;
+        bottom: 35px;
+        font-size: 0.8rem;
+        color: #6c757d;
+        z-index: 1;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    /* Certificate Preview Icon */
+    .cert-preview {
+        font-size: 5rem;
+        color: #ffc107;
+        transition: all 0.3s ease;
+    }
+    .cert-locked {
+        filter: grayscale(100%) opacity(0.5);
+        position: relative;
+    }
+    .lock-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2.5rem;
+        color: #dc3545;
+        background: white;
+        border-radius: 50%;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Success Animation */
+    @keyframes popIn {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .success-container {
+        animation: popIn 0.5s ease-out;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary mb-2">Certificate Status</h2>
+            <p class="lead text-muted">{{ course.title }}</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-5 text-center">
+                        <h5 class="fw-bold mb-4">Current Progress</h5>
+                        
+                        <div class="progress-circle mb-4">
+                            <span class="progress-value">{{ progress|floatform:0 }}%</span>
+                            <span class="progress-label">Complete</span>
+                        </div>
+
+                        {% if is_eligible %}
+                            <div class="alert alert-success border-0 bg-success bg-opacity-10">
+                                <i class="bi bi-check-circle-fill me-2"></i>Goal Reached!
+                            </div>
+                        {% else %}
+                            <div class="alert alert-light border">
+                                <i class="bi bi-info-circle me-2 text-primary"></i>
+                                You need <strong>{{ 80|add:progress|stringformat:"f" }}%</strong> to qualify (80% required).
+                            </div>
+                            <div class="d-grid">
+                                <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary rounded-pill">
+                                    Continue Learning
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="alert alert-info">
-                        <h6>Keep Going! 📚</h6>
-                        <p>You need {{ 80|add:-progress }}% more progress to earn a certificate.</p>
-                        <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">
-                            Continue Learning
-                        </a>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm {% if is_eligible %}border-success border-2{% endif %}">
+                    <div class="card-body p-5 text-center d-flex flex-column justify-content-center">
+                        
+                        {% if is_eligible %}
+                            <div class="success-container">
+                                <div class="cert-preview mb-3">
+                                    <i class="bi bi-award-fill"></i>
+                                </div>
+                                <h3 class="fw-bold text-success mb-2">Congratulations! 🎉</h3>
+                                <p class="text-muted mb-4">You have officially completed this course. Your certificate is ready for download.</p>
+                                
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'generate_certificate' enrollment.pk %}" class="btn btn-success btn-lg shadow-sm">
+                                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>Download Certificate
+                                    </a>
+                                    <button class="btn btn-outline-success">
+                                        <i class="bi bi-share-fill me-2"></i>Share Achievement
+                                    </button>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="position-relative d-inline-block mb-3">
+                                <div class="cert-preview cert-locked">
+                                    <i class="bi bi-award-fill"></i>
+                                </div>
+                                <div class="lock-icon">
+                                    <i class="bi bi-lock-fill"></i>
+                                </div>
+                            </div>
+                            <h4 class="fw-bold text-secondary mb-2">Certificate Locked</h4>
+                            <p class="text-muted small mb-4">Complete the remaining lessons and quizzes to unlock your credential.</p>
+                            
+                            <ul class="list-group list-group-flush text-start small mb-0">
+                                <li class="list-group-item bg-transparent">
+                                    <i class="bi bi-{% if progress >= 80 %}check-circle-fill text-success{% else %}circle text-muted{% endif %} me-2"></i>
+                                    Reach 80% Course Completion
+                                </li>
+                                <li class="list-group-item bg-transparent">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    Active Enrollment Verified
+                                </li>
+                            </ul>
+                        {% endif %}
                     </div>
-                {% endif %}
+                </div>
             </div>
         </div>
     </div>

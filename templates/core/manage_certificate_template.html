@@ -1,72 +1,245 @@
 {% extends 'base.html' %}
 
-{% block title %}Manage Certificate Template - {{ course.title }} - AUA LMS{% endblock %}
+{% block title %}Certificate Design - {{ course.title }}{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* Upload Zone */
+    .upload-zone {
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        background: #f8f9fa;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+    }
+    .upload-zone:hover {
+        border-color: #0d6efd;
+        background: #f1f7ff;
+    }
+    .upload-zone input[type="file"] {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Certificate Preview Canvas */
+    .cert-preview-container {
+        position: relative;
+        width: 100%;
+        padding-top: 70.7%; /* Aspect Ratio for A4 Landscape approx */
+        background-color: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        border: 10px solid #333;
+        overflow: hidden;
+    }
+    
+    .cert-content {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* Mock Elements */
+    .cert-logo-mock {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        opacity: 0.8;
+    }
+    .cert-student-name {
+        font-family: 'Great Vibes', cursive, serif; /* Example styling */
+        font-size: 3rem;
+        margin: 1rem 0;
+        border-bottom: 2px solid;
+        padding: 0 2rem;
+    }
+</style>
+
+<div class="row mb-4">
     <div class="col-12">
-        <h2>Manage Certificate Template for {{ course.title }}</h2>
-        <p>Customize the certificate template for this course.</p>
-        
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            <div class="mb-3">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Certificate Title</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                    <div class="text-danger">{{ form.title.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="mb-3">
-                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                    <div class="text-danger">{{ form.description.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="mb-3">
-                <label for="{{ form.background_image.id_for_label }}" class="form-label">Background Image</label>
-                {{ form.background_image }}
-                {% if form.background_image.errors %}
-                    <div class="text-danger">{{ form.background_image.errors }}</div>
-                {% endif %}
-                {% if template.background_image %}
-                    <p class="mt-2">
-                        Current image: <img src="{{ template.background_image.url }}" alt="Current background" style="max-width: 200px; max-height: 150px;">
-                    </p>
-                {% endif %}
-            </div>
-
-            <div class="mb-3">
-                <label for="{{ form.font_size.id_for_label }}" class="form-label">Font Size</label>
-                {{ form.font_size }}
-                {% if form.font_size.errors %}
-                    <div class="text-danger">{{ form.font_size.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="mb-3">
-                <label for="{{ form.text_color.id_for_label }}" class="form-label">Text Color</label>
-                {{ form.text_color }}
-                {% if form.text_color.errors %}
-                    <div class="text-danger">{{ form.text_color.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="mb-3 form-check">
-                {{ form.is_active }}
-                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Active</label>
-                {% if form.is_active.errors %}
-                    <div class="text-danger">{{ form.is_active.errors }}</div>
-                {% endif %}
-            </div>
-
-            <button type="submit" class="btn btn-primary">Save Template</button>
-            <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Cancel</a>
-        </form>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'instructor_dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'instructor_certificates' %}">Certificates</a></li>
+                <li class="breadcrumb-item active">Design Template</li>
+            </ol>
+        </nav>
+        <h2 class="fw-bold text-primary">Certificate Designer</h2>
+        <p class="text-muted">Customize the look and feel of certificates for <strong>{{ course.title }}</strong>.</p>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-5 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0"><i class="bi bi-sliders me-2"></i>Settings</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" enctype="multipart/form-data" id="certForm">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-secondary">Certificate Title</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-secondary">Body Text</label>
+                        {{ form.description }}
+                        <div class="form-text">Example: "For successfully completing the course..."</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-secondary">Background Image</label>
+                        <div class="upload-zone" id="uploadZone">
+                            <i class="bi bi-image fs-1 text-muted mb-2"></i>
+                            <p class="mb-0 fw-bold small text-dark">Click to upload background</p>
+                            <small class="text-muted">Recommended: 1600x1200px</small>
+                            {{ form.background_image }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label fw-bold small text-secondary">Text Color</label>
+                            <div class="input-group">
+                                <span class="input-group-text p-1"><input type="color" class="form-control-color border-0 p-0" id="colorPickerWrapper" value="#333333"></span>
+                                {{ form.text_color }}
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label fw-bold small text-secondary">Font Size (px)</label>
+                            {{ form.font_size }}
+                        </div>
+                    </div>
+
+                    <div class="mb-4 form-check form-switch">
+                        {{ form.is_active }}
+                        <label class="form-check-label fw-bold" for="{{ form.is_active.id_for_label }}">Template is Active</label>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary fw-bold">
+                            <i class="bi bi-save me-2"></i>Save Design
+                        </button>
+                        <a href="{% url 'instructor_certificates' %}" class="btn btn-light text-muted">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm bg-light">
+            <div class="card-header bg-transparent border-0 py-3 d-flex justify-content-between">
+                <h5 class="fw-bold mb-0 text-secondary"><i class="bi bi-eye me-2"></i>Live Preview</h5>
+                <span class="badge bg-secondary">Draft Mode</span>
+            </div>
+            <div class="card-body">
+                
+                <div class="cert-preview-container">
+                    <div class="cert-content" id="previewCanvas" 
+                         style="{% if template.background_image %}background-image: url('{{ template.background_image.url }}');{% endif %}">
+                        
+                        <div class="cert-logo-mock" id="prevLogo">AUA LMS</div>
+
+                        <h1 id="prevTitle" style="font-weight: 800; margin-bottom: 10px;">{{ form.title.value|default:"Certificate of Completion" }}</h1>
+                        
+                        <p id="prevBody" style="font-size: 1.1rem; max-width: 80%;">{{ form.description.value|default:"This acknowledges that the student has successfully completed the curriculum." }}</p>
+
+                        <div class="cert-student-name" id="prevName">John Doe</div>
+                        
+                        <div class="mt-4 row w-100 justify-content-around">
+                            <div class="col-4 border-top border-dark pt-2">
+                                <small>Date Issued</small>
+                            </div>
+                            <div class="col-4 border-top border-dark pt-2">
+                                <small>Instructor Signature</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3 text-muted small">
+                    * This is an approximation. Final PDF output may vary slightly.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Elements
+        const titleInput = document.querySelector('input[name="title"]');
+        const descInput = document.querySelector('textarea[name="description"]'); // or input
+        const colorInput = document.querySelector('input[name="text_color"]');
+        const colorPicker = document.getElementById('colorPickerWrapper');
+        const bgInput = document.querySelector('input[name="background_image"]');
+        
+        const prevTitle = document.getElementById('prevTitle');
+        const prevBody = document.getElementById('prevBody');
+        const prevCanvas = document.getElementById('previewCanvas');
+        const prevName = document.getElementById('prevName');
+        const prevLogo = document.getElementById('prevLogo');
+
+        // Helper: Apply color
+        function applyColor(color) {
+            prevTitle.style.color = color;
+            prevBody.style.color = color;
+            prevName.style.borderColor = color;
+            prevName.style.color = color;
+            prevLogo.style.color = color;
+            
+            // Update text inputs
+            colorInput.value = color;
+            colorPicker.value = color;
+        }
+
+        // 1. Text Listeners
+        titleInput.addEventListener('input', (e) => prevTitle.innerText = e.target.value || "Certificate Title");
+        if(descInput) {
+            descInput.addEventListener('input', (e) => prevBody.innerText = e.target.value || "Certificate Body Text");
+        }
+
+        // 2. Color Sync
+        colorInput.addEventListener('input', (e) => applyColor(e.target.value));
+        colorPicker.addEventListener('input', (e) => applyColor(e.target.value));
+        
+        // Initial Color Set
+        if(colorInput.value) applyColor(colorInput.value);
+
+        // 3. Image Upload Preview
+        bgInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    prevCanvas.style.backgroundImage = `url('${e.target.result}')`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Bootstrap styling for inputs
+        const inputs = document.querySelectorAll('input[type="text"], textarea, input[type="number"]');
+        inputs.forEach(i => i.classList.add('form-control'));
+        
+        const fileInput = document.querySelector('input[type="file"]');
+        if(fileInput) fileInput.classList.remove('form-control'); // Allow custom styling
+    });
+</script>
 {% endblock %}

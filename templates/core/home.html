@@ -1,43 +1,311 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
+<style>
+    /* --- Custom Styles for Interactivity & Mobile --- */
+    
+    /* Hero Section Styling */
+    .hero-section {
+        background: linear-gradient(135deg, #0d6efd 0%, #0043a8 100%);
+        color: white;
+        border-radius: 16px;
+        padding: 5rem 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(13, 110, 253, 0.25);
+        margin-bottom: 3rem;
+    }
+    
+    /* Background Pattern */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        transform: rotate(30deg);
+        pointer-events: none;
+    }
+
+    /* Pulse Animation */
+    .btn-pulse { animation: pulse-animation 2s infinite; }
+    @keyframes pulse-animation {
+        0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+        70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    /* Stats Section */
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border-bottom: 4px solid #0d6efd;
+        text-align: center;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+    .stat-card:hover { transform: translateY(-5px); }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #0d6efd;
+        line-height: 1.2;
+    }
+
+    /* Card Hover Effects */
+    .hover-card {
+        transition: all 0.3s ease-in-out;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+    }
+    .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Course Image Fixes */
+    .card-img-top-wrapper {
+        height: 180px;
+        overflow: hidden;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    .course-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .hover-card:hover .course-img { transform: scale(1.05); }
+
+    /* Category Badge overlay on image */
+    .category-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255,255,255,0.95);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #333;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background-color: #f8f9fa;
+        border-radius: 16px;
+        padding: 4rem 2rem;
+        margin-top: 5rem;
+    }
+
+    /* Mobile Improvements */
+    @media (max-width: 768px) {
+        .hero-section { padding: 3rem 1.5rem; text-align: center; }
+        .display-4 { font-size: 2rem; }
+        .cta-section { text-align: center; padding: 3rem 1rem; }
+    }
+</style>
+
+<div class="row mb-5 fade-in">
     <div class="col-12">
-        <h1 class="display-4">Welcome to AUA Learning Management System</h1>
-        <p class="lead">Enhance your learning experience with our comprehensive platform.</p>
-        
-        {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">Go to Dashboard</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
-            <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg">Register</a>
-        {% endif %}
+        <div class="hero-section text-center">
+            <h1 class="display-4 fw-bold mb-3">Empowering Nigeria Through Digital Innovation</h1>
+            <p class="lead mb-4 opacity-90 mx-auto" style="max-width: 700px;">Leading EdTech solutions for digital skills, Forex education, and tech startup incubation.</p>
+            {% if not user.is_authenticated %}
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'register' %}" class="btn btn-light btn-lg px-5 fw-bold btn-pulse text-primary">Get Started</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5">Login</a>
+                </div>
+            {% else %}
+                <a href="{% url 'course_list' %}" class="btn btn-light btn-lg px-5 fw-bold btn-pulse text-primary">Browse Courses</a>
+            {% endif %}
+        </div>
     </div>
 </div>
 
-{% if recent_courses %}
-<div class="row mt-5">
-    <div class="col-12">
-        <h2>Featured Courses</h2>
-        <div class="row">
-            {% for course in recent_courses %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ course.title }}</h5>
-                            <p class="card-text">{{ course.description|truncatewords:15 }}</p>
-                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">View Course</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+<div class="row g-4 mb-5">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-number count-up" data-target="4282">0</div>
+            <div class="text-muted small fw-bold text-uppercase mt-2">Students Trained</div>
         </div>
-        <div class="text-center mt-3">
-            <a href="{% url 'course_list' %}" class="btn btn-outline-primary">View All Courses</a>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-number count-up" data-target="19">0</div>
+            <div class="text-muted small fw-bold text-uppercase mt-2">States Reached</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-number count-up" data-target="10">0</div>
+            <div class="text-muted small fw-bold text-uppercase mt-2">Training Programs</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-number count-up" data-target="5">0</div>
+            <div class="text-muted small fw-bold text-uppercase mt-2">Corporate Partners</div>
         </div>
     </div>
 </div>
-{% endif %}
+
+<div class="row mb-5">
+    <div class="col-12 mb-4">
+        <h2 class="fw-bold border-start border-4 border-primary ps-3">Our Impact Projects</h2>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card hover-card h-100">
+            <div class="card-body p-4">
+                <div class="mb-3 text-primary bg-primary bg-opacity-10 d-inline-block p-3 rounded-circle">
+                    <i class="bi bi-laptop fs-2"></i>
+                </div>
+                <h4 class="card-title fw-bold">Digital Skills Training</h4>
+                <p class="card-text text-muted">Comprehensive courses in web development, data science, and UI/UX design tailored for the Nigerian job market.</p>
+                <a href="{% url 'course_list' %}" class="btn btn-outline-primary mt-3 stretched-link rounded-pill">Enroll Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card hover-card h-100">
+            <div class="card-body p-4">
+                <div class="mb-3 text-success bg-success bg-opacity-10 d-inline-block p-3 rounded-circle">
+                    <i class="bi bi-graph-up-arrow fs-2"></i>
+                </div>
+                <h4 class="card-title fw-bold">Forex Education</h4>
+                <p class="card-text text-muted">Specialized training in foreign exchange trading with programs in both English and Hausa.</p>
+                <a href="{% url 'course_list' %}?category=forex" class="btn btn-outline-success mt-3 stretched-link rounded-pill">Start Learning</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card hover-card h-100">
+            <div class="card-body p-4">
+                <div class="mb-3 text-danger bg-danger bg-opacity-10 d-inline-block p-3 rounded-circle">
+                    <i class="bi bi-people-fill fs-2"></i>
+                </div>
+                <h4 class="card-title fw-bold">Women in Forex (WIFX)</h4>
+                <p class="card-text text-muted">Dedicated program teaching women forex trading skills for financial independence.</p>
+                <a href="#" class="btn btn-outline-danger mt-3 stretched-link rounded-pill">Join WIFX</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12 mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2 class="fw-bold mb-0 border-start border-4 border-primary ps-3">Featured Courses</h2>
+        <a href="{% url 'course_list' %}" class="btn btn-link text-decoration-none fw-bold">View All Courses <i class="bi bi-arrow-right"></i></a>
+    </div>
+
+    {% for course in recent_courses %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card hover-card">
+            <div class="card-img-top-wrapper">
+                {% if course.thumbnail %}
+                    <img src="{{ course.thumbnail.url }}" class="course-img" alt="{{ course.title }}">
+                {% else %}
+                    <div class="text-center p-5 text-muted w-100">
+                        <i class="bi bi-card-image fs-1 opacity-50"></i>
+                        <p class="mb-0 small mt-2">No Thumbnail</p>
+                    </div>
+                {% endif %}
+                
+                {% if course.category %}
+                    <span class="category-badge shadow-sm">{{ course.category.name }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="card-body p-4">
+                <h5 class="card-title fw-bold text-truncate">{{ course.title }}</h5>
+                <p class="card-text text-muted small mb-2">
+                    <i class="bi bi-person-circle me-1"></i> {{ course.instructor.get_full_name|default:course.instructor.username }}
+                </p>
+                <p class="card-text text-secondary small">{{ course.description|truncatewords:12 }}</p>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-4 pt-0 px-4">
+                <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary w-100 rounded-pill">View Course</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-light text-center border py-5 rounded-3">
+            <i class="bi bi-info-circle fs-3 text-muted mb-3 d-block"></i>
+            <h5 class="text-muted">No courses available</h5>
+            <p class="mb-0 text-muted small">Check back soon for new content.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="cta-section">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-3">Become an Instructor</h2>
+                    <p class="lead text-muted mb-4 mb-lg-0">
+                        Join our community of experts. Create courses, share your knowledge, and help shape the future of tech in Nigeria.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="{% url 'register' %}" class="btn btn-dark btn-lg px-5 fw-bold">Start Teaching</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll('.count-up');
+        const speed = 200; 
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText.replace('+', '');
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            counter.innerText = target + "+";
+                        }
+                    };
+                    updateCount();
+                    observer.unobserve(counter); // Only animate once
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => observer.observe(counter));
+    });
+</script>
+
 {% endblock %}

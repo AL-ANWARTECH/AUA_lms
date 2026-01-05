@@ -1,69 +1,161 @@
 {% extends 'base.html' %}
 
-{% block title %}Gradebook - AUA LMS{% endblock %}
+{% block title %}My Grades - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>My Gradebook</h2>
-        <p>View your grades across all enrolled courses.</p>
-        
-        {% for course_data in gradebook_data %}
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5>{{ course_data.course.title }}</h5>
-                    <p class="text-muted">
-                        Instructor: {{ course_data.course.instructor.username }}
-                        {% if course_data.course_grade %}
-                            | Final Grade: {{ course_data.course_grade.final_grade|floatformat:1 }}% ({{ course_data.course_grade.letter_grade }})
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="card-body">
-                    {% if course_data.grades %}
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Item</th>
-                                        <th>Score</th>
-                                        <th>Max Points</th>
-                                        <th>Percentage</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for grade in course_data.grades %}
-                                        <tr>
-                                            <td>{{ grade.grade_type|title }}</td>
-                                            <td>
-                                                {% if grade.assignment %}
-                                                    {{ grade.assignment.title }}
-                                                {% elif grade.quiz %}
-                                                    {{ grade.quiz.title }}
-                                                {% else %}
-                                                    N/A
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ grade.score }}</td>
-                                            <td>{{ grade.max_points }}</td>
-                                            <td>{{ grade.percentage|floatformat:1 }}%</td>
-                                            <td>{{ grade.date_recorded|date:"M d, Y" }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <p class="text-muted">No grades recorded for this course yet.</p>
-                    {% endif %}
-                </div>
-            </div>
-        {% empty %}
-            <p class="text-muted">You are not enrolled in any courses or have no grades yet.</p>
-            <a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a>
-        {% endfor %}
+<style>
+    /* Grade Badge Colors */
+    .grade-badge-a { background-color: #198754; color: white; } /* Green */
+    .grade-badge-b { background-color: #0d6efd; color: white; } /* Blue */
+    .grade-badge-c { background-color: #ffc107; color: black; } /* Yellow */
+    .grade-badge-d { background-color: #fd7e14; color: white; } /* Orange */
+    .grade-badge-f { background-color: #dc3545; color: white; } /* Red */
+    
+    /* Print Styling */
+    @media print {
+        .btn, .breadcrumb, footer { display: none !important; }
+        .card { border: 1px solid #000 !important; box-shadow: none !important; break-inside: avoid; }
+        body { background-color: #fff !important; }
+    }
+</style>
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'student_dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Gradebook</li>
+            </ol>
+        </nav>
+        <h2 class="fw-bold text-primary mb-0">
+            <i class="bi bi-journal-check me-2"></i>My Gradebook
+        </h2>
+        <p class="text-muted mb-0">Academic performance across all enrolled courses.</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-printer me-2"></i>Print Report
+        </button>
     </div>
 </div>
+
+{% for course_data in gradebook_data %}
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white py-3 border-bottom-0">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h5 class="fw-bold mb-1">{{ course_data.course.title }}</h5>
+                    <small class="text-muted">
+                        <i class="bi bi-person-circle me-1"></i> {{ course_data.course.instructor.get_full_name|default:course_data.course.instructor.username }}
+                    </small>
+                </div>
+                
+                {% if course_data.course_grade %}
+                    <div class="text-end">
+                        <span class="d-block small text-muted text-uppercase fw-bold">Current Grade</span>
+                        <div class="d-flex align-items-center justify-content-end">
+                            <h3 class="fw-bold mb-0 me-2">{{ course_data.course_grade.final_grade|floatformat:0 }}%</h3>
+                            <span class="badge rounded-pill px-3 py-2 
+                                {% if course_data.course_grade.final_grade >= 90 %}grade-badge-a
+                                {% elif course_data.course_grade.final_grade >= 80 %}grade-badge-b
+                                {% elif course_data.course_grade.final_grade >= 70 %}grade-badge-c
+                                {% elif course_data.course_grade.final_grade >= 60 %}grade-badge-d
+                                {% else %}grade-badge-f{% endif %}">
+                                {{ course_data.course_grade.letter_grade }}
+                            </span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+            {% if course_data.course_grade %}
+                <div class="progress mt-3" style="height: 6px;">
+                    <div class="progress-bar 
+                        {% if course_data.course_grade.final_grade >= 70 %}bg-success
+                        {% elif course_data.course_grade.final_grade >= 50 %}bg-warning
+                        {% else %}bg-danger{% endif %}" 
+                        role="progressbar" 
+                        style="width: {{ course_data.course_grade.final_grade|stringformat:'f' }}%">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="card-body p-0">
+            {% if course_data.grades %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Item Name</th>
+                                <th>Type</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Score</th>
+                                <th class="text-end pe-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for grade in course_data.grades %}
+                                <tr>
+                                    <td class="ps-4 fw-bold text-secondary">
+                                        {% if grade.assignment %}
+                                            {{ grade.assignment.title }}
+                                        {% elif grade.quiz %}
+                                            {{ grade.quiz.title }}
+                                        {% else %}
+                                            Unknown Item
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if grade.grade_type == 'quiz' %}
+                                            <span class="badge bg-info bg-opacity-10 text-info border border-info">Quiz</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary">Assignment</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center text-muted small">
+                                        {{ grade.date_recorded|date:"M d, Y" }}
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="fw-bold">{{ grade.score }}</span> <span class="text-muted small">/ {{ grade.max_points }}</span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        {% if grade.percentage >= 80 %}
+                                            <span class="text-success fw-bold">{{ grade.percentage|floatformat:0 }}%</span>
+                                        {% elif grade.percentage >= 60 %}
+                                            <span class="text-dark fw-bold">{{ grade.percentage|floatformat:0 }}%</span>
+                                        {% else %}
+                                            <span class="text-danger fw-bold">{{ grade.percentage|floatformat:0 }}%</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="p-5 text-center text-muted">
+                    <i class="bi bi-clipboard-data display-6 opacity-25"></i>
+                    <p class="mt-2 mb-0">No graded items yet.</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="card-footer bg-light border-top-0 d-flex justify-content-end p-3">
+             <a href="{% url 'course_detail' course_data.course.pk %}" class="btn btn-sm btn-link text-decoration-none">
+                 Go to Course <i class="bi bi-arrow-right"></i>
+             </a>
+        </div>
+    </div>
+{% empty %}
+    <div class="text-center py-5">
+        <div class="mb-3 text-muted opacity-25">
+            <i class="bi bi-journal-x display-1"></i>
+        </div>
+        <h4>No Grades Available</h4>
+        <p class="text-muted">You are not enrolled in any courses or no grades have been recorded yet.</p>
+        <a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a>
+    </div>
+{% endfor %}
+
 {% endblock %}

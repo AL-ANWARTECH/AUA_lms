@@ -3,44 +3,319 @@
 {% block title %}Keyboard Shortcuts - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>Keyboard Shortcuts</h2>
-        <p>Use these keyboard shortcuts to navigate the LMS efficiently.</p>
-        
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Key Combination</th>
-                                <th>Action</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for shortcut in shortcuts %}
-                                <tr>
-                                    <td><kbd>{{ shortcut.key_combination }}</kbd></td>
-                                    <td>{{ shortcut.action|title }}</td>
-                                    <td>{{ shortcut.description }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+<style>
+    /* 3D Key Styling */
+    kbd {
+        background-color: #f8f9fa;
+        border: 1px solid #d1d5db;
+        border-bottom: 3px solid #b1b5b9;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        color: #374151;
+        display: inline-block;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.9em;
+        font-weight: 700;
+        line-height: 1;
+        padding: 6px 12px;
+        white-space: nowrap;
+        transition: all 0.1s ease;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    /* Active/Pressed State */
+    kbd:active, kbd.key-pressed {
+        transform: translateY(3px);
+        border-bottom-width: 1px;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        background-color: #e2e6ea;
+        color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    /* Highlight Row Animation */
+    .shortcut-row {
+        transition: background-color 0.2s, transform 0.2s;
+        border-radius: 8px;
+    }
+    .shortcut-row:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+    }
+    .row-highlight {
+        background-color: #d1e7dd !important; /* Green highlight */
+        transition: background-color 0.1s;
+    }
+
+    /* Sticky Search Header */
+    .sticky-header {
+        position: sticky;
+        top: 80px; /* Adjust based on navbar height */
+        z-index: 99;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+        padding-top: 10px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
+
+    /* Category Chips */
+    .category-filter {
+        cursor: pointer;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        border: 1px solid #dee2e6;
+        background: white;
+        color: #6c757d;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+    .category-filter:hover { background: #f8f9fa; }
+    .category-filter.active {
+        background-color: #0d6efd;
+        color: white;
+        border-color: #0d6efd;
+    }
+</style>
+
+<div class="container pb-5">
+    
+    <div class="row mb-4 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="fw-bold text-primary mb-2">
+                <i class="bi bi-keyboard me-2"></i>Keyboard Shortcuts
+            </h2>
+            <p class="text-muted">Boost your productivity with these quick navigation keys.</p>
+        </div>
+    </div>
+
+    <div class="sticky-header">
+        <div class="row justify-content-center g-3">
+            <div class="col-md-8">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0 ps-3">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" id="shortcutSearch" class="form-control border-start-0 py-2" placeholder="Search commands (e.g. 'save', 'next')...">
+                    
+                    <div class="input-group-text bg-white border-start-0 pe-3">
+                        <div class="form-check form-switch mb-0" title="Highlight row when key is pressed">
+                            <input class="form-check-input" type="checkbox" id="liveTestMode">
+                            <label class="form-check-label small fw-bold text-muted ms-1" for="liveTestMode">Live Test</label>
+                        </div>
+                    </div>
                 </div>
                 
-                <h5>General Navigation</h5>
-                <ul>
-                    <li><kbd>Tab</kbd> - Navigate between interactive elements</li>
-                    <li><kbd>Shift + Tab</kbd> - Navigate backwards</li>
-                    <li><kbd>Enter</kbd> - Activate links and buttons</li>
-                    <li><kbd>Space</kbd> - Toggle checkboxes and radio buttons</li>
-                    <li><kbd>Escape</kbd> - Close modals and dropdowns</li>
-                </ul>
+                <div class="mt-3 text-center d-flex justify-content-center flex-wrap" id="categoryContainer">
+                    <span class="category-filter active" data-category="all">All</span>
+                    <span class="category-filter" data-category="navigation">Navigation</span>
+                    <span class="category-filter" data-category="actions">Actions</span>
+                    <span class="category-filter" data-category="forms">Forms</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="shortcutsTable">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 py-3 text-uppercase small text-muted">Keystroke</th>
+                                    <th class="py-3 text-uppercase small text-muted">Action</th>
+                                    <th class="py-3 text-uppercase small text-muted">Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for shortcut in shortcuts %}
+                                    <tr class="shortcut-row" data-category="{{ shortcut.category|default:'general'|lower }}" data-keys="{{ shortcut.key_combination|lower }}">
+                                        <td class="ps-4 py-3">
+                                            <div onclick="copyToClipboard('{{ shortcut.key_combination }}')" title="Click to copy">
+                                                <kbd>{{ shortcut.key_combination }}</kbd>
+                                            </div>
+                                        </td>
+                                        <td class="fw-bold text-dark">
+                                            {{ shortcut.action|title }}
+                                            <div class="small text-muted fw-normal mt-1">{{ shortcut.description }}</div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-light text-secondary border">
+                                                {{ shortcut.category|default:'General' }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr class="shortcut-row" data-category="navigation" data-keys="j">
+                                        <td class="ps-4 py-3"><kbd>J</kbd></td>
+                                        <td class="fw-bold">Next Lesson</td>
+                                        <td><span class="badge bg-light text-dark border">Navigation</span></td>
+                                    </tr>
+                                    <tr class="shortcut-row" data-category="navigation" data-keys="k">
+                                        <td class="ps-4 py-3"><kbd>K</kbd></td>
+                                        <td class="fw-bold">Previous Lesson</td>
+                                        <td><span class="badge bg-light text-dark border">Navigation</span></td>
+                                    </tr>
+                                    <tr class="shortcut-row" data-category="actions" data-keys="ctrl+s">
+                                        <td class="ps-4 py-3"><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+                                        <td class="fw-bold">Save Changes</td>
+                                        <td><span class="badge bg-light text-dark border">Actions</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm bg-dark text-white mb-3 sticky-top" style="top: 180px; z-index: 1;">
+                <div class="card-header bg-transparent border-white border-opacity-10 py-3">
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-globe me-2"></i>Global Keys</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent text-white border-secondary border-opacity-25 d-flex justify-content-between align-items-center px-0">
+                            <span>Focus Search</span>
+                            <kbd>/</kbd>
+                        </li>
+                        <li class="list-group-item bg-transparent text-white border-secondary border-opacity-25 d-flex justify-content-between align-items-center px-0">
+                            <span>Close Menu</span>
+                            <kbd>Esc</kbd>
+                        </li>
+                        <li class="list-group-item bg-transparent text-white border-secondary border-opacity-25 d-flex justify-content-between align-items-center px-0">
+                            <span>Next Element</span>
+                            <kbd>Tab</kbd>
+                        </li>
+                        <li class="list-group-item bg-transparent text-white border-0 d-flex justify-content-between align-items-center px-0">
+                            <span>Select</span>
+                            <kbd>Enter</kbd>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent border-top border-secondary border-opacity-25 text-center">
+                    <small class="opacity-50">Press <kbd>?</kbd> anywhere to open help</small>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 1050">
+    <div id="copyToast" class="toast align-items-center text-white bg-success border-0 rounded-pill px-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body text-center w-100">
+                <i class="bi bi-clipboard-check me-2"></i> Copied to clipboard!
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('shortcutSearch');
+        const rows = document.querySelectorAll('.shortcut-row');
+        const filterBtns = document.querySelectorAll('.category-filter');
+        const liveTestCheckbox = document.getElementById('liveTestMode');
+
+        // 1. Search Functionality
+        searchInput.addEventListener('keyup', function() {
+            const term = this.value.toLowerCase();
+            filterRows(term, document.querySelector('.category-filter.active').dataset.category);
+        });
+
+        // 2. Category Filtering
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active style
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter rows
+                filterRows(searchInput.value.toLowerCase(), this.dataset.category);
+            });
+        });
+
+        function filterRows(searchTerm, category) {
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                const rowCat = row.dataset.category || 'all';
+                
+                const matchesSearch = text.includes(searchTerm);
+                const matchesCat = category === 'all' || rowCat.includes(category);
+
+                if (matchesSearch && matchesCat) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // 3. Live Key Listener (Interactive Feature)
+        document.addEventListener('keydown', function(event) {
+            if (!liveTestCheckbox.checked) return;
+
+            // Construct key string (e.g., "ctrl+s", "j")
+            let pressed = [];
+            if (event.ctrlKey) pressed.push('ctrl');
+            if (event.shiftKey) pressed.push('shift');
+            if (event.altKey) pressed.push('alt');
+            
+            // Ignore modifier keys alone
+            if (!['Control', 'Shift', 'Alt'].includes(event.key)) {
+                pressed.push(event.key.toLowerCase());
+            }
+
+            let keyCombo = pressed.join('+');
+
+            // Find matching row
+            rows.forEach(row => {
+                // Clean up data-keys for comparison
+                let rowKeys = row.dataset.keys.replace(/\s/g, ''); 
+                if (rowKeys === keyCombo) {
+                    // Highlight Effect
+                    row.classList.add('row-highlight');
+                    
+                    // Animate the kbd element
+                    const kbd = row.querySelector('kbd');
+                    if(kbd) kbd.classList.add('key-pressed');
+
+                    // Remove highlight after delay
+                    setTimeout(() => {
+                        row.classList.remove('row-highlight');
+                        if(kbd) kbd.classList.remove('key-pressed');
+                    }, 300);
+                    
+                    // Prevent default if it's a browser shortcut to allow testing
+                    // event.preventDefault(); 
+                }
+            });
+        });
+        
+        // Slash to focus search
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    });
+
+    // Copy Function
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = new bootstrap.Toast(document.getElementById('copyToast'));
+            toast.show();
+        });
+    }
+</script>
 {% endblock %}

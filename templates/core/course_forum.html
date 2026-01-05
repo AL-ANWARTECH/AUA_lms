@@ -3,77 +3,202 @@
 {% block title %}{{ course.title }} - Forum - AUA LMS{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></li>
-                <li class="breadcrumb-item active">Forum</li>
-            </ol>
-        </nav>
-    </div>
-</div>
+<style>
+    /* Topic List Item Styling */
+    .topic-item {
+        border-left: 4px solid transparent;
+        transition: all 0.2s ease;
+        padding: 1.5rem;
+    }
+    .topic-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+    }
+    .topic-item.pinned {
+        background-color: #f0f7ff;
+        border-left-color: #0d6efd;
+    }
+    
+    /* Avatar Styling */
+    .forum-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: white;
+        background: linear-gradient(135deg, #6c757d, #495057);
+    }
+    
+    /* Stats Box */
+    .forum-stat-box {
+        text-align: center;
+        min-width: 80px;
+    }
+    .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #6c757d;
+        letter-spacing: 0.5px;
+    }
+    .stat-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #212529;
+    }
+</style>
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'course_list' %}" class="text-decoration-none">Courses</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'course_detail' course.pk %}" class="text-decoration-none">{{ course.title }}</a></li>
+        <li class="breadcrumb-item active">Forum</li>
+    </ol>
+</nav>
 
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3>{{ forum.title }}</h3>
-                    <a href="{% url 'create_topic' forum.pk %}" class="btn btn-primary">Create Topic</a>
+    <div class="col-lg-8">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-primary mb-1">
+                    <i class="bi bi-chat-square-text-fill me-2"></i>Discussion Forum
+                </h2>
+                <p class="text-muted mb-0">{{ forum.description|default:"Ask questions, share ideas, and help fellow students." }}</p>
+            </div>
+            <a href="{% url 'create_topic' forum.pk %}" class="btn btn-primary btn-lg shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i> New Topic
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-2">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" id="topicSearch" class="form-control border-0" placeholder="Search discussions...">
                 </div>
-                <p class="text-muted">{{ forum.description }}</p>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="list-group list-group-flush">
+                {% for topic in topics %}
+                    <div class="list-group-item topic-item {% if topic.is_pinned %}pinned{% endif %}">
+                        <div class="d-flex align-items-center">
+                            
+                            <div class="me-3 d-none d-md-block">
+                                <div class="forum-avatar" title="{{ topic.author.username }}">
+                                    {{ topic.author.username|make_list|first|upper }}
+                                </div>
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center mb-1">
+                                    {% if topic.is_pinned %}
+                                        <span class="badge bg-primary me-2"><i class="bi bi-pin-angle-fill"></i> Pinned</span>
+                                    {% endif %}
+                                    {% if topic.is_closed %}
+                                        <span class="badge bg-secondary me-2"><i class="bi bi-lock-fill"></i> Closed</span>
+                                    {% endif %}
+                                    
+                                    <a href="{% url 'topic_detail' topic.pk %}" class="text-decoration-none text-dark fw-bold fs-5 stretched-link">
+                                        {{ topic.title }}
+                                    </a>
+                                </div>
+                                
+                                <p class="text-muted small mb-2">
+                                    {{ topic.content|striptags|truncatewords:20 }}
+                                </p>
+                                
+                                <div class="d-flex align-items-center text-muted small">
+                                    <span class="me-3">
+                                        <i class="bi bi-person-circle me-1"></i>{{ topic.author.username }}
+                                    </span>
+                                    <span class="me-3">
+                                        <i class="bi bi-clock me-1"></i>{{ topic.created_at|date:"M d, Y" }}
+                                    </span>
+                                    {% if topic.posts.last %}
+                                        <span>
+                                            <i class="bi bi-reply-fill me-1"></i>Last reply by {{ topic.posts.last.author.username }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="forum-stat-box ms-3 d-none d-sm-block">
+                                <div class="stat-value text-primary">{{ topic.posts.count }}</div>
+                                <div class="stat-label">Replies</div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="text-center py-5">
+                        <div class="mb-3">
+                            <i class="bi bi-chat-dots display-1 text-muted opacity-25"></i>
+                        </div>
+                        <h5 class="text-muted">No discussions yet</h5>
+                        <p class="text-muted small">Be the first to start a conversation in this course!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white py-3">
+                <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-info-circle me-2 text-primary"></i>Community Rules</h6>
             </div>
             <div class="card-body">
-                {% if topics %}
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Topic</th>
-                                    <th>Author</th>
-                                    <th>Replies</th>
-                                    <th>Last Post</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for topic in topics %}
-                                    <tr>
-                                        <td>
-                                            <a href="{% url 'topic_detail' topic.pk %}" class="text-decoration-none">
-                                                <strong>{{ topic.title }}</strong>
-                                                {% if topic.is_pinned %}
-                                                    <span class="badge bg-primary ms-1">Pinned</span>
-                                                {% endif %}
-                                                {% if topic.is_closed %}
-                                                    <span class="badge bg-secondary ms-1">Closed</span>
-                                                {% endif %}
-                                            </a>
-                                            <br>
-                                            <small class="text-muted">{{ topic.content|truncatewords:10 }}</small>
-                                        </td>
-                                        <td>{{ topic.author.username }}</td>
-                                        <td>{{ topic.posts.count }}</td>
-                                        <td>
-                                            {% if topic.posts.last %}
-                                                {{ topic.posts.last.created_at|date:"M d, Y H:i" }}<br>
-                                                by {{ topic.posts.last.author.username }}
-                                            {% else %}
-                                                No posts yet
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                <ul class="list-unstyled mb-0 small text-muted">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Be respectful to instructors and peers.</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Keep discussions relevant to the course.</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Search before posting duplicate topics.</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>No spam or promotional content.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card bg-primary text-white border-0 shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3">About this Course</h5>
+                <p class="small mb-0 opacity-75">
+                    {{ course.description|truncatewords:25 }}
+                </p>
+                <hr class="border-white opacity-25">
+                <div class="d-flex align-items-center">
+                    <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                        <i class="bi bi-person-fill fs-5"></i>
                     </div>
-                {% else %}
-                    <p class="text-muted">No topics have been created yet. Be the first to start a discussion!</p>
-                {% endif %}
+                    <div>
+                        <small class="d-block text-uppercase opacity-75" style="font-size: 0.7rem;">Instructor</small>
+                        <span class="fw-bold">{{ course.instructor.get_full_name|default:course.instructor.username }}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Simple Client-Side Search
+    document.getElementById('topicSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let items = document.querySelectorAll('.topic-item');
+
+        items.forEach(function(item) {
+            let text = item.innerText.toLowerCase();
+            if (text.includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

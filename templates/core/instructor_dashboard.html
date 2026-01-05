@@ -3,64 +3,184 @@
 {% block title %}Instructor Dashboard - AUA LMS{% endblock %}
 
 {% block content %}
+<style>
+    /* Metric Cards */
+    .metric-box {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border-left: 4px solid #0d6efd;
+        height: 100%;
+        transition: transform 0.2s;
+    }
+    .metric-box:hover { transform: translateY(-3px); }
+    
+    /* Course Cards */
+    .instructor-course-card {
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        height: 100%;
+        background: white;
+    }
+    .instructor-course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .card-actions {
+        background-color: #f8f9fa;
+        border-top: 1px solid #eee;
+    }
+</style>
+
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">Instructor Dashboard</h2>
+            <p class="text-muted mb-0">Welcome back, <strong>{{ user.username }}</strong>. Here is your teaching overview.</p>
+        </div>
+        <a href="{% url 'create_course' %}" class="btn btn-primary btn-lg shadow-sm">
+            <i class="bi bi-plus-circle me-2"></i>Create New Course
+        </a>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="metric-box border-primary">
+            <h6 class="text-muted text-uppercase small fw-bold">Total Courses</h6>
+            <h2 class="mb-0 fw-bold">{{ courses.count }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="metric-box border-success" style="border-left-color: #198754;">
+            <h6 class="text-muted text-uppercase small fw-bold">Active Students</h6>
+            <h2 class="mb-0 fw-bold">--</h2> </div>
+    </div>
+    <div class="col-md-4">
+        <div class="metric-box border-warning" style="border-left-color: #ffc107;">
+            <h6 class="text-muted text-uppercase small fw-bold">Pending Grading</h6>
+            <h2 class="mb-0 fw-bold">0</h2>
+        </div>
+    </div>
+</div>
+
 <div class="row">
-    <div class="col-12">
-        <h2>Instructor Dashboard</h2>
-        <p>Welcome, <strong>{{ user.username }}</strong>!</p>
-        <p>Your role: <strong>{{ user_role|title }}</strong></p>
-        
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">Your Courses</h5>
-                    <a href="{% url 'create_course' %}" class="btn btn-primary">Create New Course</a>
-                </div>
-                
-                {% if courses %}
-                    <div class="row">
-                        {% for course in courses %}
-                            <div class="col-md-6 col-lg-4 mb-3">
-                                <div class="card h-100">
-                                    {% if course.thumbnail %}
-                                        <img src="{{ course.thumbnail.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 150px; object-fit: cover;">
-                                    {% else %}
-                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                                            <span class="text-muted">No Thumbnail</span>
-                                        </div>
-                                    {% endif %}
-                                    <div class="card-body d-flex flex-column">
-                                        <h6 class="card-title">{{ course.title }}</h6>
-                                        <p class="card-text small text-muted">{{ course.description|truncatewords:15 }}</p>
-                                        <p class="text-muted small">
-                                            <strong>Category:</strong> {{ course.category.name|default:"Uncategorized" }}<br>
-                                            <strong>Created:</strong> {{ course.created_at|date:"M d, Y" }}<br>
-                                            <strong>Modules:</strong> {{ course.modules.count }}
-                                        </p>
-                                        <div class="mt-auto">
-                                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-sm btn-outline-primary">View</a>
-                                            <a href="{% url 'create_module' course.pk %}" class="btn btn-sm btn-outline-success">Add Module</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p class="text-muted">You haven't created any courses yet.</p>
-                    <p><a href="{% url 'create_course' %}" class="btn btn-primary">Create Your First Course</a></p>
-                {% endif %}
+    <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold mb-0">My Courses</h4>
+            
+            <div class="input-group" style="max-width: 250px;">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" id="courseSearch" class="form-control border-start-0" placeholder="Filter courses...">
             </div>
         </div>
-        
-        <div class="card mt-3">
+
+        {% if courses %}
+            <div class="row g-4">
+                {% for course in courses %}
+                    <div class="col-md-6 col-xl-4 course-item">
+                        <div class="card instructor-course-card overflow-hidden">
+                            <div class="position-relative" style="height: 160px; background-color: #f0f2f5;">
+                                {% if course.thumbnail %}
+                                    <img src="{{ course.thumbnail.url }}" class="w-100 h-100 object-fit-cover" alt="{{ course.title }}">
+                                {% else %}
+                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                        <div class="text-center">
+                                            <i class="bi bi-card-image fs-1 opacity-50"></i>
+                                            <p class="small mb-0">No Image</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="position-absolute top-0 end-0 m-2">
+                                    <span class="badge bg-white text-dark shadow-sm">{{ course.category.name|default:"General" }}</span>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-3">
+                                <h5 class="card-title fw-bold text-truncate mb-1" title="{{ course.title }}">
+                                    {{ course.title }}
+                                </h5>
+                                <p class="small text-muted mb-3">{{ course.modules.count }} Modules • Updated {{ course.updated_at|date:"M d" }}</p>
+                                
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'course_detail' course.pk %}" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-pencil-square me-1"></i> Manage Content
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="card-actions p-2 d-flex justify-content-between align-items-center">
+                                <a href="{% url 'course_analytics' course.pk %}" class="btn btn-link text-decoration-none btn-sm text-secondary" title="Analytics">
+                                    <i class="bi bi-bar-chart-fill"></i> Stats
+                                </a>
+                                <a href="{% url 'instructor_certificates' %}" class="btn btn-link text-decoration-none btn-sm text-secondary" title="Certificates">
+                                    <i class="bi bi-award-fill"></i> Certs
+                                </a>
+                                <a href="{% url 'course_forum' course.pk %}" class="btn btn-link text-decoration-none btn-sm text-secondary" title="Forum">
+                                    <i class="bi bi-chat-text-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5 border rounded-3 bg-white">
+                <i class="bi bi-journal-plus display-1 text-muted opacity-25"></i>
+                <h4 class="mt-3 text-muted">No Courses Yet</h4>
+                <p class="mb-4">Get started by creating your first curriculum.</p>
+                <a href="{% url 'create_course' %}" class="btn btn-primary">Create Course</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-3 mt-4 mt-lg-0">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white py-3">
+                <h6 class="fw-bold mb-0">Quick Actions</h6>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'create_course' %}" class="list-group-item list-group-item-action py-3">
+                    <i class="bi bi-plus-square text-primary me-2"></i> New Course
+                </a>
+                <a href="{% url 'analytics_dashboard' %}" class="list-group-item list-group-item-action py-3">
+                    <i class="bi bi-graph-up text-success me-2"></i> Global Analytics
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3">
+                    <i class="bi bi-people text-info me-2"></i> Student List
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3">
+                    <i class="bi bi-chat-square-dots text-warning me-2"></i> Messages
+                </a>
+            </div>
+        </div>
+
+        <div class="card bg-light border-0">
             <div class="card-body">
-                <h5 class="card-title">Statistics</h5>
-                <p class="card-text">
-                    <strong>Total Courses:</strong> {{ courses.count }}<br>
-                    <strong>Total Modules:</strong> {% for course in courses %}{{ course.modules.count }}{% if not forloop.last %} + {% endif %}{% endfor %} <!-- Will be updated in next step -->
-                </p>
+                <h6 class="fw-bold mb-2">Instructor Support</h6>
+                <p class="small text-muted mb-3">Need help setting up your course content?</p>
+                <a href="#" class="btn btn-sm btn-outline-secondary w-100">View Guide</a>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Simple Course Filter
+    document.getElementById('courseSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let items = document.querySelectorAll('.course-item');
+
+        items.forEach(function(item) {
+            let title = item.querySelector('.card-title').innerText.toLowerCase();
+            if (title.includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

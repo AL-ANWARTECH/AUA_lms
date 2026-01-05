@@ -1,152 +1,323 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AUA LMS - Empowering Nigeria through digital education.">
     <title>{% block title %}AUA LMS{% endblock %}</title>
-    <!-- Bootstrap CSS -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Custom CSS for Responsive Design -->
-    {% load static %}
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo/favicon.ico' %}">
+
+    <style>
+        :root {
+            --techaua-blue: #0d6efd;
+            --techaua-dark: #0b5ed7;
+            --techaua-accent: #ffc107;
+            --navbar-height: 90px; /* Grand height */
+            --footer-bg: #111827; 
+            --footer-text: #9ca3af;
+            --footer-heading: #f3f4f6;
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f9fafb;
+            color: #374151;
+            overflow-x: hidden;
+            /* MINIMUM SPACE: Padding matches header height exactly */
+            padding-top: var(--navbar-height); 
+        }
+        
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            font-family: var(--font-heading);
+        }
+
+        .main-content {
+            flex: 1;
+            /* MINIMUM SPACE: Small top margin for breathing room without big gaps */
+            margin-top: 1rem; 
+        }
+
+        /* --- GRAND INTERACTIVE HEADER --- */
+        .navbar {
+            height: var(--navbar-height);
+            backdrop-filter: blur(15px);
+            background-color: rgba(13, 110, 253, 0.95) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar.scrolled {
+            height: 75px;
+            background-color: rgba(0, 67, 168, 0.98) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-brand { 
+            font-weight: 800; 
+            font-size: 1.8rem; 
+            letter-spacing: -1px;
+        }
+        
+        .techaua-badge {
+            background: var(--techaua-accent);
+            color: #000;
+            padding: 2px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;
+            vertical-align: middle; margin-left: 8px;
+        }
+        
+        .nav-link {
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            color: rgba(255, 255, 255, 0.85) !important;
+            padding: 0.5rem 1.25rem !important;
+        }
+        
+        .nav-link:hover {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .nav-link.active {
+            color: #fff !important;
+            font-weight: 700;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px; left: 25%; width: 50%; height: 3px;
+            background: var(--techaua-accent);
+            border-radius: 10px;
+        }
+
+        .account-dropdown-btn {
+            background: #fff !important;
+            color: var(--techaua-blue) !important;
+            font-weight: 700;
+            padding: 10px 22px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        /* --- FOOTER STYLES (AS PER YOUR PREVIOUS VERSION) --- */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding-top: 5rem;
+            margin-top: 5rem;
+            position: relative;
+        }
+        .footer-title {
+            color: var(--footer-heading);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-link {
+            color: var(--footer-text);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        .footer-link:hover {
+            color: var(--techaua-blue);
+            transform: translateX(5px);
+        }
+        .social-btn {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            color: white; text-decoration: none; transition: all 0.3s; margin-right: 8px;
+        }
+        .social-btn:hover { background: var(--techaua-blue); transform: translateY(-3px); }
+        .newsletter-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
+        .footer-bottom { background: rgba(0,0,0,0.2); padding: 1.5rem 0; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .back-to-top {
+            position: absolute; top: -25px; right: 30px; background: var(--techaua-blue);
+            color: white; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); transition: 0.3s;
+        }
+    </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">AUA LMS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                        {% if user.role == 'student' %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'student_dashboard' %}">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'student_gradebook' %}">Gradebook</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'student_certificates' %}">Certificates</a>
-                            </li>
-                        {% elif user.role == 'instructor' %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'instructor_dashboard' %}">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'student_gradebook' %}">Gradebook</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'student_certificates' %}">Certificates</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'analytics_dashboard' %}">Analytics</a>
-                            </li>
-                        {% elif user.role == 'admin' %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'analytics_dashboard' %}">Analytics</a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accessibility_settings' %}">Accessibility</a>
-                        </li>
-                        {% if unread_notifications > 0 %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'notifications_list' %}">
-                                    <i class="bi bi-bell"></i>
-                                    <span class="badge bg-danger">{{ unread_notifications }}</span>
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'notifications_list' %}">
-                                    <i class="bi bi-bell"></i>
-                                </a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">Register</a>
-                        </li>
+
+<body id="top">
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNavbar">
+    <div class="container-fluid px-4 px-lg-5"> 
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            <i class="bi bi-mortarboard-fill me-2 fs-2"></i>AUA LMS <span class="techaua-badge ms-2">PRO</span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="bi bi-list fs-1"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center" id="mainNav">
+                {% if user.is_authenticated %}
+                    {% if user.role == 'student' %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'student_dashboard' %}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'student_gradebook' %}">Grades</a></li>
+                    {% elif user.role == 'instructor' %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'instructor_dashboard' %}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'analytics_dashboard' %}">Analytics</a></li>
+                    {% elif user.role == 'admin' %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'admin_dashboard' %}">Control Panel</a></li>
                     {% endif %}
-                </ul>
+
+                    <li class="nav-item dropdown ms-lg-3">
+                        <a class="nav-link dropdown-toggle btn account-dropdown-btn rounded-pill" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-1"></i> {{ user.username|title }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 p-3 rounded-4 animate slideIn">
+                            <li class="px-3 py-2 text-muted small fw-bold text-uppercase border-bottom mb-2">Signed in as {{ user.username }}</li>
+                            <li><a class="dropdown-item py-2" href="{% url 'notification_preferences' %}"><i class="bi bi-bell me-2 text-primary"></i>Notifications</a></li>
+                            <li><a class="dropdown-item py-2" href="{% url 'accessibility_settings' %}"><i class="bi bi-eye me-2 text-primary"></i>Accessibility</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger py-2 fw-bold"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link px-3" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{% url 'course_list' %}">Courses</a></li>
+                    <li class="nav-item ms-lg-4"><a class="nav-link btn btn-outline-light px-4 rounded-pill border-2 fw-bold" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-sm btn-light text-primary ms-lg-2 px-4 rounded-pill fw-bold shadow-sm" href="{% url 'register' %}">Get Started</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-4 px-lg-5 main-content">
+    {% if messages %}
+        <div class="row mb-3 justify-content-center">
+            <div class="col-lg-8">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0 d-flex align-items-center rounded-3 mb-2" role="alert">
+                        <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% else %}bi-info-circle-fill{% endif %} me-3 fs-5"></i>
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-    </nav>
+    {% endif %}
 
-    <!-- Main Content -->
-    <div class="container-fluid main-content mt-4">
-        {% if messages %}
-            <div class="row">
-                <div class="col-12">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    {% endfor %}
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    <a href="#top" class="back-to-top" title="Back to Top"><i class="bi bi-arrow-up"></i></a>
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row g-5">
+            <div class="col-lg-4 col-md-6">
+                <div class="mb-4 d-flex align-items-center">
+                    <i class="bi bi-mortarboard-fill fs-3 me-2 text-white"></i>
+                    <span class="text-white fw-bold fs-4">AUA LMS</span>
+                </div>
+                <p class="mb-4 opacity-75 leading-relaxed">
+                    Pioneering digital education in Nigeria. We bridge the gap between talent and opportunity through world-class tech training, mentorship, and certification.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-btn" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="social-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
-        {% endif %}
 
-        {% block content %}
-        {% endblock %}
+            <div class="col-lg-2 col-md-6">
+                <h5 class="footer-title">Platform</h5>
+                <a href="{% url 'home' %}" class="footer-link">Home</a>
+                <a href="{% url 'course_list' %}" class="footer-link">Browse Courses</a>
+                <a href="#" class="footer-link">Instructors</a>
+                <a href="#" class="footer-link">Success Stories</a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Contact Us</h5>
+                <div class="d-flex mb-3">
+                    <i class="bi bi-geo-alt-fill text-primary me-3 mt-1"></i>
+                    <span>No. 12 Zaria Road,<br>Kano State, Nigeria</span>
+                </div>
+                <div class="d-flex mb-3">
+                    <i class="bi bi-telephone-fill text-primary me-3 mt-1"></i>
+                    <span>+234 800 123 4567</span>
+                </div>
+                <div class="d-flex">
+                    <i class="bi bi-envelope-fill text-primary me-3 mt-1"></i>
+                    <span>support@aualms.com</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Newsletter</h5>
+                <p class="small mb-3 opacity-75">Latest tech news & course updates.</p>
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control newsletter-input" placeholder="Your Email">
+                        <button class="btn btn-primary" type="button"><i class="bi bi-send-fill"></i></button>
+                    </div>
+                </form>
+                <a href="https://wa.me/2348001234567" class="btn btn-success w-100 fw-bold py-2 mt-2 shadow-sm rounded-pill">
+                    <i class="bi bi-whatsapp me-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p>&copy; 2026 AUA LMS. All rights reserved.</p>
+    <div class="footer-bottom">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0 opacity-75 small">
+                    &copy; {% now "Y" %} TechAUA. All rights reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-secondary small text-decoration-none me-3 hover-white">Privacy</a>
+                    <a href="#" class="text-secondary small text-decoration-none me-3 hover-white">Terms</a>
+                    <a href="#" class="text-secondary small text-decoration-none hover-white">Cookies</a>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Additional responsive scripts -->
-    <script>
-        // Touch-friendly enhancements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add touch-friendly class to buttons
-            const buttons = document.querySelectorAll('.btn');
-            buttons.forEach(button => {
-                button.classList.add('touch-friendly');
-            });
-            
-            // Enhance form inputs for mobile
-            const inputs = document.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                input.classList.add('touch-friendly');
-            });
-        });
-        
-        // Responsive image handling
-        window.addEventListener('resize', function() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                // Adjust card heights on mobile for better UX
-                if (window.innerWidth <= 768) {
-                    card.style.height = 'auto';
-                }
-            });
-        });
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('mainNavbar');
+        if (window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+    });
+</script>
 </body>
 </html>

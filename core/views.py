@@ -1,13 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.db.models import Q
-from django.shortcuts import redirect
 from .forms import CustomUserCreationForm
-from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, AccessibilityAudit, ScreenReaderContent, KeyboardShortcut
+from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, AccessibilityAudit, ScreenReaderContent, KeyboardShortcut, CustomUser
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -1431,8 +1430,32 @@ def student_certificates(request):
     return render(request, 'core/student_certificates.html', context)
 
 @login_required
-def instructor_certificates(request, course_pk):
-    """Show certificates for students in a specific course"""
+def instructor_certificates(request, course_pk=None):
+    """
+    Show certificates for students in a specific course OR list all courses.
+    FIXED: Handles case where no course_pk is provided (Sidebar click).
+    """
+    # CASE 1: No course selected (Sidebar click)
+    if course_pk is None:
+        if request.user.role != 'instructor':
+            return redirect('dashboard')
+        
+        # Calculate unread notifications
+        unread_notifications = Notification.objects.filter(
+            recipient=request.user,
+            is_read=False
+        ).count()
+
+        # Get all courses created by this instructor
+        courses = Course.objects.filter(instructor=request.user)
+        
+        # Render the list page so they can choose a course
+        return render(request, 'core/instructor_certificates_list.html', {
+            'courses': courses,
+            'unread_notifications': unread_notifications
+        })
+
+    # CASE 2: Specific course selected (Original Logic)
     course = get_object_or_404(Course, pk=course_pk)
     
     if request.user.role != 'instructor' or course.instructor != request.user:
