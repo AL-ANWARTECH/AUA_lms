@@ -222,13 +222,19 @@
             </div>
             
             <div>
-                {% if next_lesson %}
-                    <a href="{% url 'lesson_detail' next_lesson.pk %}" class="btn btn-primary">
-                        Next Lesson<i class="bi bi-arrow-right ms-2"></i>
-                    </a>
+                {% if is_completed %}
+                    {% if next_lesson %}
+                        <a href="{% url 'lesson_detail' next_lesson.pk %}" class="btn btn-primary">
+                            Next Lesson<i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'course_detail' course.pk %}" class="btn btn-success">
+                            Finish Course<i class="bi bi-check-lg ms-2"></i>
+                        </a>
+                    {% endif %}
                 {% else %}
-                    <a href="{% url 'course_detail' course.pk %}" class="btn btn-success">
-                        Finish Course<i class="bi bi-check-lg ms-2"></i>
+                    <a href="{% url 'complete_lesson' lesson.pk %}" class="btn btn-primary">
+                        Mark Complete & Next <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 {% endif %}
             </div>

@@ -15,5 +15,8 @@ urlpatterns = [
 
 # This is the CRITICAL part for images to work during development
 if settings.DEBUG:
+    # We must manually serve Media files (user uploads) in development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+    # Note: We do NOT need to add static() for STATIC_URL here.
+    # Django's runserver automatically finds your logo in the 'static' folder.

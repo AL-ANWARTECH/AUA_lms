@@ -10,7 +10,6 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'),
     ]
     
-    # --- UPDATED REGISTRATION FIELDS ---
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
     
     # Contact & Personal Info
@@ -26,8 +25,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
-# --- THE REST OF YOUR MODELS REMAIN UNCHANGED ---
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -57,7 +54,6 @@ class Course(models.Model):
     
     @property
     def lessons(self):
-        """Helper to access all lessons in the course flatly"""
         return Lesson.objects.filter(module__course=self).order_by('module__order', 'order')
 
 class Module(models.Model):
@@ -86,12 +82,10 @@ class Lesson(models.Model):
     title = models.CharField(max_length=200)
     content_type = models.CharField(max_length=10, choices=CONTENT_TYPES, default='text')
     
-    # Content Fields
-    content = models.TextField(blank=True)  # Rich text
+    content = models.TextField(blank=True)
     video_url = models.URLField(blank=True, null=True)
     file = models.FileField(upload_to='lesson_files/', blank=True, null=True)
     
-    # Metadata
     duration = models.IntegerField(help_text="Estimated duration in minutes", default=10)
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -188,7 +182,6 @@ class Enrollment(models.Model):
         return f"{self.student.username} - {self.course.title}"
     
     def progress_percentage(self):
-        """Calculate completion percentage based on actual lessons"""
         total_lessons = self.course.lessons.count()
         completed = self.completed_lessons.count()
         if total_lessons == 0:
@@ -323,6 +316,9 @@ class TopicTagging(models.Model):
 class Certificate(models.Model):
     enrollment = models.OneToOneField(Enrollment, on_delete=models.CASCADE, related_name='certificate')
     certificate_id = models.CharField(max_length=20, unique=True)
+    # --- NEW FIELD ---
+    full_name = models.CharField(max_length=255, help_text="The name as it appears on the certificate", blank=True)
+    # -----------------
     issued_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     
@@ -330,6 +326,11 @@ class Certificate(models.Model):
         if not self.certificate_id:
             import random, string
             self.certificate_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        
+        # Default to user's registered name if full_name isn't provided yet
+        if not self.full_name and self.enrollment:
+            self.full_name = self.enrollment.student.get_full_name() or self.enrollment.student.username
+            
         super().save(*args, **kwargs)
 
 class CertificateTemplate(models.Model):
@@ -362,7 +363,6 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     
-    # Optional Relations
     related_course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     related_module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True, blank=True)
     related_lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)

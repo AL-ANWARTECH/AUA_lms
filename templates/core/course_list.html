@@ -19,17 +19,20 @@
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
     
-    /* Thumbnail Area */
+    /* Thumbnail Area - UPDATED FOR FULL VIEW */
     .card-img-wrapper {
-        height: 180px;
+        height: 220px; /* Increased height to match Home page */
         position: relative;
         overflow: hidden;
         background-color: #f8f9fa;
+        display: flex; /* Centers the image */
+        align-items: center;
+        justify-content: center;
     }
     .course-thumb {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain; /* CHANGED: Shows full image without cropping */
         transition: transform 0.5s ease;
     }
     .course-card:hover .course-thumb {
@@ -48,6 +51,7 @@
         padding: 4px 10px;
         border-radius: 20px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 10; /* Ensures badge stays on top */
     }
 
     /* Filter Sidebar */
@@ -143,9 +147,9 @@
                                 {% if course.thumbnail %}
                                     <img src="{{ course.thumbnail.url }}" class="course-thumb" alt="{{ course.title }}">
                                 {% else %}
-                                    <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
+                                    <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted w-100">
                                         <div class="text-center">
-                                            <i class="bi bi-image fs-3 mb-1"></i>
+                                            <i class="bi bi-image fs-3 mb-1 opacity-50"></i>
                                             <p class="small mb-0">No Image</p>
                                         </div>
                                     </div>

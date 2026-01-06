@@ -115,7 +115,7 @@
             border: none;
         }
 
-        /* --- FOOTER STYLES (AS PER YOUR PREVIOUS VERSION) --- */
+        /* --- FOOTER STYLES --- */
         footer {
             background-color: var(--footer-bg);
             color: var(--footer-text);
@@ -167,7 +167,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNavbar">
     <div class="container-fluid px-4 px-lg-5"> 
         <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-            <i class="bi bi-mortarboard-fill me-2 fs-2"></i>AUA LMS <span class="techaua-badge ms-2">PRO</span>
+            <img src="{% static 'images/logo.png' %}" alt="AUA LMS Logo" height="50" class="me-2 rounded">
+            
+            <span>AUA LMS</span> 
+            <span class="techaua-badge ms-2">PRO</span>
         </a>
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -239,7 +242,7 @@
         <div class="row g-5">
             <div class="col-lg-4 col-md-6">
                 <div class="mb-4 d-flex align-items-center">
-                    <i class="bi bi-mortarboard-fill fs-3 me-2 text-white"></i>
+                    <img src="{% static 'images/logo.png' %}" alt="AUA LMS Logo" height="40" class="me-2">
                     <span class="text-white fw-bold fs-4">AUA LMS</span>
                 </div>
                 <p class="mb-4 opacity-75 leading-relaxed">
@@ -248,6 +251,9 @@
                 <div class="social-links">
                     <a href="#" class="social-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
                     <a href="#" class="social-btn" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+                    
+                    <a href="#" class="social-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    
                     <a href="#" class="social-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
                     <a href="#" class="social-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
                 </div>
@@ -263,17 +269,26 @@
 
             <div class="col-lg-3 col-md-6">
                 <h5 class="footer-title">Contact Us</h5>
+                
                 <div class="d-flex mb-3">
                     <i class="bi bi-geo-alt-fill text-primary me-3 mt-1"></i>
-                    <span>No. 12 Zaria Road,<br>Kano State, Nigeria</span>
+                    <span>No. 505 Kofar Dawanau, Beside Aliko Petroleum along Yusif Maitama Sule University Road, Kano State, Nigeria</span>
                 </div>
+                
                 <div class="d-flex mb-3">
                     <i class="bi bi-telephone-fill text-primary me-3 mt-1"></i>
-                    <span>+234 800 123 4567</span>
+                    <div class="d-flex flex-column">
+                        <span>+234 81 4939 7002</span>
+                        <span>+234 80 8882 4392</span>
+                    </div>
                 </div>
+                
                 <div class="d-flex">
                     <i class="bi bi-envelope-fill text-primary me-3 mt-1"></i>
-                    <span>support@aualms.com</span>
+                    <div class="d-flex flex-column">
+                        <span>info@techaua.com</span>
+                        <span>info.techaua@gmail.com</span>
+                    </div>
                 </div>
             </div>
 
@@ -287,7 +302,7 @@
                         <button class="btn btn-primary" type="button"><i class="bi bi-send-fill"></i></button>
                     </div>
                 </form>
-                <a href="https://wa.me/2348001234567" class="btn btn-success w-100 fw-bold py-2 mt-2 shadow-sm rounded-pill">
+                <a href="https://wa.me/2348149397002" class="btn btn-success w-100 fw-bold py-2 mt-2 shadow-sm rounded-pill">
                     <i class="bi bi-whatsapp me-2"></i> Chat on WhatsApp
                 </a>
             </div>

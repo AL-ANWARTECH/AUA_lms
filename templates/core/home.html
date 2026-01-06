@@ -74,9 +74,10 @@
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
 
-    /* Course Image Fixes */
+    /* --- UPDATED COURSE IMAGE STYLES --- */
+    /* This setup keeps the image full view but restricted size */
     .card-img-top-wrapper {
-        height: 180px;
+        height: 220px; /* 1. Restricts the size so it's not too large */
         overflow: hidden;
         background-color: #f8f9fa;
         display: flex;
@@ -88,7 +89,7 @@
     .course-img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain; /* 2. Ensures FULL view (no cropping) inside the box */
         transition: transform 0.5s ease;
     }
     .hover-card:hover .course-img { transform: scale(1.05); }

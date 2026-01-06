@@ -29,6 +29,9 @@ urlpatterns = [
     path('dashboard/instructor/', views.instructor_dashboard, name='instructor_dashboard'),
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
 
+    # --- User Profile ---
+    path('profile/', views.profile, name='profile'),
+
     # --- Course Management ---
     path('courses/', views.course_list, name='course_list'),
     path('course/create/', views.create_course, name='create_course'),
@@ -66,6 +69,9 @@ urlpatterns = [
     path('topic/<int:topic_pk>/post/create/', views.create_post, name='create_post'),
 
     # --- Certificates ---
+    # NEW CLAIM PATH
+    path('certificate/claim/<int:course_pk>/', views.claim_certificate, name='claim_certificate'),
+    
     path('certificate/<int:enrollment_pk>/', views.generate_certificate, name='generate_certificate'),
     path('certificates/student/', views.student_certificates, name='student_certificates'),
     path('certificates/instructor/', views.instructor_certificates, name='instructor_certificates'),
@@ -75,10 +81,7 @@ urlpatterns = [
 
     # --- Notifications ---
     path('notifications/', views.notifications_list, name='notifications_list'),
-    
-    # FIXED: Changed name from 'notification_preference' to 'notification_preferences'
     path('notifications/preferences/', views.notification_preference, name='notification_preferences'),
-    
     path('notifications/<int:notification_pk>/read/', views.mark_notification_read, name='mark_notification_read'),
     path('notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
 

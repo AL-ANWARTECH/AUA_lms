@@ -17,7 +17,6 @@ class CustomUserCreationForm(UserCreationForm):
         ('instructor', 'Instructor'),
     ]
     
-    # Standard Fields
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))
@@ -27,7 +26,6 @@ class CustomUserCreationForm(UserCreationForm):
     profile_picture = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select(attrs={'class': 'form-select', 'id': 'roleSelect'}))
 
-    # Instructor Only Fields (Hidden by JS on frontend for students)
     bio = forms.CharField(
         required=False, 
         label="Educational Background",
@@ -53,7 +51,6 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Style the username field which comes from parent class
         self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Username'})
 
 # --- 2. COURSE MANAGEMENT FORMS ---
@@ -260,3 +257,36 @@ class AccessibilitySettingsForm(forms.ModelForm):
             'audio_volume_level': forms.NumberInput(attrs={'class': 'form-range', 'type': 'range', 'min': 0, 'max': 100}),
             'preferred_font_size': forms.Select(attrs={'class': 'form-select'}),
         }
+
+# --- 6. USER PROFILE UPDATE FORM ---
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 'last_name', 'email', 'phone_number', 
+            'address', 'date_of_birth', 'profile_picture', 
+            'bio', 'portfolio_website'
+        ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'profile_picture': forms.FileInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'portfolio_website': forms.URLInput(attrs={'class': 'form-control'}),
+        }
+
+# --- 7. CERTIFICATE CLAIM FORM (NEW) ---
+class CertificateClaimForm(forms.Form):
+    full_name = forms.CharField(
+        max_length=200, 
+        label="Name on Certificate",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control form-control-lg', 
+            'placeholder': 'e.g. John Doe'
+        }),
+        help_text="Please verify the spelling. This is how it will appear on your certificate."
+    )

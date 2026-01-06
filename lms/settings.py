@@ -60,7 +60,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lms.wsgi.application'
-# Make sure your project folder is named 'lms'. If it is 'AUA_lms', change 'lms' below to 'AUA_lms'.
 ASGI_APPLICATION = 'lms.asgi.application' 
 
 # Channels Layer
@@ -92,23 +91,22 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC FILES (CSS, JS) ---
+# --- STATIC FILES (CSS, JS, Logos) ---
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# --- MEDIA FILES (Images, Uploads) ---
+# --- MEDIA FILES (User Uploads, Course Thumbnails) ---
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # --- AUTHENTICATION ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.CustomUser'
 
-# We use 'home' because our home view handles the logic to send 
-# students to the student dash and instructors to the instructor dash.
+# Login/Logout redirects
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'

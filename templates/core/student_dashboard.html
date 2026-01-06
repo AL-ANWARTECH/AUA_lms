@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %} 
 
 {% block title %}My Learning - AUA LMS{% endblock %}
 
@@ -7,10 +8,22 @@
     /* Course Card Hover Effect */
     .course-card {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none; /* Removes underline from wrapped links */
+        color: inherit;
     }
     .course-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* IMAGE FIX: Matches your Home/Detail page style */
+    .dashboard-course-img {
+        height: 180px;             /* Fixed standard height */
+        width: 100%;
+        object-fit: contain;       /* Shows full logo without cropping */
+        background-color: #ffffff; /* Clean white background */
+        padding: 15px;             /* Breathing room for the logo */
+        border-bottom: 1px solid #f0f0f0;
     }
 </style>
 
@@ -42,23 +55,26 @@
                 {% for enrollment in enrollments %}
                     <div class="col-md-6">
                         <div class="card h-100 border-0 shadow-sm course-card">
-                            <div class="position-relative">
+                            <a href="{% url 'course_detail' enrollment.course.pk %}#curriculum" class="position-relative d-block text-decoration-none">
                                 {% if enrollment.course.thumbnail %}
-                                    <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top" alt="{{ enrollment.course.title }}" style="height: 160px; object-fit: cover;">
+                                    <img src="{{ enrollment.course.thumbnail.url }}" class="card-img-top dashboard-course-img" alt="{{ enrollment.course.title }}">
                                 {% else %}
-                                    <div class="bg-light d-flex align-items-center justify-content-center text-muted" style="height: 160px;">
+                                    <div class="bg-light d-flex align-items-center justify-content-center text-muted border-bottom" style="height: 180px;">
                                         <i class="bi bi-card-image fs-1 opacity-50"></i>
                                     </div>
                                 {% endif %}
-                                <span class="badge bg-white text-dark position-absolute top-0 end-0 m-2 shadow-sm">
+                                <span class="badge bg-white text-dark position-absolute top-0 end-0 m-2 shadow-sm border">
                                     {{ enrollment.course.category.name|default:"Course" }}
                                 </span>
-                            </div>
+                            </a>
 
                             <div class="card-body d-flex flex-column p-4">
-                                <h5 class="card-title fw-bold text-truncate mb-1" title="{{ enrollment.course.title }}">
-                                    {{ enrollment.course.title }}
-                                </h5>
+                                <a href="{% url 'course_detail' enrollment.course.pk %}#curriculum" class="text-decoration-none text-dark">
+                                    <h5 class="card-title fw-bold text-truncate mb-1" title="{{ enrollment.course.title }}">
+                                        {{ enrollment.course.title }}
+                                    </h5>
+                                </a>
+                                
                                 <p class="small text-muted mb-3">
                                     <i class="bi bi-person-circle me-1"></i> {{ enrollment.course.instructor.username }}
                                 </p>
@@ -75,7 +91,7 @@
                                         </div>
                                     </div>
                                     
-                                    <a href="{% url 'course_detail' enrollment.course.pk %}" class="btn btn-primary w-100 fw-bold shadow-sm">
+                                    <a href="{% url 'course_detail' enrollment.course.pk %}#curriculum" class="btn btn-primary w-100 fw-bold shadow-sm">
                                         {% if enrollment.progress_percentage >= 100 %}
                                             Review Course
                                         {% elif enrollment.progress_percentage > 0 %}
@@ -143,7 +159,7 @@
                     <div><i class="bi bi-bell text-info me-2"></i> Notifications</div>
                     <i class="bi bi-chevron-right small text-muted"></i>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                <a href="{% url 'profile' %}" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
                     <div><i class="bi bi-person-gear text-secondary me-2"></i> Edit Profile</div>
                     <i class="bi bi-chevron-right small text-muted"></i>
                 </a>
