@@ -5,8 +5,19 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.db.models import Q
-from .forms import CustomUserCreationForm, UserUpdateForm, ReportGenerationForm, DashboardWidgetForm, AccessibilitySettingsForm, QuizForm, QuestionForm, AnswerOptionFormSet, LessonForm, ModuleForm, CourseForm, AssignmentForm, CertificateTemplateForm, NotificationPreferenceForm, CertificateClaimForm
-from .models import Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, Topic, Post, TopicTag, Certificate, CertificateTemplate, Notification, NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, AccessibilityAudit, ScreenReaderContent, KeyboardShortcut, CustomUser
+from .forms import (
+    CustomUserCreationForm, UserUpdateForm, ReportGenerationForm, DashboardWidgetForm, 
+    AccessibilitySettingsForm, QuizForm, QuestionForm, AnswerOptionFormSet, LessonForm, 
+    ModuleForm, CourseForm, AssignmentForm, CertificateTemplateForm, NotificationPreferenceForm, 
+    CertificateClaimForm
+)
+from .models import (
+    Course, Category, Module, Enrollment, Lesson, Quiz, Question, AnswerOption, 
+    QuizAttempt, QuizAnswer, Assignment, Submission, Grade, CourseGrade, Forum, 
+    Topic, Post, TopicTag, Certificate, CertificateTemplate, Notification, 
+    NotificationPreference, Analytics, Report, DashboardWidget, AccessibilitySettings, 
+    AccessibilityAudit, ScreenReaderContent, KeyboardShortcut, CustomUser
+)
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -451,7 +462,7 @@ def lesson_detail(request, pk):
     is_completed = enrollment.completed_lessons.filter(pk=pk).exists()
     completed_lesson_ids = list(enrollment.completed_lessons.values_list('pk', flat=True))
 
-    # Calculate Previous and Next lessons
+    # Calculate Previous and Next lessons across all modules
     all_lessons = []
     for module in course.modules.order_by('order'):
         all_lessons.extend(module.lessons.order_by('order'))
@@ -495,6 +506,17 @@ def complete_lesson(request, pk):
     # Mark as completed
     enrollment.completed_lessons.add(lesson)
     
+    # Create notification (optional)
+    create_notification(
+        recipient=request.user,
+        title=f"Lesson completed: {lesson.title}",
+        message=f"You have completed the lesson '{lesson.title}' in course '{course.title}'.",
+        notification_type='course_update',
+        related_course=course,
+        related_module=lesson.module,
+        related_lesson=lesson
+    )
+
     # Find Next Lesson logic
     next_lesson = Lesson.objects.filter(
         module=lesson.module,
@@ -1262,7 +1284,7 @@ def claim_certificate(request, course_pk):
 
 @login_required
 def generate_certificate(request, enrollment_pk):
-    """Download the PDF certificate with QR Code and CEO Name"""
+    """Download the PDF certificate with Dynamic Logo, Signature, QR Code and CEO Name"""
     enrollment = get_object_or_404(Enrollment, pk=enrollment_pk)
     
     if request.user != enrollment.student and request.user != enrollment.course.instructor:
@@ -1277,83 +1299,114 @@ def generate_certificate(request, enrollment_pk):
 
     # --- PDF GENERATION SETUP ---
     buffer = BytesIO()
-    # Use Landscape for standard certificate look
+    # Use Landscape
     p = canvas.Canvas(buffer, pagesize=landscape(letter))
     width, height = landscape(letter)
     
-    # 1. Background Image
+    # 1. Load Template
     try:
         template = enrollment.course.certificate_template
     except CertificateTemplate.DoesNotExist:
         template = CertificateTemplate.objects.create(course=enrollment.course)
 
+    # 2. Draw Background (If uploaded)
     if template.background_image:
         try:
+            # Draws the full template background (Logos, borders, fixed text)
             p.drawImage(template.background_image.path, 0, 0, width=width, height=height)
         except:
             pass
-    else:
-        # Fallback Border if no image
+    
+    # --- IF NO BACKGROUND, DRAW FALLBACK BORDER ---
+    if not template.background_image:
+        # Outer Border (Blue)
         p.setStrokeColor(HexColor('#0d6efd'))
-        p.setLineWidth(5)
+        p.setLineWidth(12)
         p.rect(20, 20, width-40, height-40)
+        # Inner Border (Black)
         p.setStrokeColor(HexColor('#000000'))
-        p.setLineWidth(1)
-        p.rect(25, 25, width-50, height-50)
+        p.setLineWidth(2)
+        p.rect(35, 35, width-70, height-70)
+        # Fallback Title
+        p.setFillColor(HexColor('#000000'))
+        p.setFont("Helvetica-Bold", 24)
+        p.drawCentredString(width/2.0, height - 1.5*inch, "AUA TECHNOLOGIES LIMITED")
 
-    # 2. Header: AUA TECHNOLOGIES LIMITED
-    p.setFillColor(HexColor('#333333'))
-    p.setFont("Helvetica-Bold", 30)
-    p.drawCentredString(width/2.0, height - 1.5*inch, "AUA TECHNOLOGIES LIMITED")
+    # --- 3. DRAW LOGO (Dynamic) ---
+    if template.logo:
+        try:
+            # Position: Top Left Area
+            p.drawImage(template.logo.path, 50, height - 120, width=120, height=80, mask='auto', preserveAspectRatio=True)
+        except:
+            pass
+
+    # --- 4. DRAW SIGNATURE (Dynamic) ---
+    if template.signature:
+        try:
+            # Position: Bottom Leftish/Center (Above CEO Name)
+            # Adjust coordinates (x=100, y=115) to fit nicely above the line
+            p.drawImage(template.signature.path, 100, 115, width=150, height=60, mask='auto', preserveAspectRatio=True)
+        except:
+            pass
+
+    # --- TEXT OVERLAYS ---
     
-    # 3. Title: CERTIFICATE OF COMPLETION
-    p.setFillColor(HexColor('#0d6efd')) # Blue Color
+    # Certificate Title
+    p.setFillColor(HexColor('#0d6efd')) # Blue
     p.setFont("Helvetica-Bold", 36)
-    p.drawCentredString(width/2.0, height - 2.5*inch, "CERTIFICATE OF COMPLETION")
+    p.drawCentredString(width/2.0, height - 2.5*inch, template.title)
     
-    # 4. Intro Text
-    p.setFillColor(HexColor('#555555'))
-    p.setFont("Helvetica", 14)
-    p.drawCentredString(width/2.0, height - 3.2*inch, "This is to certify that")
+    # Intro
+    p.setFillColor(HexColor('#555555')) # Dark Gray
+    p.setFont("Helvetica", 16)
+    p.drawCentredString(width/2.0, height - 3.2*inch, template.description)
     
-    # 5. Student Name (Dynamic)
-    p.setFillColor(HexColor('#000000'))
+    # STUDENT NAME (Centered & Bold)
+    p.setFillColor(HexColor('#000000')) # Black
     p.setFont("Helvetica-Bold", 32)
-    p.drawCentredString(width/2.0, height - 4.0*inch, certificate.full_name) 
+    p.drawCentredString(width/2.0, height - 4.2*inch, certificate.full_name) 
+    
+    # Underline Name
     p.setLineWidth(1)
-    p.line(width/2.0 - 150, height - 4.1*inch, width/2.0 + 150, height - 4.1*inch) # Underline
-    
-    # 6. Body Text
-    p.setFillColor(HexColor('#555555'))
+    p.setStrokeColor(HexColor('#000000'))
+    p.line(width/2.0 - 200, height - 4.3*inch, width/2.0 + 200, height - 4.3*inch)
+
+    # Body Text
+    p.setFillColor(HexColor('#555555')) # Dark Gray
     p.setFont("Helvetica", 14)
-    text_y = height - 5.0*inch
-    p.drawCentredString(width/2.0, text_y, "In recognition of successfully completing the prescribed")
-    p.drawCentredString(width/2.0, text_y - 20, f"training module in {enrollment.course.title} and having met all")
     
-    # Date formatting
     date_str = certificate.issued_at.strftime('%d/%m/%Y')
-    p.drawCentredString(width/2.0, text_y - 40, f"requirements for the award, issued on {date_str}.")
     
-    # 7. CEO Name and Signature
+    line1 = "\"In recognition of successfully completing the prescribed"
+    line2 = f"training module in {enrollment.course.title} and having met all"
+    line3 = f"requirements for the award, issued on {date_str}.\""
+    
+    text_start_y = height - 5.0*inch
+    p.drawCentredString(width/2.0, text_start_y, line1)
+    p.drawCentredString(width/2.0, text_start_y - 25, line2)
+    p.drawCentredString(width/2.0, text_start_y - 50, line3)
+    
+    # CEO Name and Title
     p.setFillColor(HexColor('#000000'))
     p.setFont("Helvetica-Bold", 14)
-    # Bottom Left
-    p.drawString(100, 100, "Musab Abbas Sani")
+    
+    # Signature Line
     p.setLineWidth(1)
-    p.line(100, 115, 250, 115) # Signature Line
-    p.setFont("Helvetica", 10)
-    p.drawString(100, 85, "CEO, AUA Technologies")
+    p.line(100, 115, 250, 115) 
+    
+    # Name & Title
+    p.drawString(100, 100, "MUSAB ABBAS SANI")
+    p.setFont("Helvetica", 12)
+    p.drawString(100, 85, "CEO")
 
-    # 8. QR Code Generation
-    qr_data = f"CERTIFICATE VALIDATION\nID: {certificate.certificate_id}\nName: {certificate.full_name}\nCourse: {enrollment.course.title}\nDate: {date_str}\nIssued by: AUA Technologies"
+    # QR Code (Bottom Right)
+    qr_data = f"VERIFIED AUA CERTIFICATE\nName: {certificate.full_name}\nCourse: {enrollment.course.title}\nID: {certificate.certificate_id}\nDate: {date_str}\nSigned: MUSAB ABBAS SANI"
     qr = qrcode.make(qr_data)
     
-    # Save QR to a temporary memory buffer
     qr_buffer = BytesIO()
     qr.save(qr_buffer, format="PNG")
     qr_buffer.seek(0)
     
-    # Draw QR Code on PDF (Bottom Right)
     qr_image = ImageReader(qr_buffer)
     p.drawImage(qr_image, width - 180, 50, width=100, height=100)
     
@@ -1370,6 +1423,11 @@ def generate_certificate(request, enrollment_pk):
     response['Content-Disposition'] = f'filename="certificate_{certificate.certificate_id}.pdf"'
     
     return response
+
+# ... (Keep remaining views: student_certificates, instructor_certificates, etc.) ...
+# Note: The rest of the file remains as you provided, ensure you keep the other views below generate_certificate.
+# For brevity in this response, I'm confirming the generate_certificate logic is the key change.
+# Please ensure you copy the entire file content if you are replacing the whole file.
 
 @login_required
 def student_certificates(request):

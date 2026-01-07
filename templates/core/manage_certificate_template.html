@@ -4,16 +4,18 @@
 
 {% block content %}
 <style>
-    /* Upload Zone */
+    /* --- Upload Zone Styling --- */
     .upload-zone {
         border: 2px dashed #dee2e6;
         border-radius: 8px;
-        padding: 1.5rem;
+        padding: 1rem;
         text-align: center;
         background: #f8f9fa;
         cursor: pointer;
         transition: all 0.2s;
         position: relative;
+        margin-bottom: 10px;
+        overflow: hidden;
     }
     .upload-zone:hover {
         border-color: #0d6efd;
@@ -24,16 +26,24 @@
         top: 0; left: 0; width: 100%; height: 100%;
         opacity: 0;
         cursor: pointer;
+        z-index: 10;
+    }
+    .upload-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6c757d;
+        display: block;
+        margin-bottom: 5px;
     }
 
-    /* Certificate Preview Canvas */
+    /* --- Preview Canvas --- */
     .cert-preview-container {
         position: relative;
         width: 100%;
-        padding-top: 70.7%; /* Aspect Ratio for A4 Landscape approx */
+        padding-top: 70.7%; /* A4 Landscape Aspect Ratio */
         background-color: white;
         box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        border: 10px solid #333;
+        border: 1px solid #ddd;
         overflow: hidden;
     }
     
@@ -51,19 +61,100 @@
         background-repeat: no-repeat;
     }
 
-    /* Mock Elements */
-    .cert-logo-mock {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 2rem;
-        opacity: 0.8;
+    /* --- Certificate Text Elements (New Classes to replace Inline Styles) --- */
+    .cert-title-text {
+        font-weight: 800; 
+        margin-bottom: 10px;
     }
+    
+    .cert-body-text {
+        font-size: 1.1rem; 
+        max-width: 90%; 
+        margin: 0 auto;
+    }
+
+    .cert-text-container {
+        margin-top: 20px;
+        width: 80%;
+    }
+
     .cert-student-name {
-        font-family: 'Great Vibes', cursive, serif; /* Example styling */
-        font-size: 3rem;
-        margin: 1rem 0;
-        border-bottom: 2px solid;
+        font-family: serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 1.5rem 0;
+        border-bottom: 2px solid #000;
         padding: 0 2rem;
+        display: inline-block;
+        min-width: 300px;
+    }
+
+    /* --- Graphics & Signatures --- */
+    .cert-logo-mock {
+        position: absolute;
+        top: 40px;
+        left: 50px;
+        width: 120px;
+        height: auto;
+        object-fit: contain;
+    }
+    
+    .cert-signature-mock {
+        position: absolute;
+        bottom: 100px;
+        left: 100px;
+        width: 150px;
+        height: auto;
+        object-fit: contain;
+    }
+    
+    .cert-signature-line {
+        position: absolute;
+        bottom: 90px;
+        left: 100px;
+        width: 200px;
+        border-top: 2px solid #000;
+    }
+    .cert-ceo-name {
+        position: absolute;
+        bottom: 70px;
+        left: 100px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        text-align: left;
+    }
+    .cert-ceo-title {
+        position: absolute;
+        bottom: 55px;
+        left: 100px;
+        font-size: 0.8rem;
+    }
+    
+    /* --- QR Code Area --- */
+    .cert-qr-mock {
+        position: absolute; 
+        bottom: 50px; 
+        right: 50px; 
+        text-align: right;
+    }
+    
+    .cert-qr-box {
+        width: 80px; 
+        height: 80px; 
+        background: #eee; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        margin-left: auto;
+    }
+    
+    .cert-qr-label {
+        font-size: 0.7rem;
+    }
+    
+    /* Sticky offset for the preview card */
+    .sticky-offset-top {
+        top: 100px;
     }
 </style>
 
@@ -85,7 +176,7 @@
     <div class="col-lg-5 mb-4">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3">
-                <h5 class="fw-bold mb-0"><i class="bi bi-sliders me-2"></i>Settings</h5>
+                <h5 class="fw-bold mb-0"><i class="bi bi-sliders me-2"></i>Configuration</h5>
             </div>
             <div class="card-body p-4">
                 <form method="post" enctype="multipart/form-data" id="certForm">
@@ -102,21 +193,47 @@
                         <div class="form-text">Example: "For successfully completing the course..."</div>
                     </div>
 
+                    <hr class="text-muted opacity-25">
+                    
+                    <h6 class="fw-bold text-primary mb-3">Graphics & Assets</h6>
+
                     <div class="mb-3">
-                        <label class="form-label fw-bold small text-secondary">Background Image</label>
-                        <div class="upload-zone" id="uploadZone">
-                            <i class="bi bi-image fs-1 text-muted mb-2"></i>
-                            <p class="mb-0 fw-bold small text-dark">Click to upload background</p>
-                            <small class="text-muted">Recommended: 1600x1200px</small>
+                        <span class="upload-label">Background Image</span>
+                        <div class="upload-zone">
+                            <i class="bi bi-image fs-4 text-muted"></i>
+                            <span class="ms-2 small">Upload Background</span>
                             {{ form.background_image }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-6 mb-3">
+                            <span class="upload-label">Company Logo</span>
+                            <div class="upload-zone">
+                                <i class="bi bi-star fs-4 text-muted"></i>
+                                <span class="ms-2 small">Upload Logo</span>
+                                {{ form.logo }}
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <span class="upload-label">CEO Signature</span>
+                            <div class="upload-zone">
+                                <i class="bi bi-pen fs-4 text-muted"></i>
+                                <span class="ms-2 small">Upload Sig</span>
+                                {{ form.signature }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="text-muted opacity-25">
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
                             <label class="form-label fw-bold small text-secondary">Text Color</label>
                             <div class="input-group">
-                                <span class="input-group-text p-1"><input type="color" class="form-control-color border-0 p-0" id="colorPickerWrapper" value="#333333"></span>
+                                <span class="input-group-text p-1">
+                                    <input type="color" class="form-control-color border-0 p-0" id="colorPickerWrapper" value="#333333" aria-label="Color Picker">
+                                </span>
                                 {{ form.text_color }}
                             </div>
                         </div>
@@ -128,12 +245,12 @@
 
                     <div class="mb-4 form-check form-switch">
                         {{ form.is_active }}
-                        <label class="form-check-label fw-bold" for="{{ form.is_active.id_for_label }}">Template is Active</label>
+                        <label class="form-check-label fw-bold" for="{{ form.is_active.id_for_label }}">Activate Template</label>
                     </div>
 
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary fw-bold">
-                            <i class="bi bi-save me-2"></i>Save Design
+                            <i class="bi bi-save me-2"></i> Save Design
                         </button>
                         <a href="{% url 'instructor_certificates' %}" class="btn btn-light text-muted">Cancel</a>
                     </div>
@@ -143,7 +260,7 @@
     </div>
 
     <div class="col-lg-7">
-        <div class="card border-0 shadow-sm bg-light">
+        <div class="card border-0 shadow-sm bg-light sticky-top sticky-offset-top">
             <div class="card-header bg-transparent border-0 py-3 d-flex justify-content-between">
                 <h5 class="fw-bold mb-0 text-secondary"><i class="bi bi-eye me-2"></i>Live Preview</h5>
                 <span class="badge bg-secondary">Draft Mode</span>
@@ -152,29 +269,44 @@
                 
                 <div class="cert-preview-container">
                     <div class="cert-content" id="previewCanvas" 
-                         style="{% if template.background_image %}background-image: url('{{ template.background_image.url }}');{% endif %}">
+                         {% if template.background_image %}style="background-image: url('{{ template.background_image.url }}');"{% endif %}>
                         
-                        <div class="cert-logo-mock" id="prevLogo">AUA LMS</div>
+                        <img id="prevLogoImg" 
+                             src="{% if template.logo %}{{ template.logo.url }}{% endif %}" 
+                             alt="Company Logo"
+                             class="cert-logo-mock" 
+                             {% if not template.logo %}style="display:none;"{% endif %}>
 
-                        <h1 id="prevTitle" style="font-weight: 800; margin-bottom: 10px;">{{ form.title.value|default:"Certificate of Completion" }}</h1>
-                        
-                        <p id="prevBody" style="font-size: 1.1rem; max-width: 80%;">{{ form.description.value|default:"This acknowledges that the student has successfully completed the curriculum." }}</p>
+                        <div class="cert-text-container">
+                            <h1 id="prevTitle" class="cert-title-text">{{ form.title.value|default:"CERTIFICATE OF COMPLETION" }}</h1>
+                            
+                            <p id="prevBody" class="cert-body-text">{{ form.description.value|default:"This acknowledges that the student has successfully completed the curriculum." }}</p>
 
-                        <div class="cert-student-name" id="prevName">John Doe</div>
-                        
-                        <div class="mt-4 row w-100 justify-content-around">
-                            <div class="col-4 border-top border-dark pt-2">
-                                <small>Date Issued</small>
-                            </div>
-                            <div class="col-4 border-top border-dark pt-2">
-                                <small>Instructor Signature</small>
-                            </div>
+                            <div class="cert-student-name" id="prevName">Student Name</div>
                         </div>
+                        
+                        <img id="prevSigImg" 
+                             src="{% if template.signature %}{{ template.signature.url }}{% endif %}" 
+                             alt="CEO Signature"
+                             class="cert-signature-mock" 
+                             {% if not template.signature %}style="display:none;"{% endif %}>
+                        
+                        <div class="cert-signature-line"></div>
+                        <div class="cert-ceo-name">MUSAB ABBAS SANI</div>
+                        <div class="cert-ceo-title">CEO</div>
+                        
+                        <div class="cert-qr-mock">
+                            <div class="cert-qr-box">
+                                <i class="bi bi-qr-code fs-1 text-dark opacity-50"></i>
+                            </div>
+                            <small class="d-block mt-1 text-muted cert-qr-label">ID: 12345ABC</small>
+                        </div>
+
                     </div>
                 </div>
 
                 <div class="text-center mt-3 text-muted small">
-                    * This is an approximation. Final PDF output may vary slightly.
+                    <i class="bi bi-info-circle me-1"></i> This preview approximates the final PDF layout.
                 </div>
             </div>
         </div>
@@ -185,61 +317,77 @@
     document.addEventListener("DOMContentLoaded", function() {
         // Elements
         const titleInput = document.querySelector('input[name="title"]');
-        const descInput = document.querySelector('textarea[name="description"]'); // or input
+        const descInput = document.querySelector('textarea[name="description"]');
         const colorInput = document.querySelector('input[name="text_color"]');
         const colorPicker = document.getElementById('colorPickerWrapper');
-        const bgInput = document.querySelector('input[name="background_image"]');
         
+        // Image Inputs
+        const bgInput = document.querySelector('input[name="background_image"]');
+        const logoInput = document.querySelector('input[name="logo"]');
+        const sigInput = document.querySelector('input[name="signature"]');
+        
+        // Preview Elements
         const prevTitle = document.getElementById('prevTitle');
         const prevBody = document.getElementById('prevBody');
         const prevCanvas = document.getElementById('previewCanvas');
         const prevName = document.getElementById('prevName');
-        const prevLogo = document.getElementById('prevLogo');
+        const prevLogoImg = document.getElementById('prevLogoImg');
+        const prevSigImg = document.getElementById('prevSigImg');
 
-        // Helper: Apply color
-        function applyColor(color) {
-            prevTitle.style.color = color;
-            prevBody.style.color = color;
-            prevName.style.borderColor = color;
-            prevName.style.color = color;
-            prevLogo.style.color = color;
-            
-            // Update text inputs
-            colorInput.value = color;
-            colorPicker.value = color;
-        }
-
-        // 1. Text Listeners
-        titleInput.addEventListener('input', (e) => prevTitle.innerText = e.target.value || "Certificate Title");
+        // 1. Text Update Listeners
+        if(titleInput) titleInput.addEventListener('input', (e) => prevTitle.innerText = e.target.value || "Certificate Title");
         if(descInput) {
             descInput.addEventListener('input', (e) => prevBody.innerText = e.target.value || "Certificate Body Text");
         }
 
-        // 2. Color Sync
-        colorInput.addEventListener('input', (e) => applyColor(e.target.value));
-        colorPicker.addEventListener('input', (e) => applyColor(e.target.value));
-        
-        // Initial Color Set
-        if(colorInput.value) applyColor(colorInput.value);
-
-        // 3. Image Upload Preview
-        bgInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    prevCanvas.style.backgroundImage = `url('${e.target.result}')`;
-                }
-                reader.readAsDataURL(file);
+        // 2. Color Sync Logic
+        function applyColor(color) {
+            if(prevTitle) prevTitle.style.color = color;
+            if(prevBody) prevBody.style.color = color;
+            if(prevName) {
+                prevName.style.borderColor = color;
+                prevName.style.color = color;
             }
+            if(colorInput) colorInput.value = color;
+            if(colorPicker) colorPicker.value = color;
+        }
+        
+        if(colorInput) colorInput.addEventListener('input', (e) => applyColor(e.target.value));
+        if(colorPicker) colorPicker.addEventListener('input', (e) => applyColor(e.target.value));
+        
+        // Apply initial color if set
+        if(colorInput && colorInput.value) applyColor(colorInput.value);
+
+        // 3. Image Preview Logic
+        function readURL(input, targetElement, isBackground=false) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    if(isBackground) {
+                        targetElement.style.backgroundImage = `url('${e.target.result}')`;
+                    } else {
+                        targetElement.src = e.target.result;
+                        targetElement.style.display = 'block';
+                    }
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 4. Attach Image Listeners
+        if(bgInput) bgInput.addEventListener('change', function() { readURL(this, prevCanvas, true); });
+        if(logoInput) logoInput.addEventListener('change', function() { readURL(this, prevLogoImg, false); });
+        if(sigInput) sigInput.addEventListener('change', function() { readURL(this, prevSigImg, false); });
+        
+        // 5. Bootstrap Styling Fix for File Inputs
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        fileInputs.forEach(input => {
+            input.classList.remove('form-control'); 
         });
         
-        // Bootstrap styling for inputs
-        const inputs = document.querySelectorAll('input[type="text"], textarea, input[type="number"]');
-        inputs.forEach(i => i.classList.add('form-control'));
-        
-        const fileInput = document.querySelector('input[type="file"]');
-        if(fileInput) fileInput.classList.remove('form-control'); // Allow custom styling
+        // Add form-control to text inputs just in case
+        const textInputs = document.querySelectorAll('input[type="text"], textarea, input[type="number"]');
+        textInputs.forEach(i => i.classList.add('form-control'));
     });
 </script>
 {% endblock %}

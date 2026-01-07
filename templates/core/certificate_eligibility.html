@@ -4,13 +4,14 @@
 
 {% block content %}
 <style>
-    /* Circular Progress Chart */
+    /* --- Circular Progress Chart --- */
     .progress-circle {
         width: 160px;
         height: 160px;
         border-radius: 50%;
+        /* Variables are now set via ID in the specific style block below */
         background: conic-gradient(
-            {% if is_eligible %}#198754{% else %}#0d6efd{% endif %} {{ progress }}%, 
+            var(--progress-color, #0d6efd) var(--progress-value, 0%), 
             #e9ecef 0
         );
         display: flex;
@@ -21,6 +22,7 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         transition: transform 0.3s ease;
     }
+    
     .progress-circle::before {
         content: "";
         width: 130px;
@@ -29,6 +31,7 @@
         border-radius: 50%;
         position: absolute;
     }
+    
     .progress-value {
         position: relative;
         font-size: 2.5rem;
@@ -36,6 +39,7 @@
         color: #343a40;
         z-index: 1;
     }
+    
     .progress-label {
         position: absolute;
         bottom: 35px;
@@ -46,16 +50,18 @@
         font-weight: 600;
     }
 
-    /* Certificate Preview Icon */
+    /* --- Certificate Icons --- */
     .cert-preview {
         font-size: 5rem;
         color: #ffc107;
         transition: all 0.3s ease;
     }
+    
     .cert-locked {
         filter: grayscale(100%) opacity(0.5);
         position: relative;
     }
+    
     .lock-icon {
         position: absolute;
         top: 50%;
@@ -69,13 +75,20 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* Success Animation */
+    /* --- Animations --- */
     @keyframes popIn {
         0% { transform: scale(0.8); opacity: 0; }
         100% { transform: scale(1); opacity: 1; }
     }
+    
     .success-container {
         animation: popIn 0.5s ease-out;
+    }
+    
+    /* State Modifiers */
+    .border-success-thick {
+        border-color: #198754 !important;
+        border-width: 2px !important;
     }
 </style>
 
@@ -92,7 +105,15 @@
                     <div class="card-body p-5 text-center">
                         <h5 class="fw-bold mb-4">Current Progress</h5>
                         
-                        <div class="progress-circle mb-4">
+                        {# Dynamic style block to avoid inline style attribute error #}
+                        <style>
+                            #certificate-progress {
+                                --progress-value: {{ progress|floatform:0 }}%;
+                                --progress-color: {% if is_eligible %}#198754{% else %}#0d6efd{% endif %};
+                            }
+                        </style>
+                        
+                        <div id="certificate-progress" class="progress-circle mb-4">
                             <span class="progress-value">{{ progress|floatform:0 }}%</span>
                             <span class="progress-label">Complete</span>
                         </div>
@@ -104,7 +125,7 @@
                         {% else %}
                             <div class="alert alert-light border">
                                 <i class="bi bi-info-circle me-2 text-primary"></i>
-                                You need <strong>{{ 80|add:progress|stringformat:"f" }}%</strong> to qualify (80% required).
+                                Requirement: <strong>80% Completion</strong>
                             </div>
                             <div class="d-grid">
                                 <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary rounded-pill">
@@ -117,7 +138,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-sm {% if is_eligible %}border-success border-2{% endif %}">
+                <div class="card h-100 border-0 shadow-sm {% if is_eligible %}border-success-thick{% endif %}">
                     <div class="card-body p-5 text-center d-flex flex-column justify-content-center">
                         
                         {% if is_eligible %}
@@ -129,12 +150,9 @@
                                 <p class="text-muted mb-4">You have officially completed this course. Your certificate is ready for download.</p>
                                 
                                 <div class="d-grid gap-2">
-                                    <a href="{% url 'generate_certificate' enrollment.pk %}" class="btn btn-success btn-lg shadow-sm">
-                                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>Download Certificate
+                                    <a href="{% url 'claim_certificate' course.pk %}" class="btn btn-success btn-lg shadow-sm">
+                                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>Claim Certificate
                                     </a>
-                                    <button class="btn btn-outline-success">
-                                        <i class="bi bi-share-fill me-2"></i>Share Achievement
-                                    </button>
                                 </div>
                             </div>
                         {% else %}

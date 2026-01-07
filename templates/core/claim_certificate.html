@@ -3,44 +3,115 @@
 {% block title %}Claim Certificate - {{ course.title }}{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center min-vh-50 align-items-center">
+<style>
+    .claim-card {
+        border-top: 5px solid #0d6efd; /* TechAUA Blue */
+        transition: transform 0.3s ease;
+    }
+    .claim-card:hover {
+        transform: translateY(-5px);
+    }
+    .trophy-container {
+        position: relative;
+        display: inline-block;
+    }
+    .trophy-icon {
+        color: #ffc107; /* Warning/Gold color */
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        animation: pulse-gold 2s infinite;
+    }
+    
+    /* New classes to replace inline styles */
+    .claim-container {
+        min-height: 70vh;
+    }
+    .claim-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    @keyframes pulse-gold {
+        0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255, 193, 7, 0)); }
+        50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.4)); }
+        100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255, 193, 7, 0)); }
+    }
+
+    /* Ensure the Django form input looks good even without widget tweaks */
+    #certNameForm input[type="text"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+        border: 2px solid #dee2e6;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+    }
+    #certNameForm input[type="text"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        outline: none;
+    }
+</style>
+
+<div class="row justify-content-center align-items-center claim-container">
     <div class="col-lg-6 col-md-8">
-        <div class="card shadow border-0 text-center p-4">
+        <div class="card shadow-lg border-0 text-center p-5 claim-card">
             <div class="card-body">
-                <div class="mb-4 text-success">
-                    <i class="bi bi-trophy-fill display-1"></i>
+                <div class="mb-4 trophy-container">
+                    <i class="bi bi-trophy-fill display-1 trophy-icon"></i>
                 </div>
                 
-                <h2 class="fw-bold mb-3">Congratulations!</h2>
-                <p class="text-muted mb-4">
-                    You have successfully completed <strong>{{ course.title }}</strong>. 
-                    Please enter your name exactly as you want it to appear on your official certificate.
+                <h2 class="fw-bold mb-3 display-6">Congratulations!</h2>
+                <p class="text-muted mb-4 lead claim-subtitle">
+                    You have successfully completed <br>
+                    <strong class="text-primary">{{ course.title }}</strong>
                 </p>
 
-                <form method="POST" class="text-start">
+                <div class="alert alert-light border border-secondary border-opacity-10 rounded-3 mb-4 p-3 bg-light">
+                    <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                    <span class="small text-muted">Please verify your name below. This is exactly how it will appear on your official certificate.</span>
+                </div>
+
+                <form method="POST" class="text-start" id="certNameForm">
                     {% csrf_token %}
                     
                     <div class="mb-4">
-                        <label class="form-label fw-bold small text-uppercase text-secondary">Certificate Name</label>
                         {{ form.full_name }}
                         {% if form.full_name.help_text %}
-                            <div class="form-text">{{ form.full_name.help_text }}</div>
+                            <div class="form-text text-center mt-2">{{ form.full_name.help_text }}</div>
+                        {% endif %}
+                        {% if form.full_name.errors %}
+                            <div class="text-danger small text-center mt-2">
+                                {{ form.full_name.errors }}
+                            </div>
                         {% endif %}
                     </div>
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg fw-bold">
-                            <i class="bi bi-file-earmark-pdf-fill me-2"></i> Generate & Download
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold py-3 rounded-pill shadow-sm">
+                            <i class="bi bi-patch-check-fill me-2"></i> Generate Official Certificate
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="text-center mt-3">
-            <a href="{% url 'course_detail' course.pk %}" class="text-muted text-decoration-none">
-                <i class="bi bi-arrow-left"></i> Back to Course
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'course_detail' course.pk %}" class="text-secondary text-decoration-none fw-semibold">
+                <i class="bi bi-arrow-left me-1"></i> Return to Course Dashboard
             </a>
         </div>
     </div>
 </div>
+
+<script>
+    // Simple script to enhance the input field if the backend didn't add classes
+    document.addEventListener("DOMContentLoaded", function() {
+        const nameInput = document.querySelector('#certNameForm input[name="full_name"]');
+        if(nameInput) {
+            nameInput.classList.add('form-control', 'form-control-lg', 'text-center');
+            nameInput.placeholder = "Enter your full name (e.g. John Doe)";
+        }
+    });
+</script>
 {% endblock %}

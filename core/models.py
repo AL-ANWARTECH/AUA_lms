@@ -335,12 +335,21 @@ class Certificate(models.Model):
 
 class CertificateTemplate(models.Model):
     course = models.OneToOneField(Course, on_delete=models.CASCADE, related_name='certificate_template', null=True, blank=True)
-    title = models.CharField(max_length=200, default="Certificate of Completion")
+    title = models.CharField(max_length=200, default="CERTIFICATE OF COMPLETION")
     description = models.TextField(default="This is to certify that the student has successfully completed the course.")
+    
+    # --- UPDATED FIELDS FOR LOGO & SIGNATURE ---
     background_image = models.ImageField(upload_to='certificates/backgrounds/', null=True, blank=True)
+    logo = models.ImageField(upload_to='certificates/logos/', null=True, blank=True, help_text="Upload the company logo")
+    signature = models.ImageField(upload_to='certificates/signatures/', null=True, blank=True, help_text="Upload CEO signature")
+    # -------------------------------------------
+    
     font_size = models.IntegerField(default=14)
     text_color = models.CharField(max_length=7, default='#000000')
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Template for {self.course.title}"
 
 class Notification(models.Model):
     NOTIFICATION_TYPES = [

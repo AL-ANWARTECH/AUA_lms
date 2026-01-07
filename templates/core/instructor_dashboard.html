@@ -10,12 +10,19 @@
         border-radius: 12px;
         padding: 1.5rem;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        border-left: 4px solid #0d6efd;
+        border-left: 4px solid #0d6efd; /* Default Primary */
         height: 100%;
         transition: transform 0.2s;
     }
     .metric-box:hover { transform: translateY(-3px); }
     
+    .metric-box-success {
+        border-left-color: #198754 !important;
+    }
+    .metric-box-warning {
+        border-left-color: #ffc107 !important;
+    }
+
     /* Course Cards */
     .instructor-course-card {
         transition: all 0.3s ease;
@@ -28,9 +35,20 @@
         transform: translateY(-5px);
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
+    
+    .course-img-container {
+        height: 160px; 
+        background-color: #f0f2f5;
+    }
+
     .card-actions {
         background-color: #f8f9fa;
         border-top: 1px solid #eee;
+    }
+
+    /* Search Input */
+    .search-group {
+        max-width: 250px;
     }
 </style>
 
@@ -54,12 +72,13 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="metric-box border-success" style="border-left-color: #198754;">
+        <div class="metric-box border-success metric-box-success">
             <h6 class="text-muted text-uppercase small fw-bold">Active Students</h6>
-            <h2 class="mb-0 fw-bold">--</h2> </div>
+            <h2 class="mb-0 fw-bold">--</h2> 
+        </div>
     </div>
     <div class="col-md-4">
-        <div class="metric-box border-warning" style="border-left-color: #ffc107;">
+        <div class="metric-box border-warning metric-box-warning">
             <h6 class="text-muted text-uppercase small fw-bold">Pending Grading</h6>
             <h2 class="mb-0 fw-bold">0</h2>
         </div>
@@ -71,7 +90,7 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="fw-bold mb-0">My Courses</h4>
             
-            <div class="input-group" style="max-width: 250px;">
+            <div class="input-group search-group">
                 <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
                 <input type="text" id="courseSearch" class="form-control border-start-0" placeholder="Filter courses...">
             </div>
@@ -82,7 +101,7 @@
                 {% for course in courses %}
                     <div class="col-md-6 col-xl-4 course-item">
                         <div class="card instructor-course-card overflow-hidden">
-                            <div class="position-relative" style="height: 160px; background-color: #f0f2f5;">
+                            <div class="position-relative course-img-container">
                                 {% if course.thumbnail %}
                                     <img src="{{ course.thumbnail.url }}" class="w-100 h-100 object-fit-cover" alt="{{ course.title }}">
                                 {% else %}

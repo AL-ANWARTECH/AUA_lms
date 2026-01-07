@@ -70,6 +70,22 @@
         background-color: #f8f9fa; 
         border-left: 2px solid #dee2e6;
     }
+
+    /* --- New Utility Classes to Replace Inline Styles --- */
+    .header-truncate {
+        max-width: 120px;
+    }
+    .min-w-100 {
+        min-width: 100px;
+    }
+    .student-avatar {
+        width: 32px; 
+        height: 32px; 
+        font-size: 0.8rem;
+    }
+    .letter-grade-badge {
+        width: 35px;
+    }
 </style>
 
 <div class="row mb-4">
@@ -144,7 +160,7 @@
                 
                 {% for assignment in assignments %}
                     <th class="text-center" title="{{ assignment.title }}">
-                        <div class="text-truncate" style="max-width: 120px;">
+                        <div class="text-truncate header-truncate">
                             <i class="bi bi-file-text me-1"></i>{{ assignment.title }}
                         </div>
                         <span class="badge bg-light text-secondary border mt-1">{{ assignment.max_points }} pts</span>
@@ -153,14 +169,14 @@
                 
                 {% for quiz in quizzes %}
                     <th class="text-center" title="{{ quiz.title }}">
-                        <div class="text-truncate" style="max-width: 120px;">
+                        <div class="text-truncate header-truncate">
                             <i class="bi bi-lightning me-1"></i>{{ quiz.title }}
                         </div>
                         <span class="badge bg-light text-secondary border mt-1">100 %</span>
                     </th>
                 {% endfor %}
 
-                <th class="text-center score-final" style="min-width: 100px;">
+                <th class="text-center score-final min-w-100">
                     FINAL<br>GRADE
                 </th>
             </tr>
@@ -170,7 +186,7 @@
                 <tr class="student-row">
                     <td class="sticky-col ps-4 fw-bold text-dark">
                         <div class="d-flex align-items-center">
-                            <div class="avatar-sm bg-light text-primary rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 0.8rem;">
+                            <div class="avatar-sm bg-light text-primary rounded-circle me-2 d-flex align-items-center justify-content-center student-avatar">
                                 {{ student_data.student.username|make_list|first|upper }}
                             </div>
                             {{ student_data.student.username }}
@@ -209,7 +225,7 @@
                                 <span class="fs-5 {% if student_data.course_grade.final_grade >= 70 %}text-success{% else %}text-dark{% endif %}">
                                     {{ student_data.course_grade.final_grade|floatformat:0 }}%
                                 </span>
-                                <small class="badge bg-dark text-white rounded-pill mx-auto" style="width: 35px;">
+                                <small class="badge bg-dark text-white rounded-pill mx-auto letter-grade-badge">
                                     {{ student_data.course_grade.letter_grade }}
                                 </small>
                             </div>

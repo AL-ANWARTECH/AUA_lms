@@ -193,11 +193,14 @@ class PostForm(forms.ModelForm):
 class CertificateTemplateForm(forms.ModelForm):
     class Meta:
         model = CertificateTemplate
-        fields = ['title', 'description', 'background_image', 'font_size', 'text_color', 'is_active']
+        # ADDED 'logo' and 'signature' HERE
+        fields = ['title', 'description', 'background_image', 'logo', 'signature', 'font_size', 'text_color', 'is_active']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'background_image': forms.FileInput(attrs={'class': 'form-control'}),
+            'logo': forms.FileInput(attrs={'class': 'form-control'}),      # New Widget
+            'signature': forms.FileInput(attrs={'class': 'form-control'}), # New Widget
             'font_size': forms.NumberInput(attrs={'class': 'form-control'}),
             'text_color': forms.TextInput(attrs={'class': 'form-control form-control-color', 'type': 'color'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -279,7 +282,7 @@ class UserUpdateForm(forms.ModelForm):
             'portfolio_website': forms.URLInput(attrs={'class': 'form-control'}),
         }
 
-# --- 7. CERTIFICATE CLAIM FORM (NEW) ---
+# --- 7. CERTIFICATE CLAIM FORM ---
 class CertificateClaimForm(forms.Form):
     full_name = forms.CharField(
         max_length=200, 
